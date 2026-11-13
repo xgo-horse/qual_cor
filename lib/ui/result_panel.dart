@@ -121,6 +121,11 @@ class ControlButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8),
             backgroundColor: on ? theme.colorScheme.primary : null,
             foregroundColor: on ? theme.colorScheme.onPrimary : Colors.white,
+            // Desabilitado: a borda também apaga, não só o texto.
+            side: BorderSide(
+              color: onPressed == null ? Colors.white24 : Colors.white,
+              width: 1.5,
+            ),
           ),
           icon: Icon(icon, size: 20),
           label: Text(label, maxLines: 1, overflow: TextOverflow.ellipsis),

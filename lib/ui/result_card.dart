@@ -69,7 +69,54 @@ class ResultCard extends StatelessWidget {
     );
 
     final warningText = texts?.warningTexts.join(' ') ?? '';
-    final hex = d?.color.toHex();
+
+    // Sem resultado: a dica ocupa exatamente a mesma altura do cartão
+    // cheio (nada pula quando o primeiro resultado chega) e pode usar até 3
+    // linhas, em vez de ser cortada na linha do título.
+    if (d == null) {
+      final total =
+          slotHeight(context, mainStyle, 1) +
+          slotHeight(context, detailStyle, 2) +
+          slotHeight(context, nameStyle, 1) +
+          slotHeight(context, warnStyle, 2);
+      final hint = placeholder ?? l10n.liveHint;
+      return Card(
+        margin: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(14, 8, 14, 8),
+          child: Semantics(
+            container: true,
+            liveRegion: true,
+            label: hint,
+            child: ExcludeSemantics(
+              child: SizedBox(
+                height: total,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.touch_app_outlined,
+                      size: 28,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        hint,
+                        style: detailStyle,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    final t = texts!;
+    final hex = d.color.toHex();
 
     return Card(
       margin: const EdgeInsets.fromLTRB(12, 4, 12, 4),
@@ -80,7 +127,7 @@ class ResultCard extends StatelessWidget {
         child: Semantics(
           container: true,
           liveRegion: true,
-          label: texts?.accessibleText ?? placeholder ?? l10n.liveHint,
+          label: t.accessibleText,
           child: ExcludeSemantics(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -88,26 +135,16 @@ class ResultCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(
-                      child: slot(
-                        texts?.main ?? placeholder ?? l10n.liveHint,
-                        d == null ? detailStyle : mainStyle,
-                        1,
-                      ),
-                    ),
+                    Expanded(child: slot(t.main, mainStyle, 1)),
                     const SizedBox(width: 8),
-                    _Swatch(
-                      color: d == null
-                          ? Colors.transparent
-                          : Color(0xFF000000 | d.color.toRgbInt()),
-                    ),
+                    _Swatch(color: Color(0xFF000000 | d.color.toRgbInt())),
                   ],
                 ),
-                slot(texts?.details, detailStyle, 2),
+                slot(t.details, detailStyle, 2),
                 Row(
                   children: [
-                    Expanded(child: slot(texts?.popularName, nameStyle, 1)),
-                    if (showHex && hex != null) ...[
+                    Expanded(child: slot(t.popularName, nameStyle, 1)),
+                    if (showHex) ...[
                       const SizedBox(width: 8),
                       Text(l10n.hexCode(hex), style: warnStyle, maxLines: 1),
                     ],

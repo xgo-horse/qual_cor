@@ -266,10 +266,21 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                   ? Center(
                       child: Padding(
                         padding: const EdgeInsets.all(24),
-                        child: Text(
-                          _error!,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleMedium,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.no_photography_outlined,
+                              size: 48,
+                              color: Colors.white70,
+                            ),
+                            const SizedBox(height: 12),
+                            Text(
+                              _error!,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
                         ),
                       ),
                     )
@@ -311,7 +322,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                       icon: _frozen ? Icons.play_arrow : Icons.pause,
                       label: _frozen ? l10n.liveContinue : l10n.liveFreeze,
                       tooltip: _frozen ? l10n.liveContinue : l10n.liveFreeze,
-                      onPressed: _toggleFreeze,
+                      onPressed: controller == null ? null : _toggleFreeze,
                     ),
                     ControlButton(
                       key: const Key('torch'),
