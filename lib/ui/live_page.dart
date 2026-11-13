@@ -2,18 +2,20 @@ import 'dart:io' show Platform;
 import 'dart:math' as math;
 
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart' show setEquals;
 import 'package:material_ui/material_ui.dart';
 
+import '../camera/sampling_worker.dart';
 import '../color/area_sampler.dart';
 import '../color/color_namer.dart';
-import '../color/oklab.dart';
+import '../color/live_smoother.dart';
 import '../color/pixel_area.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'area_slider.dart';
 import 'result_card.dart';
 
-/// Mira ao vivo: câmera com uma mira no centro, amostrada ~4 vezes por
-/// segundo e suavizada (média móvel exponencial em OKLab).
+/// Mira ao vivo: câmera com uma mira no centro, amostrada até ~20 vezes por
+/// segundo num isolate separado, com suavização adaptativa ([LiveSmoother]).
 class LivePage extends StatefulWidget {
   const LivePage({super.key});
 
@@ -22,25 +24,24 @@ class LivePage extends StatefulWidget {
 }
 
 class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
-  static const _interval = Duration(milliseconds: 250);
-  static const _emaAlpha = 0.35;
+  /// Intervalo mínimo entre amostras (~20 por segundo). A câmera manda ~30
+  /// quadros/s; quadros que chegam com o isolate ocupado são descartados.
+  static const _minInterval = Duration(milliseconds: 50);
 
-  final _sampler = const AreaSampler();
-  final _namer = ColorNamer();
+  final _smoother = LiveSmoother(ColorNamer());
 
+  /// Só o painel de resultado escuta isto; a prévia da câmera não é
+  /// reconstruída a cada amostra.
+  final _result = ValueNotifier<_LiveResult?>(null);
+
+  SamplingWorker? _worker;
   CameraController? _controller;
   String? _error;
   bool _initializing = false;
   bool _frozen = false;
   bool _torch = false;
-  bool _processing = false;
   DateTime _lastSample = DateTime.fromMillisecondsSinceEpoch(0);
   double _areaFraction = 0.04;
-
-  Oklab? _smoothed;
-  ColorDescription? _shown;
-  Set<SampleWarning> _warnings = const {};
-  String? _pendingKey;
 
   @override
   void initState() {
@@ -54,6 +55,8 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _controller?.dispose();
+    _worker?.dispose();
+    _result.dispose();
     super.dispose();
   }
 
@@ -76,6 +79,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     _initializing = true;
     final l10n = AppLocalizations.of(context);
     try {
+      _worker ??= await SamplingWorker.spawn();
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
         setState(() => _error = l10n.liveNoCamera);
@@ -118,48 +122,35 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   }
 
   void _onFrame(CameraImage image) {
-    if (_frozen || _processing) return;
+    final worker = _worker;
+    if (_frozen || worker == null || worker.isBusy) return;
     final now = DateTime.now();
-    if (now.difference(_lastSample) < _interval) return;
+    if (now.difference(_lastSample) < _minInterval) return;
     _lastSample = now;
-    _processing = true;
-    try {
-      final pixels = _centerPixels(image);
-      final result = _sampler.sample(pixels);
-      if (result == null || !mounted) return;
-      final prev = _smoothed;
-      final smoothed = prev == null
-          ? result.color
-          : prev.lerp(result.color, _emaAlpha);
-      _smoothed = smoothed;
-      final desc = _namer.describe(smoothed);
-      // Só troca o texto quando o novo resultado se repete em duas
-      // amostras seguidas: evita piscar e anúncios repetidos no leitor
-      // de tela.
-      final shown = _shown;
-      if (shown == null ||
-          desc.textKey == shown.textKey ||
-          desc.textKey == _pendingKey) {
-        _pendingKey = null;
-        setState(() {
-          _shown = desc;
-          _warnings = result.warnings;
-        });
-      } else {
-        _pendingKey = desc.textKey;
+    final crop = _centerCrop(image);
+    if (crop == null) return;
+    worker.sample(crop).then((result) {
+      if (result == null || !mounted || _frozen) return;
+      final changed = _smoother.add(result.color);
+      final shown = _smoother.shown;
+      final prev = _result.value;
+      if (shown != null &&
+          (changed ||
+              prev == null ||
+              !setEquals(prev.warnings, result.warnings))) {
+        _result.value = _LiveResult(shown, result.warnings);
       }
-    } finally {
-      _processing = false;
-    }
+    });
   }
 
-  List<int> _centerPixels(CameraImage image) {
+  /// Recorta só a região da mira (alguns KB) para mandar ao isolate.
+  FrameCrop? _centerCrop(CameraImage image) {
     final w = image.width, h = image.height;
     final radius = math.max(2, (math.min(w, h) * _areaFraction).round());
     final cx = w ~/ 2, cy = h ~/ 2;
     if (image.format.group == ImageFormatGroup.bgra8888) {
       final p = image.planes.first;
-      return pixelsFromBgra8888(
+      return cropBgra8888(
         width: w,
         height: h,
         bytes: p.bytes,
@@ -169,9 +160,9 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
         radius: radius,
       );
     }
-    if (image.planes.length < 3) return const [];
+    if (image.planes.length < 3) return null;
     final y = image.planes[0], u = image.planes[1], v = image.planes[2];
-    return pixelsFromYuv420(
+    return cropYuv420(
       width: w,
       height: h,
       yPlane: y.bytes,
@@ -213,7 +204,6 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final controller = _controller;
-    final shown = _shown;
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.liveTitle)),
@@ -251,16 +241,21 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                       fraction: _areaFraction,
                       onChanged: (v) => setState(() => _areaFraction = v),
                     ),
-                    if (shown != null)
-                      ResultCard(description: shown, warnings: _warnings)
-                    else
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          l10n.liveHint,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
+                    ValueListenableBuilder<_LiveResult?>(
+                      valueListenable: _result,
+                      builder: (context, result, _) => result != null
+                          ? ResultCard(
+                              description: result.description,
+                              warnings: result.warnings,
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Text(
+                                l10n.liveHint,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
                       child: Row(
@@ -304,6 +299,13 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
       ),
     );
   }
+}
+
+class _LiveResult {
+  const _LiveResult(this.description, this.warnings);
+
+  final ColorDescription description;
+  final Set<SampleWarning> warnings;
 }
 
 /// Prévia da câmera preenchendo todo o espaço (corta as sobras, sem

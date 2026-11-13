@@ -23,8 +23,8 @@ A mira ao vivo precisa de câmera de verdade; no simulador do iOS use
 ## Telas
 
 - **Início:** três botões grandes: *Mira ao vivo*, *Tirar foto* e *Escolher da galeria*.
-- **Mira ao vivo:** prévia da câmera com uma mira no centro. A área dentro do
-  círculo é lida umas 4 vezes por segundo e suavizada. Botões *Congelar /
+- **Mira ao vivo:** prévia da câmera na metade de cima da tela, com uma mira
+  no centro. A área dentro do círculo é lida até ~20 vezes por segundo. Botões *Congelar /
   Continuar* e *lanterna*.
 - **Foto:** a foto aparece inteira; toque (ou arraste) no ponto desejado. Um
   marcador mostra a área lida, e um controle ajusta o tamanho dela.
@@ -58,9 +58,23 @@ isso a cor vem sempre da média de uma **área circular**, de tamanho ajustável
 3. **Avisos:** pouca luz (L < 0,12), superexposição (mais de 25% dos pixels com
    algum canal ≥ 250), reflexo removido e cores misturadas.
 
-Na mira ao vivo, cada amostra é suavizada com média móvel exponencial em OKLab
-(α = 0,35). O texto só muda quando o novo resultado se repete em duas amostras
-seguidas, para não piscar nem encher o leitor de tela de anúncios.
+Na mira ao vivo (`lib/color/live_smoother.dart`):
+
+- **Mudança grande** (objeto novo, distância OKLab > 0,06): o app pula direto
+  para a cor nova e troca o texto no quadro seguinte (~50 ms).
+- **Mudança pequena** (ruído do sensor, mão tremendo): média móvel exponencial
+  (α = 0,5), e o texto só muda quando o novo resultado se repete em dois
+  quadros seguidos, para não piscar na fronteira entre dois nomes.
+- A conversão de cor e a amostragem rodam num **isolate de vida longa**
+  (`lib/camera/sampling_worker.dart`), que recebe só o recorte da mira (alguns
+  KB). Quadros que chegam com o isolate ocupado são descartados, então nunca
+  forma fila. Só o painel de resultado é reconstruído a cada amostra; a prévia
+  da câmera, não.
+
+A versão anterior (uma amostra a cada 250 ms, α = 0,35, confirmação em 2
+amostras) levava de 1,5 a 2 s para mostrar a cor nova. O custo do
+processamento em si sempre foi pequeno (< 0,1 ms por quadro no Mac): o atraso
+vinha do intervalo e da suavização.
 
 ### Nome em três níveis
 
