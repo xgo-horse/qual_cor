@@ -65,11 +65,10 @@ Na mira ao vivo (`lib/color/live_smoother.dart`):
 - **Mudança pequena** (ruído do sensor, mão tremendo): média móvel exponencial
   (α = 0,5), e o texto só muda quando o novo resultado se repete em dois
   quadros seguidos, para não piscar na fronteira entre dois nomes.
-- A conversão de cor e a amostragem rodam num **isolate de vida longa**
-  (`lib/camera/sampling_worker.dart`), que recebe só o recorte da mira (alguns
-  KB). Quadros que chegam com o isolate ocupado são descartados, então nunca
-  forma fila. Só o painel de resultado é reconstruído a cada amostra; a prévia
-  da câmera, não.
+- A amostragem roda direto na thread da interface: custa menos de 0,1 ms por
+  quadro (medido em `test/bench/frame_cost_test.dart`), então um isolate não
+  compensaria. Só o painel de resultado é reconstruído a cada amostra; a
+  prévia da câmera, não.
 
 A versão anterior (uma amostra a cada 250 ms, α = 0,35, confirmação em 2
 amostras) levava de 1,5 a 2 s para mostrar a cor nova. O custo do

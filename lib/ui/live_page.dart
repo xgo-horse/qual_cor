@@ -5,7 +5,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart' show setEquals;
 import 'package:material_ui/material_ui.dart';
 
-import '../camera/sampling_worker.dart';
 import '../color/area_sampler.dart';
 import '../color/color_namer.dart';
 import '../color/live_smoother.dart';
@@ -15,7 +14,8 @@ import 'area_slider.dart';
 import 'result_card.dart';
 
 /// Mira ao vivo: câmera com uma mira no centro, amostrada até ~20 vezes por
-/// segundo num isolate separado, com suavização adaptativa ([LiveSmoother]).
+/// segundo, com suavização adaptativa ([LiveSmoother]). A amostragem custa
+/// menos de 0,1 ms por quadro, então roda direto na thread da interface.
 class LivePage extends StatefulWidget {
   const LivePage({super.key});
 
@@ -25,16 +25,16 @@ class LivePage extends StatefulWidget {
 
 class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   /// Intervalo mínimo entre amostras (~20 por segundo). A câmera manda ~30
-  /// quadros/s; quadros que chegam com o isolate ocupado são descartados.
+  /// quadros/s; os que chegam antes disso são ignorados.
   static const _minInterval = Duration(milliseconds: 50);
 
+  final _sampler = const AreaSampler();
   final _smoother = LiveSmoother(ColorNamer());
 
   /// Só o painel de resultado escuta isto; a prévia da câmera não é
   /// reconstruída a cada amostra.
   final _result = ValueNotifier<_LiveResult?>(null);
 
-  SamplingWorker? _worker;
   CameraController? _controller;
   String? _error;
   bool _initializing = false;
@@ -55,7 +55,6 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _controller?.dispose();
-    _worker?.dispose();
     _result.dispose();
     super.dispose();
   }
@@ -79,7 +78,6 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     _initializing = true;
     final l10n = AppLocalizations.of(context);
     try {
-      _worker ??= await SamplingWorker.spawn();
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
         setState(() => _error = l10n.liveNoCamera);
@@ -122,35 +120,30 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   }
 
   void _onFrame(CameraImage image) {
-    final worker = _worker;
-    if (_frozen || worker == null || worker.isBusy) return;
+    if (_frozen || !mounted) return;
     final now = DateTime.now();
     if (now.difference(_lastSample) < _minInterval) return;
     _lastSample = now;
-    final crop = _centerCrop(image);
-    if (crop == null) return;
-    worker.sample(crop).then((result) {
-      if (result == null || !mounted || _frozen) return;
-      final changed = _smoother.add(result.color);
-      final shown = _smoother.shown;
-      final prev = _result.value;
-      if (shown != null &&
-          (changed ||
-              prev == null ||
-              !setEquals(prev.warnings, result.warnings))) {
-        _result.value = _LiveResult(shown, result.warnings);
-      }
-    });
+    final result = _sampler.sample(_centerPixels(image));
+    if (result == null) return;
+    final changed = _smoother.add(result.color);
+    final shown = _smoother.shown;
+    final prev = _result.value;
+    if (shown != null &&
+        (changed ||
+            prev == null ||
+            !setEquals(prev.warnings, result.warnings))) {
+      _result.value = _LiveResult(shown, result.warnings);
+    }
   }
 
-  /// Recorta só a região da mira (alguns KB) para mandar ao isolate.
-  FrameCrop? _centerCrop(CameraImage image) {
+  List<int> _centerPixels(CameraImage image) {
     final w = image.width, h = image.height;
     final radius = math.max(2, (math.min(w, h) * _areaFraction).round());
     final cx = w ~/ 2, cy = h ~/ 2;
     if (image.format.group == ImageFormatGroup.bgra8888) {
       final p = image.planes.first;
-      return cropBgra8888(
+      return pixelsFromBgra8888(
         width: w,
         height: h,
         bytes: p.bytes,
@@ -160,9 +153,9 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
         radius: radius,
       );
     }
-    if (image.planes.length < 3) return null;
+    if (image.planes.length < 3) return const [];
     final y = image.planes[0], u = image.planes[1], v = image.planes[2];
-    return cropYuv420(
+    return pixelsFromYuv420(
       width: w,
       height: h,
       yPlane: y.bytes,

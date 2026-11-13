@@ -6,11 +6,9 @@ import 'package:qual_cor/color/color_namer.dart';
 import 'package:qual_cor/color/live_smoother.dart';
 import 'package:qual_cor/color/pixel_area.dart';
 
-/// Custo por quadro da mira ao vivo na thread da interface, num quadro
-/// YUV420 720x480 (ResolutionPreset.medium).
-///   antes: leitura + conversão + amostragem + nome, tudo na thread da UI;
-///   depois: só o recorte (cópia de alguns KB) + suavização/nome; a
-///   conversão e a amostragem vão para o isolate.
+/// Custo por quadro da mira ao vivo (leitura dos pixels + conversão +
+/// amostragem + suavização/nome) num quadro YUV420 720x480
+/// (ResolutionPreset.medium). Tudo roda na thread da interface.
 void main() {
   test('custo por quadro na thread da interface', () {
     const w = 720, h = 480;
@@ -24,11 +22,11 @@ void main() {
       v[i] = 170 + (i * 17) % 20;
     }
     const sampler = AreaSampler();
-    final namer = ColorNamer();
+    final smoother = LiveSmoother(ColorNamer());
     const runs = 500;
     for (final fraction in [0.01, 0.04, 0.10]) {
       final radius = (h * fraction).round();
-      final before = Stopwatch()..start();
+      final sw = Stopwatch()..start();
       for (var i = 0; i < runs; i++) {
         final px = pixelsFromYuv420(
           width: w,
@@ -43,52 +41,17 @@ void main() {
           cy: h ~/ 2,
           radius: radius,
         );
-        namer.describe(sampler.sample(px)!.color);
+        smoother.add(sampler.sample(px)!.color);
       }
-      before.stop();
-      final color = sampler
-          .sample(
-            pixelsFromYuv420(
-              width: w,
-              height: h,
-              yPlane: y,
-              yRowStride: w,
-              uPlane: u,
-              vPlane: v,
-              uvRowStride: w ~/ 2,
-              uvPixelStride: 1,
-              cx: w ~/ 2,
-              cy: h ~/ 2,
-              radius: radius,
-            ),
-          )!
-          .color;
-      final smoother = LiveSmoother(namer);
-      final after = Stopwatch()..start();
-      for (var i = 0; i < runs; i++) {
-        cropYuv420(
-          width: w,
-          height: h,
-          yPlane: y,
-          yRowStride: w,
-          uPlane: u,
-          vPlane: v,
-          uvRowStride: w ~/ 2,
-          uvPixelStride: 1,
-          cx: w ~/ 2,
-          cy: h ~/ 2,
-          radius: radius,
-        );
-        smoother.add(color);
-      }
-      after.stop();
-      String ms(Stopwatch s) =>
-          (s.elapsedMicroseconds / runs / 1000).toStringAsFixed(3);
+      sw.stop();
+      final ms = sw.elapsedMicroseconds / runs / 1000;
       // ignore: avoid_print
       print(
-        'área ${(fraction * 100).round()}% (raio $radius px): antes ${ms(before)} ms, depois ${ms(after)} ms na thread da UI',
+        'área ${(fraction * 100).round()}% (raio $radius px): '
+        '${ms.toStringAsFixed(3)} ms/quadro',
       );
-      expect(before.elapsedMilliseconds / runs, lessThan(20));
+      // Folga grande: entre dois quadros da câmera há ~33 ms.
+      expect(ms, lessThan(5));
     }
   });
 }

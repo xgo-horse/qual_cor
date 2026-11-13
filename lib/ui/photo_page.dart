@@ -19,7 +19,9 @@ import 'result_card.dart';
 /// achar a cor de uma área isso basta e deixa tudo rápido.
 const int _maxSide = 1600;
 
-/// Decodifica, aplica a orientação do EXIF e reduz. Roda em outro isolate.
+/// Decodifica, aplica a orientação do EXIF e reduz. Roda em outro isolate
+/// (compute), uma vez por foto: uma foto de 12 MP leva ~0,5 s e travaria a
+/// tela (ver test/bench/photo_decode_test.dart).
 img.Image? decodeForSampling(Uint8List bytes) {
   final decoded = img.decodeImage(bytes);
   if (decoded == null) return null;
