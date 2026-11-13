@@ -175,25 +175,25 @@ abstract class AppLocalizations {
   /// No description provided for @warningLowLight.
   ///
   /// In pt, this message translates to:
-  /// **'Pouca luz: o resultado pode não ser confiável.'**
+  /// **'Pouca luz: resultado incerto.'**
   String get warningLowLight;
 
   /// No description provided for @warningOverexposed.
   ///
   /// In pt, this message translates to:
-  /// **'Muita luz ou reflexo forte: a cor pode estar lavada.'**
+  /// **'Luz forte demais: a cor pode estar lavada.'**
   String get warningOverexposed;
 
   /// No description provided for @warningHighlight.
   ///
   /// In pt, this message translates to:
-  /// **'Ignorei um brilho/reflexo na área.'**
+  /// **'Ignorei um reflexo.'**
   String get warningHighlight;
 
   /// No description provided for @warningMixed.
   ///
   /// In pt, this message translates to:
-  /// **'A área tem mais de uma cor; mostro a predominante. Diminua a área para mais precisão.'**
+  /// **'Área com mais de uma cor; diminua a área.'**
   String get warningMixed;
 
   /// No description provided for @showHex.
@@ -333,6 +333,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Ponto escolhido'**
   String get markerLabel;
+
+  /// Rótulo curto do botão da lanterna (o estado vai na dica e na acessibilidade)
+  ///
+  /// In pt, this message translates to:
+  /// **'Lanterna'**
+  String get torch;
+
+  /// Rótulo curto do botão que mostra/esconde o código hex
+  ///
+  /// In pt, this message translates to:
+  /// **'Código'**
+  String get hexToggle;
 }
 
 class _AppLocalizationsDelegate

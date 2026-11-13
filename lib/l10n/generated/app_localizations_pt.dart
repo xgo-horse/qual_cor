@@ -121,19 +121,16 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get warningLowLight =>
-      'Pouca luz: o resultado pode não ser confiável.';
+  String get warningLowLight => 'Pouca luz: resultado incerto.';
 
   @override
-  String get warningOverexposed =>
-      'Muita luz ou reflexo forte: a cor pode estar lavada.';
+  String get warningOverexposed => 'Luz forte demais: a cor pode estar lavada.';
 
   @override
-  String get warningHighlight => 'Ignorei um brilho/reflexo na área.';
+  String get warningHighlight => 'Ignorei um reflexo.';
 
   @override
-  String get warningMixed =>
-      'A área tem mais de uma cor; mostro a predominante. Diminua a área para mais precisão.';
+  String get warningMixed => 'Área com mais de uma cor; diminua a área.';
 
   @override
   String get showHex => 'Mostrar código';
@@ -212,4 +209,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get markerLabel => 'Ponto escolhido';
+
+  @override
+  String get torch => 'Lanterna';
+
+  @override
+  String get hexToggle => 'Código';
 }

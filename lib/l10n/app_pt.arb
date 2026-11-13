@@ -82,10 +82,10 @@
       }
     }
   },
-  "warningLowLight": "Pouca luz: o resultado pode não ser confiável.",
-  "warningOverexposed": "Muita luz ou reflexo forte: a cor pode estar lavada.",
-  "warningHighlight": "Ignorei um brilho/reflexo na área.",
-  "warningMixed": "A área tem mais de uma cor; mostro a predominante. Diminua a área para mais precisão.",
+  "warningLowLight": "Pouca luz: resultado incerto.",
+  "warningOverexposed": "Luz forte demais: a cor pode estar lavada.",
+  "warningHighlight": "Ignorei um reflexo.",
+  "warningMixed": "Área com mais de uma cor; diminua a área.",
   "showHex": "Mostrar código",
   "hideHex": "Esconder código",
   "hexCode": "Código: {hex}",
@@ -146,5 +146,13 @@
     }
   },
   "crosshairLabel": "Mira no centro da imagem",
-  "markerLabel": "Ponto escolhido"
+  "markerLabel": "Ponto escolhido",
+  "torch": "Lanterna",
+  "@torch": {
+    "description": "Rótulo curto do botão da lanterna (o estado vai na dica e na acessibilidade)"
+  },
+  "hexToggle": "Código",
+  "@hexToggle": {
+    "description": "Rótulo curto do botão que mostra/esconde o código hex"
+  }
 }

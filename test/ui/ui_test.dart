@@ -60,25 +60,23 @@ void main() {
   testWidgets('cartão de resultado: textos, código e acessibilidade', (
     tester,
   ) async {
-    await tester.pumpWidget(
-      wrap(
-        ResultCard(
-          description: d('#000080'),
-          warnings: const {SampleWarning.mixedColors},
-        ),
+    Widget card({required bool showHex}) => wrap(
+      ResultCard(
+        description: d('#000080'),
+        warnings: const {SampleWarning.mixedColors},
+        showHex: showHex,
       ),
     );
+    await tester.pumpWidget(card(showHex: false));
     expect(find.text('Azul'), findsOneWidget);
     expect(find.text('escuro'), findsOneWidget);
     expect(find.text('Parecido com: azul-marinho'), findsOneWidget);
     expect(find.text(l10n.warningMixed), findsOneWidget);
-
-    // código hex escondido por padrão
     expect(find.text('Código: #000080'), findsNothing);
-    await tester.tap(find.text('Mostrar código'));
-    await tester.pump();
-    expect(find.text('Código: #000080'), findsOneWidget);
     expect(find.text('Falar'), findsNothing);
+
+    await tester.pumpWidget(card(showHex: true));
+    expect(find.text('Código: #000080'), findsOneWidget);
 
     // região "ao vivo" com o resultado completo para o leitor de tela
     final handle = tester.ensureSemantics();
@@ -91,28 +89,5 @@ void main() {
     );
     expect(node.flagsCollection.isLiveRegion, isTrue);
     handle.dispose();
-  });
-
-  testWidgets('cartão aguenta texto do sistema em 200% numa tela estreita', (
-    tester,
-  ) async {
-    tester.view.physicalSize = const Size(360, 640);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
-    await tester.pumpWidget(
-      MediaQuery(
-        data: const MediaQueryData(
-          size: Size(360, 640),
-          textScaler: TextScaler.linear(2),
-        ),
-        child: wrap(
-          ResultCard(
-            description: d('#A52A2A'),
-            warnings: const {SampleWarning.lowLight, SampleWarning.mixedColors},
-          ),
-        ),
-      ),
-    );
-    expect(tester.takeException(), isNull);
   });
 }

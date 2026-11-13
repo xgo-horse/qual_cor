@@ -12,8 +12,7 @@ import '../color/area_sampler.dart';
 import '../color/color_namer.dart';
 import '../color/pixel_area.dart';
 import '../l10n/generated/app_localizations.dart';
-import 'area_slider.dart';
-import 'result_card.dart';
+import 'result_panel.dart';
 
 /// Lado maior máximo da foto em memória. Fotos de celular têm 12+ MP; para
 /// achar a cor de uma área isso basta e deixa tudo rápido.
@@ -244,37 +243,19 @@ class _PhotoPageState extends State<PhotoPage> {
             ),
             // Foto sempre na metade de cima; resultado na de baixo.
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(top: 4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (uiImage != null && !_loading) ...[
-                      AreaSlider(
-                        fraction: _areaFraction,
-                        onChanged: (v) {
-                          setState(() => _areaFraction = v);
-                          final p = _point;
-                          if (p != null) _sampleAt(p);
-                        },
-                      ),
-                      if (description != null)
-                        ResultCard(
-                          description: description,
-                          warnings: _warnings,
-                        )
-                      else
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            l10n.photoTapHint,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-                    ],
-                  ],
-                ),
-              ),
+              child: uiImage == null || _loading
+                  ? const SizedBox.shrink()
+                  : ResultPanel(
+                      description: description,
+                      warnings: _warnings,
+                      placeholder: l10n.photoTapHint,
+                      areaFraction: _areaFraction,
+                      onAreaChanged: (v) {
+                        setState(() => _areaFraction = v);
+                        final p = _point;
+                        if (p != null) _sampleAt(p);
+                      },
+                    ),
             ),
           ],
         ),

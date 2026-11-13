@@ -10,8 +10,7 @@ import '../color/color_namer.dart';
 import '../color/live_smoother.dart';
 import '../color/pixel_area.dart';
 import '../l10n/generated/app_localizations.dart';
-import 'area_slider.dart';
-import 'result_card.dart';
+import 'result_panel.dart';
 
 /// Mira ao vivo: câmera com uma mira no centro, amostrada até ~20 vezes por
 /// segundo, com suavização adaptativa ([LiveSmoother]). A amostragem custa
@@ -225,63 +224,28 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                     ),
             ),
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(top: 4),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    AreaSlider(
-                      fraction: _areaFraction,
-                      onChanged: (v) => setState(() => _areaFraction = v),
+              child: ValueListenableBuilder<_LiveResult?>(
+                valueListenable: _result,
+                builder: (context, result, _) => ResultPanel(
+                  description: result?.description,
+                  warnings: result?.warnings ?? const {},
+                  areaFraction: _areaFraction,
+                  onAreaChanged: (v) => setState(() => _areaFraction = v),
+                  actions: [
+                    ControlButton(
+                      key: const Key('freeze'),
+                      icon: _frozen ? Icons.play_arrow : Icons.pause,
+                      label: _frozen ? l10n.liveContinue : l10n.liveFreeze,
+                      tooltip: _frozen ? l10n.liveContinue : l10n.liveFreeze,
+                      onPressed: _toggleFreeze,
                     ),
-                    ValueListenableBuilder<_LiveResult?>(
-                      valueListenable: _result,
-                      builder: (context, result, _) => result != null
-                          ? ResultCard(
-                              description: result.description,
-                              warnings: result.warnings,
-                            )
-                          : Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Text(
-                                l10n.liveHint,
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: _toggleFreeze,
-                              icon: Icon(
-                                _frozen ? Icons.play_arrow : Icons.pause,
-                              ),
-                              label: Text(
-                                _frozen ? l10n.liveContinue : l10n.liveFreeze,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: controller == null
-                                  ? null
-                                  : _toggleTorch,
-                              icon: Icon(
-                                _torch
-                                    ? Icons.flashlight_off
-                                    : Icons.flashlight_on,
-                              ),
-                              label: Text(
-                                _torch ? l10n.liveTorchOff : l10n.liveTorchOn,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    ControlButton(
+                      key: const Key('torch'),
+                      icon: _torch ? Icons.flashlight_off : Icons.flashlight_on,
+                      label: l10n.torch,
+                      tooltip: _torch ? l10n.liveTorchOff : l10n.liveTorchOn,
+                      selected: _torch,
+                      onPressed: controller == null ? null : _toggleTorch,
                     ),
                   ],
                 ),
