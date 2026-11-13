@@ -30,3 +30,28 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+
+# Ícone e tela de abertura: gerados a partir de assets/icon/ (criados por
+# tool/make_icon.dart). Para regenerar:
+#   dart run tool/make_icon.dart
+#   dart run flutter_launcher_icons
+#   dart run flutter_native_splash:create
+flutter_launcher_icons:
+  ios: true
+  android: true
+  image_path: assets/icon/icon.png
+  remove_alpha_ios: true
+  background_color_ios: "#E9E8E4"
+  adaptive_icon_background: "#E9E8E4"
+  adaptive_icon_foreground: assets/icon/foreground.png
+  min_sdk_android: 21
+
+flutter_native_splash:
+  color: "#E9E8E4"
+  image: assets/icon/splash.png
+  android_12:
+    color: "#E9E8E4"
+    image: assets/icon/splash.png
+  ios: true
+  android: true
+  web: false
