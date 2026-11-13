@@ -4,11 +4,6 @@
   "@appTitle": {
     "description": "Nome do app"
   },
-  "homeIntro": "Aponte para algo ou escolha uma foto e toque no ponto que quer saber a cor.",
-  "homeLive": "Mira ao vivo",
-  "@homeLive": {
-    "description": "Botão: abre a câmera com mira no centro"
-  },
   "homeTakePhoto": "Tirar foto",
   "homeGallery": "Escolher da galeria",
   "familyName": "{family, select, preto{preto} branco{branco} cinza{cinza} vermelho{vermelho} laranja{laranja} amarelo{amarelo} verde{verde} azul{azul} roxo{roxo} rosa{rosa} marrom{marrom} other{cor}}",
@@ -86,20 +81,6 @@
   "warningOverexposed": "Luz forte demais: a cor pode estar lavada.",
   "warningHighlight": "Ignorei um reflexo.",
   "warningMixed": "Área com mais de uma cor; diminua a área.",
-  "showHex": "Mostrar código",
-  "hideHex": "Esconder código",
-  "hexCode": "Código: {hex}",
-  "@hexCode": {
-    "placeholders": {
-      "hex": {
-        "type": "String"
-      }
-    }
-  },
-  "swatchLabel": "Amostra da cor",
-  "@swatchLabel": {
-    "description": "Rótulo de acessibilidade do quadradinho de cor"
-  },
   "resultSummary": "{main} {details}.",
   "@resultSummary": {
     "description": "Resumo do resultado para o leitor de tela: nome principal e detalhes",
@@ -112,12 +93,8 @@
       }
     }
   },
-  "liveTitle": "Mira ao vivo",
   "liveFreeze": "Congelar",
   "liveContinue": "Continuar",
-  "liveTorchOn": "Ligar lanterna",
-  "liveTorchOff": "Desligar lanterna",
-  "liveHint": "Aponte a mira para o objeto.",
   "liveNoCamera": "Nenhuma câmera disponível.",
   "cameraError": "Não foi possível abrir a câmera: {error}",
   "@cameraError": {
@@ -128,16 +105,20 @@
     }
   },
   "cameraPermissionDenied": "Sem permissão para usar a câmera. Libere o acesso nos Ajustes do aparelho.",
-  "photoTitle": "Foto",
-  "photoTapHint": "Toque no ponto da foto que quer saber a cor.",
-  "photoLoading": "Abrindo a foto…",
   "photoError": "Não foi possível abrir a foto.",
-  "photoChooseAnother": "Outra foto",
-  "areaSize": "Tamanho da área",
-  "@areaSize": {
-    "description": "Rótulo do controle deslizante do tamanho da área amostrada"
+  "torch": "Lanterna",
+  "@torch": {
+    "description": "Rótulo curto do botão da lanterna (o estado vai na dica e na acessibilidade)"
   },
-  "areaSizeValue": "{percent}% da imagem",
+  "labelFamily": "FAMÍLIA",
+  "@labelFamily": {
+    "description": "Rótulo acima do nome da cor no cartão"
+  },
+  "labelArea": "ÁREA",
+  "@labelArea": {
+    "description": "Rótulo do controle do tamanho da área"
+  },
+  "areaSizeValue": "Área: {percent}% da imagem",
   "@areaSizeValue": {
     "placeholders": {
       "percent": {
@@ -145,18 +126,81 @@
       }
     }
   },
+  "liveHint": "Aponte para um objeto",
+  "@liveHint": {
+    "description": "Cartão vazio na mira ao vivo"
+  },
+  "photoTapHint": "Toque no ponto da foto",
+  "@photoTapHint": {
+    "description": "Cartão vazio na tela de foto"
+  },
+  "emptyFamily": "—",
+  "@emptyFamily": {
+    "description": "Família enquanto não há resultado"
+  },
+  "frozenChip": "CONGELADO",
+  "@frozenChip": {
+    "description": "Etiqueta sobre a imagem congelada"
+  },
+  "liveDragHint": "Arraste a mira para escolher o ponto.",
   "crosshairLabel": "Mira no centro da imagem",
   "markerLabel": "Ponto escolhido",
-  "torch": "Lanterna",
-  "@torch": {
-    "description": "Rótulo curto do botão da lanterna (o estado vai na dica e na acessibilidade)"
+  "barGallery": "Galeria",
+  "@barGallery": {
+    "description": "Botão da barra inferior: abrir foto"
   },
-  "hexToggle": "Código",
-  "@hexToggle": {
-    "description": "Rótulo curto do botão que mostra/esconde o código hex"
+  "barTorch": "Lanterna",
+  "barBack": "Mira",
+  "@barBack": {
+    "description": "Botão da tela de foto que volta para a mira ao vivo"
   },
-  "liveDragHint": "Arraste a mira para escolher o ponto",
-  "@liveDragHint": {
-    "description": "Aviso sobre a imagem congelada: a mira pode ser movida"
-  }
+  "barAnotherPhoto": "Outra foto",
+  "barTakePhoto": "Câmera",
+  "@barTakePhoto": {
+    "description": "Botão da tela de foto: tirar uma foto nova"
+  },
+  "torchOnHint": "Ligar lanterna",
+  "torchOffHint": "Desligar lanterna",
+  "copyCode": "Copiar código da cor",
+  "@copyCode": {
+    "description": "Rótulo de acessibilidade do botão de copiar o hex"
+  },
+  "codeCopied": "Código {hex} copiado",
+  "@codeCopied": {
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "colorCode": "Código {hex}",
+  "@colorCode": {
+    "description": "Leitura do hex para o leitor de tela",
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "openSettings": "Abrir ajustes",
+  "retry": "Tentar de novo",
+  "photoLoading": "Abrindo a foto…",
+  "about": "Sobre o app",
+  "@about": {
+    "description": "Botão de informações e título da tela Sobre"
+  },
+  "aboutDescription": "Diz o nome da cor de um ponto na câmera ou numa foto, para ajudar quem é daltônico. Funciona sem internet.",
+  "aboutVersion": "Versão {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutLicenses": "Licenças",
+  "@aboutLicenses": {
+    "description": "Item da tela Sobre que abre as licenças"
+  },
+  "aboutLicensesSubtitle": "Bibliotecas e fontes usadas no app"
 }

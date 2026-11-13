@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:qual_cor/app.dart';
 import 'package:qual_cor/color/area_sampler.dart';
 import 'package:qual_cor/color/color_names_pt.dart';
 import 'package:qual_cor/color/color_namer.dart';
 import 'package:qual_cor/color/oklab.dart';
 import 'package:qual_cor/l10n/generated/app_localizations.dart';
 import 'package:qual_cor/ui/result_panel.dart';
+import 'package:qual_cor/ui/style.dart';
 
 /// Resultado curto: "Preto", sem descrição, sem avisos.
 final short = ColorNamer().describe(Oklab.fromHex('#000000'));
@@ -45,7 +45,6 @@ class _Harness extends StatelessWidget {
         ...GlobalMaterialLocalizations.delegates,
       ],
       home: Scaffold(
-        appBar: AppBar(title: const Text('Mira ao vivo')),
         body: SafeArea(
           child: Column(
             children: [
@@ -58,23 +57,31 @@ class _Harness extends StatelessWidget {
                     warnings: r.$2,
                     areaFraction: 0.04,
                     onAreaChanged: (_) {},
-                    actions: [
-                      ControlButton(
-                        key: const Key('freeze'),
-                        icon: Icons.pause,
-                        label: 'Congelar',
-                        tooltip: 'Congelar',
-                        onPressed: () {},
-                      ),
-                      ControlButton(
-                        key: const Key('torch'),
-                        icon: Icons.flashlight_on,
-                        label: 'Lanterna',
-                        tooltip: 'Ligar lanterna',
-                        selected: false,
-                        onPressed: () {},
-                      ),
-                    ],
+                    bar: BottomBar(
+                      buttons: [
+                        BarButton(
+                          key: const Key('gallery'),
+                          icon: Icons.photo_library_outlined,
+                          label: 'Galeria',
+                          onPressed: () {},
+                        ),
+                        BarButton(
+                          key: const Key('freeze'),
+                          icon: Icons.pause,
+                          label: 'Congelar',
+                          primary: true,
+                          flex: 1.4,
+                          onPressed: () {},
+                        ),
+                        BarButton(
+                          key: const Key('torch'),
+                          icon: Icons.flashlight_on_outlined,
+                          label: 'Lanterna',
+                          selected: false,
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -94,7 +101,7 @@ void main() {
   final controls = [
     find.byKey(const Key('freeze')),
     find.byKey(const Key('torch')),
-    find.byKey(const Key('hex-toggle')),
+    find.byKey(const Key('gallery')),
     find.byType(Slider),
   ];
 

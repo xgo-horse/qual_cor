@@ -13,13 +13,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appTitle => 'Qual cor?';
 
   @override
-  String get homeIntro =>
-      'Aponte para algo ou escolha uma foto e toque no ponto que quer saber a cor.';
-
-  @override
-  String get homeLive => 'Mira ao vivo';
-
-  @override
   String get homeTakePhoto => 'Tirar foto';
 
   @override
@@ -133,41 +126,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get warningMixed => 'Área com mais de uma cor; diminua a área.';
 
   @override
-  String get showHex => 'Mostrar código';
-
-  @override
-  String get hideHex => 'Esconder código';
-
-  @override
-  String hexCode(String hex) {
-    return 'Código: $hex';
-  }
-
-  @override
-  String get swatchLabel => 'Amostra da cor';
-
-  @override
   String resultSummary(String main, String details) {
     return '$main $details.';
   }
-
-  @override
-  String get liveTitle => 'Mira ao vivo';
 
   @override
   String get liveFreeze => 'Congelar';
 
   @override
   String get liveContinue => 'Continuar';
-
-  @override
-  String get liveTorchOn => 'Ligar lanterna';
-
-  @override
-  String get liveTorchOff => 'Desligar lanterna';
-
-  @override
-  String get liveHint => 'Aponte a mira para o objeto.';
 
   @override
   String get liveNoCamera => 'Nenhuma câmera disponível.';
@@ -182,27 +149,36 @@ class AppLocalizationsPt extends AppLocalizations {
       'Sem permissão para usar a câmera. Libere o acesso nos Ajustes do aparelho.';
 
   @override
-  String get photoTitle => 'Foto';
-
-  @override
-  String get photoTapHint => 'Toque no ponto da foto que quer saber a cor.';
-
-  @override
-  String get photoLoading => 'Abrindo a foto…';
-
-  @override
   String get photoError => 'Não foi possível abrir a foto.';
 
   @override
-  String get photoChooseAnother => 'Outra foto';
+  String get torch => 'Lanterna';
 
   @override
-  String get areaSize => 'Tamanho da área';
+  String get labelFamily => 'FAMÍLIA';
+
+  @override
+  String get labelArea => 'ÁREA';
 
   @override
   String areaSizeValue(int percent) {
-    return '$percent% da imagem';
+    return 'Área: $percent% da imagem';
   }
+
+  @override
+  String get liveHint => 'Aponte para um objeto';
+
+  @override
+  String get photoTapHint => 'Toque no ponto da foto';
+
+  @override
+  String get emptyFamily => '—';
+
+  @override
+  String get frozenChip => 'CONGELADO';
+
+  @override
+  String get liveDragHint => 'Arraste a mira para escolher o ponto.';
 
   @override
   String get crosshairLabel => 'Mira no centro da imagem';
@@ -211,11 +187,63 @@ class AppLocalizationsPt extends AppLocalizations {
   String get markerLabel => 'Ponto escolhido';
 
   @override
-  String get torch => 'Lanterna';
+  String get barGallery => 'Galeria';
 
   @override
-  String get hexToggle => 'Código';
+  String get barTorch => 'Lanterna';
 
   @override
-  String get liveDragHint => 'Arraste a mira para escolher o ponto';
+  String get barBack => 'Mira';
+
+  @override
+  String get barAnotherPhoto => 'Outra foto';
+
+  @override
+  String get barTakePhoto => 'Câmera';
+
+  @override
+  String get torchOnHint => 'Ligar lanterna';
+
+  @override
+  String get torchOffHint => 'Desligar lanterna';
+
+  @override
+  String get copyCode => 'Copiar código da cor';
+
+  @override
+  String codeCopied(String hex) {
+    return 'Código $hex copiado';
+  }
+
+  @override
+  String colorCode(String hex) {
+    return 'Código $hex';
+  }
+
+  @override
+  String get openSettings => 'Abrir ajustes';
+
+  @override
+  String get retry => 'Tentar de novo';
+
+  @override
+  String get photoLoading => 'Abrindo a foto…';
+
+  @override
+  String get about => 'Sobre o app';
+
+  @override
+  String get aboutDescription =>
+      'Diz o nome da cor de um ponto na câmera ou numa foto, para ajudar quem é daltônico. Funciona sem internet.';
+
+  @override
+  String aboutVersion(String version) {
+    return 'Versão $version';
+  }
+
+  @override
+  String get aboutLicenses => 'Licenças';
+
+  @override
+  String get aboutLicensesSubtitle => 'Bibliotecas e fontes usadas no app';
 }

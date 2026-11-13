@@ -12,6 +12,7 @@ import '../color/area_sampler.dart';
 import '../color/color_namer.dart';
 import '../color/pixel_area.dart';
 import '../l10n/generated/app_localizations.dart';
+import 'frame.dart';
 import 'result_panel.dart';
 
 /// Lado maior máximo da foto em memória. Fotos de celular têm 12+ MP; para
@@ -189,73 +190,78 @@ class _PhotoPageState extends State<PhotoPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final theme = Theme.of(context);
     final uiImage = _uiImage;
-    final description = _description;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.photoTitle),
-        actions: [
-          IconButton(
-            tooltip: l10n.photoChooseAnother,
-            iconSize: 30,
-            onPressed: _loading ? null : () => _pick(widget.source),
-            icon: Icon(
-              widget.source == ImageSource.camera
-                  ? Icons.photo_camera
-                  : Icons.photo_library,
-            ),
-          ),
-        ],
-      ),
       body: SafeArea(
+        // Mesmo layout da mira: foto na metade de cima, resultado embaixo.
         child: Column(
           children: [
             Expanded(
-              child: _loading
-                  ? Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const CircularProgressIndicator(),
-                          const SizedBox(height: 16),
-                          Text(
-                            l10n.photoLoading,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ],
-                      ),
-                    )
-                  : uiImage == null
-                  ? Center(
-                      child: Text(
-                        _failed ? l10n.photoError : '',
-                        style: theme.textTheme.titleMedium,
-                      ),
-                    )
-                  : _TappableImage(
-                      image: uiImage,
-                      point: _point,
-                      radiusPx: _radiusPx(_image!).toDouble(),
-                      onPoint: _sampleAt,
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: CameraFrame(
+                  child: _loading
+                      ? StatusMessage(
+                          icon: Icons.hourglass_empty,
+                          text: l10n.photoLoading,
+                        )
+                      : uiImage == null
+                      ? StatusMessage(
+                          icon: Icons.broken_image_outlined,
+                          text: _failed ? l10n.photoError : '',
+                          actionLabel: l10n.retry,
+                          onAction: () => _pick(widget.source),
+                        )
+                      : _TappableImage(
+                          image: uiImage,
+                          point: _point,
+                          radiusPx: _radiusPx(_image!).toDouble(),
+                          onPoint: _sampleAt,
+                        ),
+                ),
+              ),
             ),
-            // Foto sempre na metade de cima; resultado na de baixo.
             Expanded(
-              child: uiImage == null || _loading
-                  ? const SizedBox.shrink()
-                  : ResultPanel(
-                      description: description,
-                      warnings: _warnings,
-                      placeholder: l10n.photoTapHint,
-                      areaFraction: _areaFraction,
-                      onAreaChanged: (v) {
-                        setState(() => _areaFraction = v);
-                        final p = _point;
-                        if (p != null) _sampleAt(p);
-                      },
+              child: ResultPanel(
+                description: _description,
+                warnings: _warnings,
+                placeholder: l10n.photoTapHint,
+                areaFraction: _areaFraction,
+                onAreaChanged: (v) {
+                  setState(() => _areaFraction = v);
+                  final p = _point;
+                  if (p != null) _sampleAt(p);
+                },
+                bar: BottomBar(
+                  buttons: [
+                    BarButton(
+                      key: const Key('back'),
+                      icon: Icons.center_focus_strong_outlined,
+                      label: l10n.barBack,
+                      onPressed: () => Navigator.of(context).maybePop(),
                     ),
+                    BarButton(
+                      key: const Key('another'),
+                      icon: Icons.photo_library_outlined,
+                      label: l10n.barAnotherPhoto,
+                      primary: true,
+                      flex: 1.4,
+                      onPressed: _loading
+                          ? null
+                          : () => _pick(ImageSource.gallery),
+                    ),
+                    BarButton(
+                      key: const Key('camera'),
+                      icon: Icons.photo_camera_outlined,
+                      label: l10n.barTakePhoto,
+                      onPressed: _loading
+                          ? null
+                          : () => _pick(ImageSource.camera),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -336,39 +342,8 @@ class _MarkerPainter extends CustomPainter {
   final double radius;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final dark = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
-    final light = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5;
-    for (final p in [dark, light]) {
-      canvas.drawCircle(center, radius, p);
-      canvas.drawLine(
-        center.translate(-radius - 14, 0),
-        center.translate(-radius - 4, 0),
-        p,
-      );
-      canvas.drawLine(
-        center.translate(radius + 4, 0),
-        center.translate(radius + 14, 0),
-        p,
-      );
-      canvas.drawLine(
-        center.translate(0, -radius - 14),
-        center.translate(0, -radius - 4),
-        p,
-      );
-      canvas.drawLine(
-        center.translate(0, radius + 4),
-        center.translate(0, radius + 14),
-        p,
-      );
-    }
-  }
+  void paint(Canvas canvas, Size size) =>
+      paintCrosshair(canvas, center, radius);
 
   @override
   bool shouldRepaint(_MarkerPainter old) =>

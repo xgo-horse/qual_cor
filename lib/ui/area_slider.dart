@@ -1,14 +1,11 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../l10n/generated/app_localizations.dart';
+import 'style.dart';
 
-/// Controle do tamanho da área amostrada, em % do lado menor da imagem.
-class AreaSlider extends StatelessWidget {
-  const AreaSlider({
-    super.key,
-    required this.fraction,
-    required this.onChanged,
-  });
+/// Controle do tamanho da área, em % do lado menor da imagem.
+class AreaRow extends StatelessWidget {
+  const AreaRow({super.key, required this.fraction, required this.onChanged});
 
   static const double min = 0.01;
   static const double max = 0.10;
@@ -21,17 +18,17 @@ class AreaSlider extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final percent = (fraction * 100).round();
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.fromLTRB(16, 0, 4, 0),
       child: Row(
         children: [
-          Text(l10n.areaSize, style: Theme.of(context).textTheme.bodyLarge),
+          ExcludeSemantics(child: Text(l10n.labelArea, style: Txt.label())),
           Expanded(
             child: Slider(
               value: fraction.clamp(min, max),
               min: min,
               max: max,
               divisions: 9,
-              label: l10n.areaSizeValue(percent),
+              label: '$percent%',
               semanticFormatterCallback: (_) => l10n.areaSizeValue(percent),
               onChanged: onChanged,
             ),

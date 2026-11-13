@@ -1,8 +1,11 @@
 import 'dart:io' show Platform;
 import 'dart:math' as math;
 
+import 'package:app_settings/app_settings.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart' show setEquals;
+import 'package:flutter/services.dart' show HapticFeedback;
+import 'package:image_picker/image_picker.dart' show ImageSource;
 import 'package:material_ui/material_ui.dart';
 
 import '../camera/frame_mapper.dart';
@@ -11,7 +14,11 @@ import '../color/color_namer.dart';
 import '../color/live_smoother.dart';
 import '../color/pixel_area.dart';
 import '../l10n/generated/app_localizations.dart';
+import 'about_page.dart';
+import 'frame.dart';
+import 'photo_page.dart';
 import 'result_panel.dart';
+import 'style.dart';
 
 /// Mira ao vivo: câmera com uma mira no centro, amostrada até ~20 vezes por
 /// segundo, com suavização adaptativa ([LiveSmoother]). A amostragem custa
@@ -37,6 +44,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
 
   CameraController? _controller;
   String? _error;
+  bool _permissionDenied = false;
   bool _initializing = false;
   bool _frozen = false;
   bool _torch = false;
@@ -87,7 +95,10 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     try {
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
-        setState(() => _error = l10n.liveNoCamera);
+        setState(() {
+          _error = l10n.liveNoCamera;
+          _permissionDenied = false;
+        });
         return;
       }
       final camera = cameras.firstWhere(
@@ -112,12 +123,15 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
       setState(() {
         _controller = controller;
         _error = null;
+        _permissionDenied = false;
       });
     } on CameraException catch (e) {
       if (!mounted) return;
+      final denied =
+          e.code.contains('AccessDenied') || e.code.contains('Restricted');
       setState(() {
-        _error =
-            e.code.contains('AccessDenied') || e.code.contains('Restricted')
+        _permissionDenied = denied;
+        _error = denied
             ? l10n.cameraPermissionDenied
             : l10n.cameraError(e.description ?? e.code);
       });
@@ -189,6 +203,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     final c = _controller;
     final freezing = !_frozen;
     final image = _lastImage;
+    HapticFeedback.selectionClick();
     setState(() {
       _frozen = freezing;
       if (freezing && image != null) {
@@ -249,60 +264,113 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     } on CameraException catch (_) {}
   }
 
+  /// Para a câmera enquanto outra tela está por cima e religa na volta.
+  Future<void> _pushPaused(Widget page) async {
+    final c = _controller;
+    setState(() {
+      _controller = null;
+      _torch = false;
+    });
+    await c?.dispose();
+    if (!mounted) return;
+    await Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (_) => page));
+    if (mounted && _controller == null) await _start();
+  }
+
+  Future<void> _openGallery() async {
+    final l10n = AppLocalizations.of(context);
+    final source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              minTileHeight: 56,
+              leading: const Icon(Icons.photo_library_outlined),
+              title: Text(l10n.homeGallery, style: Txt.sans(size: 16)),
+              onTap: () => Navigator.pop(context, ImageSource.gallery),
+            ),
+            const Divider(height: 1, color: Palette.hairlineLight),
+            ListTile(
+              minTileHeight: 56,
+              leading: const Icon(Icons.photo_camera_outlined),
+              title: Text(l10n.homeTakePhoto, style: Txt.sans(size: 16)),
+              onTap: () => Navigator.pop(context, ImageSource.camera),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (source == null || !mounted) return;
+    await _pushPaused(PhotoPage(source: source));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
     final controller = _controller;
+    final frozen = _frozenImage != null;
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.liveTitle)),
       body: SafeArea(
         // A câmera ocupa sempre a metade de cima; resultado e controles, a
-        // de baixo (com rolagem se não couberem).
+        // de baixo.
         child: Column(
           children: [
             Expanded(
-              child: _error != null
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(
-                              Icons.no_photography_outlined,
-                              size: 48,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                child: CameraFrame(
+                  frozen: frozen,
+                  frozenLabel: l10n.frozenChip,
+                  trailing: InfoButton(
+                    onPressed: () => _pushPaused(const AboutPage()),
+                  ),
+                  child: _error != null
+                      ? StatusMessage(
+                          icon: _permissionDenied
+                              ? Icons.no_photography_outlined
+                              : Icons.videocam_off_outlined,
+                          text: _error!,
+                          actionLabel: _permissionDenied
+                              ? l10n.openSettings
+                              : l10n.retry,
+                          onAction: _permissionDenied
+                              ? () => AppSettings.openAppSettings()
+                              : _start,
+                        )
+                      : controller == null || !controller.value.isInitialized
+                      ? const Center(
+                          child: SizedBox.square(
+                            dimension: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
                               color: Colors.white70,
                             ),
-                            const SizedBox(height: 12),
-                            Text(
-                              _error!,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ],
+                          ),
+                        )
+                      : _CoverPreview(
+                          controller: controller,
+                          areaFraction: _areaFraction,
+                          frozen: _frozenImage == null
+                              ? null
+                              : _Frozen(
+                                  width: _frozenImage!.width,
+                                  height: _frozenImage!.height,
+                                  rotation: _rotationFor(_frozenImage!),
+                                  mirror:
+                                      controller.description.lensDirection ==
+                                      CameraLensDirection.front,
+                                  point: _frozenPoint!,
+                                  radius: _frameRadius(_frozenImage!)
+                                      .toDouble(),
+                                ),
+                          onFrozenPoint: _sampleFrozen,
                         ),
-                      ),
-                    )
-                  : controller == null || !controller.value.isInitialized
-                  ? const Center(child: CircularProgressIndicator())
-                  : _CoverPreview(
-                      controller: controller,
-                      areaFraction: _areaFraction,
-                      frozen: _frozenImage == null
-                          ? null
-                          : _Frozen(
-                              width: _frozenImage!.width,
-                              height: _frozenImage!.height,
-                              rotation: _rotationFor(_frozenImage!),
-                              mirror:
-                                  controller.description.lensDirection ==
-                                  CameraLensDirection.front,
-                              point: _frozenPoint!,
-                              radius: _frameRadius(_frozenImage!).toDouble(),
-                            ),
-                      onFrozenPoint: _sampleFrozen,
-                    ),
+                ),
+              ),
             ),
             Expanded(
               child: ValueListenableBuilder<_LiveResult?>(
@@ -310,29 +378,41 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                 builder: (context, result, _) => ResultPanel(
                   description: result?.description,
                   warnings: result?.warnings ?? const {},
+                  note: frozen ? l10n.liveDragHint : null,
                   areaFraction: _areaFraction,
                   onAreaChanged: (v) {
                     setState(() => _areaFraction = v);
                     final p = _frozenPoint;
                     if (_frozenImage != null && p != null) _sampleFrozen(p);
                   },
-                  actions: [
-                    ControlButton(
-                      key: const Key('freeze'),
-                      icon: _frozen ? Icons.play_arrow : Icons.pause,
-                      label: _frozen ? l10n.liveContinue : l10n.liveFreeze,
-                      tooltip: _frozen ? l10n.liveContinue : l10n.liveFreeze,
-                      onPressed: controller == null ? null : _toggleFreeze,
-                    ),
-                    ControlButton(
-                      key: const Key('torch'),
-                      icon: _torch ? Icons.flashlight_off : Icons.flashlight_on,
-                      label: l10n.torch,
-                      tooltip: _torch ? l10n.liveTorchOff : l10n.liveTorchOn,
-                      selected: _torch,
-                      onPressed: controller == null ? null : _toggleTorch,
-                    ),
-                  ],
+                  bar: BottomBar(
+                    buttons: [
+                      BarButton(
+                        key: const Key('gallery'),
+                        icon: Icons.photo_library_outlined,
+                        label: l10n.barGallery,
+                        onPressed: _openGallery,
+                      ),
+                      BarButton(
+                        key: const Key('freeze'),
+                        icon: _frozen ? Icons.play_arrow : Icons.pause,
+                        label: _frozen ? l10n.liveContinue : l10n.liveFreeze,
+                        primary: true,
+                        flex: 1.4,
+                        onPressed: controller == null ? null : _toggleFreeze,
+                      ),
+                      BarButton(
+                        key: const Key('torch'),
+                        icon: _torch
+                            ? Icons.flashlight_on
+                            : Icons.flashlight_on_outlined,
+                        label: l10n.barTorch,
+                        tooltip: _torch ? l10n.torchOffHint : l10n.torchOnHint,
+                        selected: _torch,
+                        onPressed: controller == null ? null : _toggleTorch,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -433,7 +513,6 @@ class _CoverPreview extends StatelessWidget {
         void move(Offset local) => onFrozenPoint(
           mapper.clampFrame(mapper.viewToFrame(local), f.radius),
         );
-        final theme = Theme.of(context);
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTapDown: (d) => move(d.localPosition),
@@ -446,30 +525,6 @@ class _CoverPreview extends StatelessWidget {
               _Crosshair(
                 radius: math.max(6.0, f.radius * mapper.scale),
                 center: mapper.frameToView(f.point),
-              ),
-              Positioned(
-                left: 8,
-                top: 8,
-                right: 8,
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.black87,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      child: Text(
-                        AppLocalizations.of(context).liveDragHint,
-                        style: theme.textTheme.bodyMedium,
-                      ),
-                    ),
-                  ),
-                ),
               ),
             ],
           ),
@@ -505,23 +560,7 @@ class _CrosshairPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final c = center ?? size.center(Offset.zero);
-    final dark = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
-    final light = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.5;
-    for (final p in [dark, light]) {
-      canvas.drawCircle(c, radius, p);
-      final gap = radius + 6, len = radius + 22;
-      canvas.drawLine(c.translate(-len, 0), c.translate(-gap, 0), p);
-      canvas.drawLine(c.translate(gap, 0), c.translate(len, 0), p);
-      canvas.drawLine(c.translate(0, -len), c.translate(0, -gap), p);
-      canvas.drawLine(c.translate(0, gap), c.translate(0, len), p);
-    }
+    paintCrosshair(canvas, center ?? size.center(Offset.zero), radius);
   }
 
   @override
