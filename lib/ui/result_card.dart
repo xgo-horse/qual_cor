@@ -40,9 +40,9 @@ class _ResultCardState extends State<ResultCard> {
     final hex = widget.description.color.toHex();
 
     return Card(
-      margin: const EdgeInsets.all(12),
+      margin: const EdgeInsets.fromLTRB(12, 4, 12, 8),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
@@ -64,7 +64,7 @@ class _ResultCardState extends State<ResultCard> {
                         Expanded(
                           child: Text(
                             texts.main,
-                            style: theme.textTheme.displayMedium?.copyWith(
+                            style: theme.textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.w800,
                               height: 1.05,
                             ),
@@ -80,13 +80,13 @@ class _ResultCardState extends State<ResultCard> {
                     ),
                     if (details.isNotEmpty) ...[
                       const SizedBox(height: 6),
-                      Text(details, style: theme.textTheme.headlineSmall),
+                      Text(details, style: theme.textTheme.titleMedium),
                     ],
                     if (name != null) ...[
                       const SizedBox(height: 6),
                       Text(
                         name,
-                        style: theme.textTheme.titleLarge?.copyWith(
+                        style: theme.textTheme.bodyLarge?.copyWith(
                           color: theme.colorScheme.primary,
                         ),
                       ),
@@ -99,11 +99,12 @@ class _ResultCardState extends State<ResultCard> {
                           children: [
                             Icon(
                               Icons.warning_amber_rounded,
+                              size: 20,
                               color: theme.colorScheme.primary,
                             ),
                             const SizedBox(width: 8),
                             Expanded(
-                              child: Text(w, style: theme.textTheme.bodyLarge),
+                              child: Text(w, style: theme.textTheme.bodyMedium),
                             ),
                           ],
                         ),
@@ -112,14 +113,14 @@ class _ResultCardState extends State<ResultCard> {
                       const SizedBox(height: 8),
                       Text(
                         l10n.hexCode(hex),
-                        style: theme.textTheme.titleMedium,
+                        style: theme.textTheme.bodyMedium,
                       ),
                     ],
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
@@ -128,18 +129,23 @@ class _ResultCardState extends State<ResultCard> {
                       final speak = widget.onSpeak ?? Speech.instance.speak;
                       speak(texts.spoken);
                     },
-                    icon: const Icon(Icons.volume_up, size: 30),
+                    icon: const Icon(Icons.volume_up),
                     label: Text(l10n.speak),
                   ),
                 ),
                 const SizedBox(width: 8),
-                TextButton(
-                  onPressed: () => setState(() => _showHex = !_showHex),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(48, 56),
+                Flexible(
+                  child: TextButton(
+                    onPressed: () => setState(() => _showHex = !_showHex),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(48, 48),
+                    ),
+                    child: Text(
+                      _showHex ? l10n.hideHex : l10n.showHex,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  child: Text(_showHex ? l10n.hideHex : l10n.showHex),
                 ),
               ],
             ),
@@ -160,8 +166,8 @@ class _Swatch extends StatelessWidget {
     return Semantics(
       label: AppLocalizations.of(context).swatchLabel,
       child: Container(
-        width: 40,
-        height: 40,
+        width: 28,
+        height: 28,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8),

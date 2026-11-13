@@ -24,7 +24,7 @@ class AreaSlider extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          Text(l10n.areaSize, style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.areaSize, style: Theme.of(context).textTheme.bodyLarge),
           Expanded(
             child: Slider(
               value: fraction.clamp(min, max),

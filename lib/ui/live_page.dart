@@ -218,71 +218,85 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.liveTitle)),
       body: SafeArea(
+        // A câmera ocupa sempre a metade de cima; resultado e controles, a
+        // de baixo (com rolagem se não couberem).
         child: Column(
           children: [
             Expanded(
-              child: Center(
-                child: _error != null
-                    ? Padding(
+              child: _error != null
+                  ? Center(
+                      child: Padding(
                         padding: const EdgeInsets.all(24),
                         child: Text(
                           _error!,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
-                      )
-                    : controller == null || !controller.value.isInitialized
-                    ? const CircularProgressIndicator()
-                    : CameraPreview(
-                        controller,
-                        child: _Crosshair(fraction: _areaFraction),
                       ),
-              ),
+                    )
+                  : controller == null || !controller.value.isInitialized
+                  ? const Center(child: CircularProgressIndicator())
+                  : _CoverPreview(
+                      controller: controller,
+                      areaFraction: _areaFraction,
+                    ),
             ),
-            AreaSlider(
-              fraction: _areaFraction,
-              onChanged: (v) => setState(() => _areaFraction = v),
-            ),
-            if (shown != null)
-              ResultCard(description: shown, warnings: _warnings)
-            else
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  l10n.liveHint,
-                  style: Theme.of(context).textTheme.titleLarge,
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(top: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AreaSlider(
+                      fraction: _areaFraction,
+                      onChanged: (v) => setState(() => _areaFraction = v),
+                    ),
+                    if (shown != null)
+                      ResultCard(description: shown, warnings: _warnings)
+                    else
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          l10n.liveHint,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: _toggleFreeze,
+                              icon: Icon(
+                                _frozen ? Icons.play_arrow : Icons.pause,
+                              ),
+                              label: Text(
+                                _frozen ? l10n.liveContinue : l10n.liveFreeze,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: controller == null
+                                  ? null
+                                  : _toggleTorch,
+                              icon: Icon(
+                                _torch
+                                    ? Icons.flashlight_off
+                                    : Icons.flashlight_on,
+                              ),
+                              label: Text(
+                                _torch ? l10n.liveTorchOff : l10n.liveTorchOn,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: _toggleFreeze,
-                      icon: Icon(
-                        _frozen ? Icons.play_arrow : Icons.pause,
-                        size: 28,
-                      ),
-                      label: Text(
-                        _frozen ? l10n.liveContinue : l10n.liveFreeze,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: OutlinedButton.icon(
-                      onPressed: controller == null ? null : _toggleTorch,
-                      icon: Icon(
-                        _torch ? Icons.flashlight_off : Icons.flashlight_on,
-                        size: 28,
-                      ),
-                      label: Text(
-                        _torch ? l10n.liveTorchOff : l10n.liveTorchOn,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
@@ -292,25 +306,60 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   }
 }
 
+/// Prévia da câmera preenchendo todo o espaço (corta as sobras, sem
+/// distorcer), com a mira no centro. O raio da mira acompanha a escala do
+/// corte, para mostrar exatamente a área que é lida no quadro.
+class _CoverPreview extends StatelessWidget {
+  const _CoverPreview({required this.controller, required this.areaFraction});
+
+  final CameraController controller;
+  final double areaFraction;
+
+  @override
+  Widget build(BuildContext context) {
+    final portrait = MediaQuery.orientationOf(context) == Orientation.portrait;
+    // value.aspectRatio é largura/altura do quadro do sensor (deitado).
+    final frameAspect = portrait
+        ? 1 / controller.value.aspectRatio
+        : controller.value.aspectRatio;
+    return LayoutBuilder(
+      builder: (context, box) {
+        final w = box.maxWidth, h = box.maxHeight;
+        final pw = w, ph = w / frameAspect;
+        final scale = math.max(w / pw, h / ph);
+        final radius = math.max(6.0, math.min(pw, ph) * scale * areaFraction);
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            ClipRect(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: pw,
+                  height: ph,
+                  child: CameraPreview(controller),
+                ),
+              ),
+            ),
+            _Crosshair(radius: radius),
+          ],
+        );
+      },
+    );
+  }
+}
+
 /// Mira desenhada sobre a prévia. O círculo mostra a área amostrada.
 class _Crosshair extends StatelessWidget {
-  const _Crosshair({required this.fraction});
+  const _Crosshair({required this.radius});
 
-  final double fraction;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
       label: AppLocalizations.of(context).crosshairLabel,
-      child: LayoutBuilder(
-        builder: (context, box) {
-          final r = math.max(
-            6.0,
-            math.min(box.maxWidth, box.maxHeight) * fraction,
-          );
-          return CustomPaint(size: box.biggest, painter: _CrosshairPainter(r));
-        },
-      ),
+      child: CustomPaint(painter: _CrosshairPainter(radius)),
     );
   }
 }

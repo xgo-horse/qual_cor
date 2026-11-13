@@ -54,6 +54,35 @@ Future<ui.Image> _toUiImage(img.Image image) {
   return completer.future;
 }
 
+/// Onde a imagem fica dentro da caixa com BoxFit.contain (centralizada) e
+/// a conversão de um toque na tela para o pixel da imagem.
+class ContainLayout {
+  ContainLayout(this.imageSize, Size box)
+    : dest = Alignment.center.inscribe(
+        applyBoxFit(BoxFit.contain, imageSize, box).destination,
+        Offset.zero & box,
+      );
+
+  final Size imageSize;
+  final Rect dest;
+
+  double get scale => dest.width / imageSize.width;
+
+  /// Pixel da imagem sob [local], ou null se o toque caiu fora da imagem
+  /// (nas faixas pretas).
+  Offset? toImage(Offset local) {
+    if (!dest.contains(local)) return null;
+    final p = (local - dest.topLeft) / scale;
+    return Offset(
+      p.dx.clamp(0, imageSize.width - 1),
+      p.dy.clamp(0, imageSize.height - 1),
+    );
+  }
+
+  /// Posição na tela de um pixel da imagem (para desenhar o marcador).
+  Offset toLocal(Offset imagePoint) => dest.topLeft + imagePoint * scale;
+}
+
 class PhotoPage extends StatefulWidget {
   const PhotoPage({super.key, required this.source});
 
@@ -192,7 +221,7 @@ class _PhotoPageState extends State<PhotoPage> {
                           const SizedBox(height: 16),
                           Text(
                             l10n.photoLoading,
-                            style: theme.textTheme.titleLarge,
+                            style: theme.textTheme.titleMedium,
                           ),
                         ],
                       ),
@@ -201,7 +230,7 @@ class _PhotoPageState extends State<PhotoPage> {
                   ? Center(
                       child: Text(
                         _failed ? l10n.photoError : '',
-                        style: theme.textTheme.titleLarge,
+                        style: theme.textTheme.titleMedium,
                       ),
                     )
                   : _TappableImage(
@@ -211,26 +240,40 @@ class _PhotoPageState extends State<PhotoPage> {
                       onPoint: _sampleAt,
                     ),
             ),
-            if (uiImage != null && !_loading) ...[
-              AreaSlider(
-                fraction: _areaFraction,
-                onChanged: (v) {
-                  setState(() => _areaFraction = v);
-                  final p = _point;
-                  if (p != null) _sampleAt(p);
-                },
-              ),
-              if (description != null)
-                ResultCard(description: description, warnings: _warnings)
-              else
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    l10n.photoTapHint,
-                    style: theme.textTheme.titleLarge,
-                  ),
+            // Foto sempre na metade de cima; resultado na de baixo.
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(top: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    if (uiImage != null && !_loading) ...[
+                      AreaSlider(
+                        fraction: _areaFraction,
+                        onChanged: (v) {
+                          setState(() => _areaFraction = v);
+                          final p = _point;
+                          if (p != null) _sampleAt(p);
+                        },
+                      ),
+                      if (description != null)
+                        ResultCard(
+                          description: description,
+                          warnings: _warnings,
+                        )
+                      else
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            l10n.photoTapHint,
+                            style: theme.textTheme.titleMedium,
+                          ),
+                        ),
+                    ],
+                  ],
                 ),
-            ],
+              ),
+            ),
           ],
         ),
       ),
@@ -259,22 +302,13 @@ class _TappableImage extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, box) {
         final imageSize = Size(image.width.toDouble(), image.height.toDouble());
-        final fitted = applyBoxFit(BoxFit.contain, imageSize, box.biggest);
-        final dest = Alignment.center.inscribe(
-          fitted.destination,
-          Offset.zero & box.biggest,
-        );
-        final scale = dest.width / imageSize.width;
+        final layout = ContainLayout(imageSize, box.biggest);
+        final dest = layout.dest;
+        final scale = layout.scale;
 
         void handle(Offset local) {
-          if (!dest.contains(local)) return;
-          final p = (local - dest.topLeft) / scale;
-          onPoint(
-            Offset(
-              p.dx.clamp(0, imageSize.width - 1),
-              p.dy.clamp(0, imageSize.height - 1),
-            ),
-          );
+          final p = layout.toImage(local);
+          if (p != null) onPoint(p);
         }
 
         final pt = point;
@@ -298,7 +332,7 @@ class _TappableImage extends StatelessWidget {
                     label: l10n.markerLabel,
                     child: CustomPaint(
                       painter: _MarkerPainter(
-                        center: dest.topLeft + pt * scale,
+                        center: layout.toLocal(pt),
                         radius: math.max(8, radiusPx * scale),
                       ),
                     ),

@@ -4,8 +4,9 @@ import 'l10n/generated/app_localizations.dart';
 import 'ui/home_page.dart';
 
 /// Tema escuro de alto contraste: fundo preto, texto branco e destaque
-/// amarelo (cores que a maioria dos daltônicos distingue bem), com letras
-/// grandes.
+/// amarelo (cores que a maioria dos daltônicos distingue bem). Tamanhos
+/// padrão do Material 3; quem precisa de letra maior usa o tamanho de texto
+/// do sistema, que o app respeita.
 ThemeData buildTheme() {
   const accent = Color(0xFFFFD600);
   final scheme = const ColorScheme.dark(
@@ -22,32 +23,29 @@ ThemeData buildTheme() {
   final base = ThemeData(colorScheme: scheme, useMaterial3: true);
   return base.copyWith(
     scaffoldBackgroundColor: Colors.black,
-    // Letras 15% maiores que o padrão. A escala vem da tipografia
-    // "englishLike" (que tem os tamanhos); a do tema base só tem as cores.
-    textTheme: base.textTheme
-        .merge(
-          Typography.material2021().englishLike.apply(fontSizeFactor: 1.15),
-        )
-        .apply(bodyColor: Colors.white, displayColor: Colors.white),
+    textTheme: base.textTheme.apply(
+      bodyColor: Colors.white,
+      displayColor: Colors.white,
+    ),
     cardTheme: const CardThemeData(
       color: Color(0xFF151515),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.white54, width: 1.5),
-        borderRadius: BorderRadius.all(Radius.circular(16)),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
       ),
     ),
     filledButtonTheme: FilledButtonThemeData(
       style: FilledButton.styleFrom(
-        minimumSize: const Size(64, 64),
-        textStyle: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+        minimumSize: const Size(48, 48),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        minimumSize: const Size(64, 56),
+        minimumSize: const Size(48, 48),
         foregroundColor: Colors.white,
-        side: const BorderSide(color: Colors.white, width: 2),
-        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+        side: const BorderSide(color: Colors.white, width: 1.5),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       ),
     ),
     sliderTheme: const SliderThemeData(

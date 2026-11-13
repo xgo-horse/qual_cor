@@ -18,28 +18,26 @@ class HomePage extends StatelessWidget {
             .push(MaterialPageRoute<void>(builder: (_) => page));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.appTitle, style: theme.textTheme.headlineMedium),
-      ),
+      appBar: AppBar(title: Text(l10n.appTitle)),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            Text(l10n.homeIntro, style: theme.textTheme.titleLarge),
-            const SizedBox(height: 28),
+            Text(l10n.homeIntro, style: theme.textTheme.titleMedium),
+            const SizedBox(height: 24),
             _BigButton(
               icon: Icons.center_focus_strong,
               label: l10n.homeLive,
               onPressed: () => open(const LivePage()),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
             _BigButton(
               icon: Icons.photo_camera,
               label: l10n.homeTakePhoto,
               onPressed: () =>
                   open(const PhotoPage(source: ImageSource.camera)),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
             _BigButton(
               icon: Icons.photo_library,
               label: l10n.homeGallery,
@@ -69,11 +67,11 @@ class _BigButton extends StatelessWidget {
     return FilledButton.icon(
       onPressed: onPressed,
       style: FilledButton.styleFrom(
-        minimumSize: const Size.fromHeight(96),
-        textStyle: const TextStyle(fontSize: 26, fontWeight: FontWeight.w800),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        minimumSize: const Size.fromHeight(56),
+        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      icon: Icon(icon, size: 40),
+      icon: Icon(icon, size: 24),
       label: Text(label),
     );
   }

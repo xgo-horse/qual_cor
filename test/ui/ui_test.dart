@@ -96,4 +96,27 @@ void main() {
     expect(node.flagsCollection.isLiveRegion, isTrue);
     handle.dispose();
   });
+
+  testWidgets('cartão aguenta texto do sistema em 200% numa tela estreita', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(360, 640);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      MediaQuery(
+        data: const MediaQueryData(
+          size: Size(360, 640),
+          textScaler: TextScaler.linear(2),
+        ),
+        child: wrap(
+          ResultCard(
+            description: d('#A52A2A'),
+            warnings: const {SampleWarning.lowLight, SampleWarning.mixedColors},
+          ),
+        ),
+      ),
+    );
+    expect(tester.takeException(), isNull);
+  });
 }
