@@ -164,3 +164,18 @@ test/                    testes do motor e da interface
 - iOS: `NSCameraUsageDescription` e `NSPhotoLibraryUsageDescription` (em
   português) no `Info.plist`.
 - Android: `CAMERA`.
+
+## Visual, fontes e licenças
+
+- Estilo "cartela de tinta": fundo cinza neutro `#E9E8E4` (para não puxar a
+  percepção da cor medida), cartões brancos, ações quase pretas, sem outra cor
+  de destaque. Tokens em `lib/ui/style.dart`.
+- Fontes embutidas em `assets/fonts/` (nada é baixado): Fraunces, Inter e
+  JetBrains Mono, de github.com/google/fonts, licença SIL OFL 1.1. Os textos das
+  licenças ficam em `assets/licenses/` e são registrados em `lib/licenses.dart`,
+  que aparece em Sobre > Licenças.
+- Ícone e tela de abertura: desenhados por `tool/make_icon.dart`. O passo a
+  passo para regenerar está no fim do `pubspec.yaml`.
+- A tela de licenças do Flutter lista **todo** pacote do `pubspec.lock`,
+  inclusive os de desenvolvimento. Por isso os geradores de ícone e de tela de
+  abertura não ficam como dependência.

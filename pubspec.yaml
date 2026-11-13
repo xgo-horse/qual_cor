@@ -23,9 +23,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  flutter_launcher_icons: ^0.14.4
-  flutter_native_splash: ^2.4.8
-
 flutter:
   generate: true
   uses-material-design: true
@@ -50,10 +47,17 @@ flutter:
         - asset: assets/fonts/JetBrainsMono.ttf
 
 # Ícone e tela de abertura: gerados a partir de assets/icon/ (criados por
-# tool/make_icon.dart). Para regenerar:
+# tool/make_icon.dart). Os geradores NÃO ficam como dependência porque o
+# Flutter põe na tela de licenças do app todo pacote do pubspec, inclusive
+# os de desenvolvimento (eles trariam 13 pacotes à toa). Para regenerar:
+#   flutter pub add --dev flutter_launcher_icons flutter_native_splash
 #   dart run tool/make_icon.dart
 #   dart run flutter_launcher_icons
 #   dart run flutter_native_splash:create
+#   (confira se o projeto do Xcode não ganhou
+#   ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = AppIcon;
+#   o certo é YES)
+#   flutter pub remove flutter_launcher_icons flutter_native_splash
 flutter_launcher_icons:
   ios: true
   android: true
