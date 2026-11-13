@@ -24,8 +24,7 @@ enum ColorFamily {
   rosa,
   marrom;
 
-  bool get isAchromatic =>
-      this == preto || this == branco || this == cinza;
+  bool get isAchromatic => this == preto || this == branco || this == cinza;
 }
 
 class NamedColor {

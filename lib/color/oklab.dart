@@ -60,14 +60,21 @@ class Oklab {
   /// Volta para sRGB 0xRRGGBB, cortando valores fora da gama.
   int toRgbInt() {
     final (r, g, bl) = _toLinear();
-    return (_linearToSrgb(r) << 16) | (_linearToSrgb(g) << 8) | _linearToSrgb(bl);
+    return (_linearToSrgb(r) << 16) |
+        (_linearToSrgb(g) << 8) |
+        _linearToSrgb(bl);
   }
 
   /// Se a cor cabe no sRGB (com uma pequena tolerância).
   bool get isInGamut {
     final (r, g, bl) = _toLinear();
     const e = 1e-4;
-    return r >= -e && r <= 1 + e && g >= -e && g <= 1 + e && bl >= -e && bl <= 1 + e;
+    return r >= -e &&
+        r <= 1 + e &&
+        g >= -e &&
+        g <= 1 + e &&
+        bl >= -e &&
+        bl <= 1 + e;
   }
 
   /// Maior croma que cabe no sRGB com esta claridade e este matiz.
@@ -115,7 +122,9 @@ class Oklab {
 
 final List<double> _srgbToLinear = List<double>.generate(256, (i) {
   final c = i / 255.0;
-  return c <= 0.04045 ? c / 12.92 : math.pow((c + 0.055) / 1.055, 2.4).toDouble();
+  return c <= 0.04045
+      ? c / 12.92
+      : math.pow((c + 0.055) / 1.055, 2.4).toDouble();
 }, growable: false);
 
 int _linearToSrgb(double x) {

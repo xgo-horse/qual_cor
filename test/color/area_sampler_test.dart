@@ -72,7 +72,14 @@ void main() {
     test('imagem: só a área circular em volta do ponto', () {
       final image = img.Image(width: 50, height: 50);
       img.fill(image, color: img.ColorRgb8(0, 0, 255));
-      img.fillRect(image, x1: 20, y1: 20, x2: 30, y2: 30, color: img.ColorRgb8(255, 0, 0));
+      img.fillRect(
+        image,
+        x1: 20,
+        y1: 20,
+        x2: 30,
+        y2: 30,
+        color: img.ColorRgb8(255, 0, 0),
+      );
       final px = pixelsFromImage(image, 25, 25, 4);
       expect(px, isNotEmpty);
       expect(px.every((p) => p == 0xFF0000), isTrue);
@@ -90,7 +97,14 @@ void main() {
         bytes[i * 4 + 3] = 0xFF;
       }
       final px = pixelsFromBgra8888(
-          width: w, height: h, bytes: bytes, bytesPerRow: w * 4, cx: 4, cy: 4, radius: 2);
+        width: w,
+        height: h,
+        bytes: bytes,
+        bytesPerRow: w * 4,
+        cx: 4,
+        cy: 4,
+        radius: 2,
+      );
       expect(px.toSet(), {0x102030});
     });
 
@@ -98,20 +112,32 @@ void main() {
       const w = 8, h = 8;
       Uint8List plane(int n, int v) => Uint8List(n)..fillRange(0, n, v);
       var px = pixelsFromYuv420(
-        width: w, height: h,
-        yPlane: plane(w * h, 128), yRowStride: w,
-        uPlane: plane(w * h ~/ 4, 128), vPlane: plane(w * h ~/ 4, 128),
-        uvRowStride: w ~/ 2, uvPixelStride: 1,
-        cx: 4, cy: 4, radius: 2,
+        width: w,
+        height: h,
+        yPlane: plane(w * h, 128),
+        yRowStride: w,
+        uPlane: plane(w * h ~/ 4, 128),
+        vPlane: plane(w * h ~/ 4, 128),
+        uvRowStride: w ~/ 2,
+        uvPixelStride: 1,
+        cx: 4,
+        cy: 4,
+        radius: 2,
       );
       expect(px.toSet(), {0x808080});
       // Y=76, U=85, V=255 ≈ vermelho puro (BT.601)
       px = pixelsFromYuv420(
-        width: w, height: h,
-        yPlane: plane(w * h, 76), yRowStride: w,
-        uPlane: plane(w * h ~/ 4, 85), vPlane: plane(w * h ~/ 4, 255),
-        uvRowStride: w ~/ 2, uvPixelStride: 1,
-        cx: 4, cy: 4, radius: 2,
+        width: w,
+        height: h,
+        yPlane: plane(w * h, 76),
+        yRowStride: w,
+        uPlane: plane(w * h ~/ 4, 85),
+        vPlane: plane(w * h ~/ 4, 255),
+        uvRowStride: w ~/ 2,
+        uvPixelStride: 1,
+        cx: 4,
+        cy: 4,
+        radius: 2,
       );
       final c = Oklab.fromRgbInt(px.first);
       expect(c.distanceTo(Oklab.fromHex('#FF0000')), lessThan(0.03));

@@ -1,0 +1,154 @@
+{
+  "@@locale": "pt",
+  "appTitle": "Qual cor?",
+  "@appTitle": {
+    "description": "Nome do app"
+  },
+  "homeIntro": "Aponte para algo ou escolha uma foto e toque no ponto que quer saber a cor.",
+  "homeLive": "Mira ao vivo",
+  "@homeLive": {
+    "description": "Botão: abre a câmera com mira no centro"
+  },
+  "homeTakePhoto": "Tirar foto",
+  "homeGallery": "Escolher da galeria",
+  "familyName": "{family, select, preto{preto} branco{branco} cinza{cinza} vermelho{vermelho} laranja{laranja} amarelo{amarelo} verde{verde} azul{azul} roxo{roxo} rosa{rosa} marrom{marrom} other{cor}}",
+  "@familyName": {
+    "description": "Nome da família de cor (minúsculo, para frases)",
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
+  },
+  "familyTitle": "{family, select, preto{Preto} branco{Branco} cinza{Cinza} vermelho{Vermelho} laranja{Laranja} amarelo{Amarelo} verde{Verde} azul{Azul} roxo{Roxo} rosa{Rosa} marrom{Marrom} other{Cor}}",
+  "@familyTitle": {
+    "description": "Nome da família de cor com maiúscula, para o título grande",
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
+  },
+  "betweenFamilies": "Entre {first} e {second}",
+  "@betweenFamilies": {
+    "description": "Cor que fica entre duas famílias",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "lightness": "{value, select, muitoClaro{muito claro} claro{claro} escuro{escuro} muitoEscuro{muito escuro} other{}}",
+  "@lightness": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "saturation": "{value, select, acinzentado{acinzentado} suave{suave} vivo{vivo} other{}}",
+  "@saturation": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "undertone": "puxando para o {family, select, preto{preto} branco{branco} cinza{cinza} vermelho{vermelho} laranja{laranja} amarelo{amarelo} verde{verde} azul{azul} roxo{roxo} rosa{rosa} marrom{marrom} other{cor}}",
+  "@undertone": {
+    "description": "Subtom: segunda família mais próxima",
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
+  },
+  "nameParecido": "Parecido com: {name}",
+  "@nameParecido": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "nameLembra": "Lembra: {name}",
+  "@nameLembra": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "warningLowLight": "Pouca luz: o resultado pode não ser confiável.",
+  "warningOverexposed": "Muita luz ou reflexo forte: a cor pode estar lavada.",
+  "warningHighlight": "Ignorei um brilho/reflexo na área.",
+  "warningMixed": "A área tem mais de uma cor; mostro a predominante. Diminua a área para mais precisão.",
+  "speak": "Falar",
+  "@speak": {
+    "description": "Botão que lê o resultado em voz alta"
+  },
+  "showHex": "Mostrar código",
+  "hideHex": "Esconder código",
+  "hexCode": "Código: {hex}",
+  "@hexCode": {
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "swatchLabel": "Amostra da cor",
+  "@swatchLabel": {
+    "description": "Rótulo de acessibilidade do quadradinho de cor"
+  },
+  "spokenResult": "{main} {details}.",
+  "@spokenResult": {
+    "description": "Texto falado: nome principal e detalhes",
+    "placeholders": {
+      "main": {
+        "type": "String"
+      },
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "liveTitle": "Mira ao vivo",
+  "liveFreeze": "Congelar",
+  "liveContinue": "Continuar",
+  "liveTorchOn": "Ligar lanterna",
+  "liveTorchOff": "Desligar lanterna",
+  "liveHint": "Aponte a mira para o objeto.",
+  "liveNoCamera": "Nenhuma câmera disponível.",
+  "cameraError": "Não foi possível abrir a câmera: {error}",
+  "@cameraError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "cameraPermissionDenied": "Sem permissão para usar a câmera. Libere o acesso nos Ajustes do aparelho.",
+  "photoTitle": "Foto",
+  "photoTapHint": "Toque no ponto da foto que quer saber a cor.",
+  "photoLoading": "Abrindo a foto…",
+  "photoError": "Não foi possível abrir a foto.",
+  "photoChooseAnother": "Outra foto",
+  "areaSize": "Tamanho da área",
+  "@areaSize": {
+    "description": "Rótulo do controle deslizante do tamanho da área amostrada"
+  },
+  "areaSizeValue": "{percent}% da imagem",
+  "@areaSizeValue": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "crosshairLabel": "Mira no centro da imagem",
+  "markerLabel": "Ponto escolhido"
+}

@@ -6,8 +6,12 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>O Qual cor? usa a câmera para dizer o nome da cor do que você aponta ou fotografa. As imagens não saem do aparelho.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>O Qual cor? abre a foto que você escolher para dizer o nome da cor do ponto que você tocar. As fotos não saem do aparelho.</string>
 	<key>CFBundleDisplayName</key>
-	<string>Qual Cor</string>
+	<string>Qual cor?</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

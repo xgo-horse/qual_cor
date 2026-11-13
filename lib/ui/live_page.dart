@@ -1,0 +1,346 @@
+import 'dart:io' show Platform;
+import 'dart:math' as math;
+
+import 'package:camera/camera.dart';
+import 'package:material_ui/material_ui.dart';
+
+import '../color/area_sampler.dart';
+import '../color/color_namer.dart';
+import '../color/oklab.dart';
+import '../color/pixel_area.dart';
+import '../l10n/generated/app_localizations.dart';
+import 'area_slider.dart';
+import 'result_card.dart';
+
+/// Mira ao vivo: câmera com uma mira no centro, amostrada ~4 vezes por
+/// segundo e suavizada (média móvel exponencial em OKLab).
+class LivePage extends StatefulWidget {
+  const LivePage({super.key});
+
+  @override
+  State<LivePage> createState() => _LivePageState();
+}
+
+class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
+  static const _interval = Duration(milliseconds: 250);
+  static const _emaAlpha = 0.35;
+
+  final _sampler = const AreaSampler();
+  final _namer = ColorNamer();
+
+  CameraController? _controller;
+  String? _error;
+  bool _initializing = false;
+  bool _frozen = false;
+  bool _torch = false;
+  bool _processing = false;
+  DateTime _lastSample = DateTime.fromMillisecondsSinceEpoch(0);
+  double _areaFraction = 0.04;
+
+  Oklab? _smoothed;
+  ColorDescription? _shown;
+  Set<SampleWarning> _warnings = const {};
+  String? _pendingKey;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    // Depois do primeiro quadro, para poder ler as localizações do context.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _start());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      final c = _controller;
+      _controller = null;
+      _torch = false;
+      c?.dispose();
+      if (mounted) setState(() {});
+    } else if (state == AppLifecycleState.resumed && _controller == null) {
+      _start();
+    }
+  }
+
+  Future<void> _start() async {
+    if (_initializing) return;
+    _initializing = true;
+    final l10n = AppLocalizations.of(context);
+    try {
+      final cameras = await availableCameras();
+      if (cameras.isEmpty) {
+        setState(() => _error = l10n.liveNoCamera);
+        return;
+      }
+      final camera = cameras.firstWhere(
+        (c) => c.lensDirection == CameraLensDirection.back,
+        orElse: () => cameras.first,
+      );
+      final controller = CameraController(
+        camera,
+        ResolutionPreset.medium,
+        enableAudio: false,
+        imageFormatGroup: Platform.isIOS
+            ? ImageFormatGroup.bgra8888
+            : ImageFormatGroup.yuv420,
+      );
+      await controller.initialize();
+      if (!mounted) {
+        await controller.dispose();
+        return;
+      }
+      await controller.startImageStream(_onFrame);
+      if (_frozen) await controller.pausePreview();
+      setState(() {
+        _controller = controller;
+        _error = null;
+      });
+    } on CameraException catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error =
+            e.code.contains('AccessDenied') || e.code.contains('Restricted')
+            ? l10n.cameraPermissionDenied
+            : l10n.cameraError(e.description ?? e.code);
+      });
+    } finally {
+      _initializing = false;
+    }
+  }
+
+  void _onFrame(CameraImage image) {
+    if (_frozen || _processing) return;
+    final now = DateTime.now();
+    if (now.difference(_lastSample) < _interval) return;
+    _lastSample = now;
+    _processing = true;
+    try {
+      final pixels = _centerPixels(image);
+      final result = _sampler.sample(pixels);
+      if (result == null || !mounted) return;
+      final prev = _smoothed;
+      final smoothed = prev == null
+          ? result.color
+          : prev.lerp(result.color, _emaAlpha);
+      _smoothed = smoothed;
+      final desc = _namer.describe(smoothed);
+      // Só troca o texto quando o novo resultado se repete em duas
+      // amostras seguidas: evita piscar e anúncios repetidos no leitor
+      // de tela.
+      final shown = _shown;
+      if (shown == null ||
+          desc.textKey == shown.textKey ||
+          desc.textKey == _pendingKey) {
+        _pendingKey = null;
+        setState(() {
+          _shown = desc;
+          _warnings = result.warnings;
+        });
+      } else {
+        _pendingKey = desc.textKey;
+      }
+    } finally {
+      _processing = false;
+    }
+  }
+
+  List<int> _centerPixels(CameraImage image) {
+    final w = image.width, h = image.height;
+    final radius = math.max(2, (math.min(w, h) * _areaFraction).round());
+    final cx = w ~/ 2, cy = h ~/ 2;
+    if (image.format.group == ImageFormatGroup.bgra8888) {
+      final p = image.planes.first;
+      return pixelsFromBgra8888(
+        width: w,
+        height: h,
+        bytes: p.bytes,
+        bytesPerRow: p.bytesPerRow,
+        cx: cx,
+        cy: cy,
+        radius: radius,
+      );
+    }
+    if (image.planes.length < 3) return const [];
+    final y = image.planes[0], u = image.planes[1], v = image.planes[2];
+    return pixelsFromYuv420(
+      width: w,
+      height: h,
+      yPlane: y.bytes,
+      yRowStride: y.bytesPerRow,
+      uPlane: u.bytes,
+      vPlane: v.bytes,
+      uvRowStride: u.bytesPerRow,
+      uvPixelStride: u.bytesPerPixel ?? 1,
+      cx: cx,
+      cy: cy,
+      radius: radius,
+    );
+  }
+
+  Future<void> _toggleFreeze() async {
+    final c = _controller;
+    setState(() => _frozen = !_frozen);
+    if (c == null) return;
+    try {
+      if (_frozen) {
+        await c.pausePreview();
+      } else {
+        await c.resumePreview();
+      }
+    } on CameraException catch (_) {}
+  }
+
+  Future<void> _toggleTorch() async {
+    final c = _controller;
+    if (c == null) return;
+    final next = !_torch;
+    try {
+      await c.setFlashMode(next ? FlashMode.torch : FlashMode.off);
+      setState(() => _torch = next);
+    } on CameraException catch (_) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final controller = _controller;
+    final shown = _shown;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.liveTitle)),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: _error != null
+                    ? Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Text(
+                          _error!,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      )
+                    : controller == null || !controller.value.isInitialized
+                    ? const CircularProgressIndicator()
+                    : CameraPreview(
+                        controller,
+                        child: _Crosshair(fraction: _areaFraction),
+                      ),
+              ),
+            ),
+            AreaSlider(
+              fraction: _areaFraction,
+              onChanged: (v) => setState(() => _areaFraction = v),
+            ),
+            if (shown != null)
+              ResultCard(description: shown, warnings: _warnings)
+            else
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  l10n.liveHint,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: _toggleFreeze,
+                      icon: Icon(
+                        _frozen ? Icons.play_arrow : Icons.pause,
+                        size: 28,
+                      ),
+                      label: Text(
+                        _frozen ? l10n.liveContinue : l10n.liveFreeze,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: controller == null ? null : _toggleTorch,
+                      icon: Icon(
+                        _torch ? Icons.flashlight_off : Icons.flashlight_on,
+                        size: 28,
+                      ),
+                      label: Text(
+                        _torch ? l10n.liveTorchOff : l10n.liveTorchOn,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Mira desenhada sobre a prévia. O círculo mostra a área amostrada.
+class _Crosshair extends StatelessWidget {
+  const _Crosshair({required this.fraction});
+
+  final double fraction;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: AppLocalizations.of(context).crosshairLabel,
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final r = math.max(
+            6.0,
+            math.min(box.maxWidth, box.maxHeight) * fraction,
+          );
+          return CustomPaint(size: box.biggest, painter: _CrosshairPainter(r));
+        },
+      ),
+    );
+  }
+}
+
+class _CrosshairPainter extends CustomPainter {
+  _CrosshairPainter(this.radius);
+
+  final double radius;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final c = size.center(Offset.zero);
+    final dark = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 5;
+    final light = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5;
+    for (final p in [dark, light]) {
+      canvas.drawCircle(c, radius, p);
+      final gap = radius + 6, len = radius + 22;
+      canvas.drawLine(c.translate(-len, 0), c.translate(-gap, 0), p);
+      canvas.drawLine(c.translate(gap, 0), c.translate(len, 0), p);
+      canvas.drawLine(c.translate(0, -len), c.translate(0, -gap), p);
+      canvas.drawLine(c.translate(0, gap), c.translate(0, len), p);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_CrosshairPainter old) => old.radius != radius;
+}
