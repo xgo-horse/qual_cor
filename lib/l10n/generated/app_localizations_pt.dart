@@ -246,4 +246,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get aboutLicensesSubtitle => 'Bibliotecas e fontes usadas no app';
+
+  @override
+  String get labelBetween => 'ENTRE';
+
+  @override
+  String familyPair(String first, String second) {
+    return '$first e $second';
+  }
 }

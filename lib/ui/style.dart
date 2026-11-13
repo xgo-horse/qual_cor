@@ -42,7 +42,9 @@ abstract final class Txt {
     fontSize: size,
     fontWeight: weight,
     fontStyle: style,
-    letterSpacing: letterSpacing,
+    // 0 explícito: senão herda o espaçamento do tema (0,25 no corpo) e as
+    // medições de largura deixam de bater com o que é desenhado.
+    letterSpacing: letterSpacing ?? 0,
     height: height,
     fontVariations: [FontVariation.weight(weight.value.toDouble())],
   );

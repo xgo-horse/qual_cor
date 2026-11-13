@@ -202,5 +202,21 @@
   "@aboutLicenses": {
     "description": "Item da tela Sobre que abre as licenças"
   },
-  "aboutLicensesSubtitle": "Bibliotecas e fontes usadas no app"
+  "aboutLicensesSubtitle": "Bibliotecas e fontes usadas no app",
+  "labelBetween": "ENTRE",
+  "@labelBetween": {
+    "description": "Rótulo acima do nome quando a cor fica entre duas famílias"
+  },
+  "familyPair": "{first} e {second}",
+  "@familyPair": {
+    "description": "Nome grande quando a cor fica entre duas famílias (o \"Entre\" vai no rótulo)",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  }
 }

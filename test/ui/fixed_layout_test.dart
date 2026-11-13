@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:qual_cor/color/area_sampler.dart';
@@ -165,4 +166,69 @@ void main() {
     print('rolagem do cartão no SE: ${scrollable.position.maxScrollExtent}');
     expect(scrollable.position.maxScrollExtent, 0);
   });
+
+  // Nome da família nunca com reticências: todos os pares "entre X e Y" e
+  // todas as famílias sozinhas, com a descrição mais longa e os 4 avisos.
+  final cases = <ColorDescription>[
+    for (final a in ColorFamily.values)
+      for (final b in [null, ...ColorFamily.values.where((x) => x != a)])
+        ColorDescription(
+          color: Oklab.fromHex('#B44B3C'),
+          family: a,
+          secondFamily: b,
+          lightness: Lightness.muitoClaro,
+          saturation: Saturation.acinzentado,
+          undertone: b == null ? ColorFamily.verde : null,
+          popularName: 'vermelho-alaranjado',
+          closeness: NameCloseness.parecido,
+          familyScores: const {},
+        ),
+  ];
+
+  for (final MapEntry(key: name, value: size) in screens.entries) {
+    for (final scale in [1.0, 1.3]) {
+      testWidgets(
+        '$name, texto ${scale}x: nome da família inteiro em ${cases.length} casos',
+        (tester) async {
+          tester.view.physicalSize = size;
+          tester.view.devicePixelRatio = 1;
+          tester.platformDispatcher.textScaleFactorTestValue = scale;
+          addTearDown(tester.view.reset);
+          addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
+
+          final result = ValueNotifier<(ColorDescription, Set<SampleWarning>)>((
+            short,
+            const {},
+          ));
+          await tester.pumpWidget(_Harness(result));
+          final before = [for (final f in controls) tester.getRect(f)];
+          var twoLines = 0;
+          for (final c in cases) {
+            result.value = (c, allWarnings);
+            await tester.pump();
+            expect(tester.takeException(), isNull);
+            final p = tester.renderObject<RenderParagraph>(
+              find.byKey(const Key('family-headline')),
+            );
+            expect(
+              p.didExceedMaxLines,
+              isFalse,
+              reason: '${c.family} / ${c.secondFamily} cortado',
+            );
+            if ((p.text.style?.fontSize ?? 0) == Txt.familyMinSize &&
+                p.size.height > 40) {
+              twoLines++;
+            }
+            expect(
+              [for (final f in controls) tester.getRect(f)],
+              before,
+              reason: 'botões mexeram em ${c.family} / ${c.secondFamily}',
+            );
+          }
+          // ignore: avoid_print
+          print('$name ${scale}x: $twoLines de ${cases.length} em 2 linhas');
+        },
+      );
+    }
+  }
 }

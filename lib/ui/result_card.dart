@@ -11,8 +11,9 @@ import 'style.dart';
 
 /// Altura de [lines] linhas no [style], já com o tamanho de texto do sistema.
 double slotHeight(BuildContext context, TextStyle style, int lines) {
+  final effective = DefaultTextStyle.of(context).style.merge(style);
   final painter = TextPainter(
-    text: TextSpan(text: List.filled(lines, 'Ág').join('\n'), style: style),
+    text: TextSpan(text: List.filled(lines, 'Ág').join('\n'), style: effective),
     textDirection: TextDirection.ltr,
     textScaler: MediaQuery.textScalerOf(context),
     maxLines: lines,
@@ -44,6 +45,118 @@ class Slot extends StatelessWidget {
       ),
     ),
   );
+}
+
+/// Nome grande da família + descrição, num bloco de **altura fixa**.
+///
+/// O nome nunca termina em reticências: encolhe de 38 até 26 para caber em
+/// uma linha; se nem assim couber (tela estreita, texto grande do sistema),
+/// quebra em duas linhas e a descrição cede uma das suas. Em qualquer caso
+/// o bloco tem a mesma altura, então nada abaixo dele se mexe.
+class FamilyHeadline extends StatelessWidget {
+  const FamilyHeadline({
+    super.key,
+    required this.headline,
+    required this.description,
+  });
+
+  final String headline;
+  final String description;
+
+  static const gap = 4.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final scaler = MediaQuery.textScalerOf(context);
+    final descStyle = Txt.description();
+    final oneLine = slotHeight(context, Txt.family(), 1);
+    final desc2 = slotHeight(context, descStyle, 2);
+    final desc1 = slotHeight(context, descStyle, 1);
+    final total = oneLine + gap + desc2;
+
+    return SizedBox(
+      height: total,
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final maxW = box.maxWidth;
+          // O mesmo estilo efetivo que o Text vai usar (herda do tema).
+          final base = DefaultTextStyle.of(context).style;
+          double widthAt(double size) {
+            final tp = TextPainter(
+              text: TextSpan(
+                text: headline,
+                style: base.merge(Txt.family(size: size)),
+              ),
+              textDirection: TextDirection.ltr,
+              textScaler: scaler,
+              maxLines: 1,
+            )..layout();
+            final w = tp.width;
+            tp.dispose();
+            return w;
+          }
+
+          var size = Txt.familySize;
+          final full = widthAt(size);
+          if (full > maxW) {
+            // A largura cresce em proporção ao tamanho da fonte.
+            size = (Txt.familySize * maxW / full * 0.98).clamp(
+              Txt.familyMinSize,
+              Txt.familySize,
+            );
+          }
+          final fits = widthAt(size) <= maxW;
+
+          final Widget name;
+          final int descLines;
+          if (fits) {
+            descLines = 2;
+            name = SizedBox(
+              height: oneLine,
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  headline,
+                  key: const Key('family-headline'),
+                  style: Txt.family(size: size),
+                  maxLines: 1,
+                  softWrap: false,
+                ),
+              ),
+            );
+          } else {
+            descLines = 1;
+            // Duas linhas no tamanho mínimo; se ainda sobrar (texto enorme
+            // do sistema), o FittedBox reduz o conjunto em vez de cortar.
+            // Sem limite de linhas: o nome nunca leva reticências.
+            name = SizedBox(
+              height: total - gap - desc1,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: maxW,
+                  child: Text(
+                    headline,
+                    key: const Key('family-headline'),
+                    style: Txt.family(size: Txt.familyMinSize),
+                  ),
+                ),
+              ),
+            );
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              name,
+              const SizedBox(height: gap),
+              Slot(description, descStyle, lines: descLines),
+            ],
+          );
+        },
+      ),
+    );
+  }
 }
 
 /// Cartão "cartela de tinta" com **altura fixa**: à esquerda, a cor medida
@@ -110,17 +223,14 @@ class ResultCard extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Slot(l10n.labelFamily, Txt.label()),
-                              const SizedBox(height: 2),
                               Slot(
-                                texts?.main ?? l10n.emptyFamily,
-                                Txt.family(),
+                                texts?.label ?? l10n.labelFamily,
+                                Txt.label(),
                               ),
-                              const SizedBox(height: 4),
-                              Slot(
-                                d == null ? hint : details,
-                                Txt.description(),
-                                lines: 2,
+                              const SizedBox(height: 2),
+                              FamilyHeadline(
+                                headline: texts?.headline ?? l10n.emptyFamily,
+                                description: d == null ? hint : details,
                               ),
                             ],
                           ),

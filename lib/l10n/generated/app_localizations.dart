@@ -399,6 +399,18 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Bibliotecas e fontes usadas no app'**
   String get aboutLicensesSubtitle;
+
+  /// Rótulo acima do nome quando a cor fica entre duas famílias
+  ///
+  /// In pt, this message translates to:
+  /// **'ENTRE'**
+  String get labelBetween;
+
+  /// Nome grande quando a cor fica entre duas famílias (o "Entre" vai no rótulo)
+  ///
+  /// In pt, this message translates to:
+  /// **'{first} e {second}'**
+  String familyPair(String first, String second);
 }
 
 class _AppLocalizationsDelegate

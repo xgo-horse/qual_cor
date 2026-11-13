@@ -23,6 +23,21 @@ class DescriptionTexts {
     return l10n.familyTitle(d.family.name);
   }
 
+  /// Rótulo pequeno do cartão: "FAMÍLIA" ou, entre duas, "ENTRE".
+  String get label =>
+      d.secondFamily == null ? l10n.labelFamily : l10n.labelBetween;
+
+  /// Nome grande do cartão: "Azul" ou "Marrom e vermelho" (o "Entre" fica
+  /// no rótulo, para o nome caber). O leitor de tela usa [main].
+  String get headline {
+    final second = d.secondFamily;
+    if (second == null) return l10n.familyTitle(d.family.name);
+    return l10n.familyPair(
+      l10n.familyTitle(d.family.name),
+      l10n.familyName(second.name),
+    );
+  }
+
   /// Nível 2: "escuro acinzentado, puxando para o verde" (ou vazio).
   String get details {
     final words = <String>[
