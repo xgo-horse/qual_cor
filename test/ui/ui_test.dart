@@ -3,8 +3,10 @@ import 'package:material_ui/material_ui.dart';
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:qual_cor/app.dart';
+import 'package:qual_cor/licenses.dart';
 import 'package:qual_cor/ui/about_page.dart';
 import 'package:qual_cor/ui/style.dart';
 import 'package:qual_cor/color/area_sampler.dart';
@@ -153,5 +155,14 @@ void main() {
       multiLine: true,
     ).firstMatch(pubspec)!.group(1);
     expect(appVersion, v);
+  });
+
+  test('licenças das fontes embutidas aparecem em Licenças', () async {
+    registerLicenses();
+    final names = <String>{};
+    await for (final entry in LicenseRegistry.licenses) {
+      names.addAll(entry.packages);
+    }
+    expect(names, containsAll(['Fraunces', 'Inter', 'JetBrains Mono']));
   });
 }

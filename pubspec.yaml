@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  google_fonts: ^9.0.0
   image: ^4.12.0
   image_picker: ^1.2.4
   intl: ^0.20.3
@@ -30,6 +29,25 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+
+  # Licenças das fontes (aparecem em Sobre > Licenças, via lib/licenses.dart).
+  assets:
+    - assets/licenses/
+
+  # Fontes embutidas (variáveis; o peso vai por FontVariation 'wght').
+  # Fonte: github.com/google/fonts, licença SIL OFL 1.1.
+  fonts:
+    - family: Fraunces
+      fonts:
+        - asset: assets/fonts/Fraunces.ttf
+        - asset: assets/fonts/Fraunces-Italic.ttf
+          style: italic
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf
+    - family: JetBrains Mono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono.ttf
 
 # Ícone e tela de abertura: gerados a partir de assets/icon/ (criados por
 # tool/make_icon.dart). Para regenerar:

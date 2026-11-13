@@ -1,4 +1,3 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// Estilo "cartela de tinta": fundo cinza neutro e quente (para não puxar a
@@ -24,24 +23,12 @@ abstract final class Palette {
   ];
 }
 
-/// Fontes: Fraunces (nome da cor), Inter (interface), JetBrains Mono
-/// (código hex). Vêm do pacote google_fonts: usa a fonte embutida em
-/// assets/fonts se existir; senão baixa uma vez e guarda no aparelho. Sem
-/// internet e sem a fonte embutida, cai na fonte do sistema (nada quebra).
+/// Fontes embutidas em assets/fonts (nada é baixado): Fraunces (nome da
+/// cor), Inter (interface), JetBrains Mono (código hex). São fontes
+/// variáveis: o peso vai também como FontVariation('wght'), senão algumas
+/// plataformas mostram sempre o peso padrão.
 abstract final class Txt {
-  /// Os testes desligam o google_fonts (sem rede) e usam a fonte padrão.
-  static bool useGoogleFonts = true;
-
   static TextStyle _font(
-    TextStyle Function({
-      Color? color,
-      double? fontSize,
-      FontWeight? fontWeight,
-      FontStyle? fontStyle,
-      double? letterSpacing,
-      double? height,
-    })
-    google,
     String family, {
     required double size,
     FontWeight weight = FontWeight.w400,
@@ -49,27 +36,16 @@ abstract final class Txt {
     Color color = Palette.text,
     double? letterSpacing,
     double? height,
-  }) {
-    if (useGoogleFonts) {
-      return google(
-        color: color,
-        fontSize: size,
-        fontWeight: weight,
-        fontStyle: style,
-        letterSpacing: letterSpacing,
-        height: height,
-      );
-    }
-    return TextStyle(
-      fontFamily: family,
-      color: color,
-      fontSize: size,
-      fontWeight: weight,
-      fontStyle: style,
-      letterSpacing: letterSpacing,
-      height: height,
-    );
-  }
+  }) => TextStyle(
+    fontFamily: family,
+    color: color,
+    fontSize: size,
+    fontWeight: weight,
+    fontStyle: style,
+    letterSpacing: letterSpacing,
+    height: height,
+    fontVariations: [FontVariation.weight(weight.value.toDouble())],
+  );
 
   static TextStyle serif({
     required double size,
@@ -78,15 +54,6 @@ abstract final class Txt {
     Color color = Palette.text,
     double? height,
   }) => _font(
-    ({color, fontSize, fontWeight, fontStyle, letterSpacing, height}) =>
-        GoogleFonts.fraunces(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontStyle: fontStyle,
-          letterSpacing: letterSpacing,
-          height: height,
-        ),
     'Fraunces',
     size: size,
     weight: weight,
@@ -102,15 +69,6 @@ abstract final class Txt {
     double? letterSpacing,
     double? height,
   }) => _font(
-    ({color, fontSize, fontWeight, fontStyle, letterSpacing, height}) =>
-        GoogleFonts.inter(
-          color: color,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontStyle: fontStyle,
-          letterSpacing: letterSpacing,
-          height: height,
-        ),
     'Inter',
     size: size,
     weight: weight,
@@ -121,12 +79,6 @@ abstract final class Txt {
 
   static TextStyle mono({required double size, Color color = Palette.muted}) =>
       _font(
-        ({color, fontSize, fontWeight, fontStyle, letterSpacing, height}) =>
-            GoogleFonts.jetBrainsMono(
-              color: color,
-              fontSize: fontSize,
-              fontWeight: fontWeight,
-            ),
         'JetBrains Mono',
         size: size,
         weight: FontWeight.w500,
@@ -141,8 +93,11 @@ abstract final class Txt {
     letterSpacing: 11 * 0.14,
   );
 
-  /// Nome da família da cor.
-  static TextStyle family() => serif(size: 38, height: 1.05);
+  /// Nome da família da cor (encolhe até [familyMinSize] para caber).
+  static const double familySize = 38;
+  static const double familyMinSize = 26;
+  static TextStyle family({double size = familySize}) =>
+      serif(size: size, height: 1.05);
 
   /// Nome popular ("azul-petróleo").
   static TextStyle popular() =>
