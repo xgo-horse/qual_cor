@@ -154,5 +154,9 @@
   "hexToggle": "Código",
   "@hexToggle": {
     "description": "Rótulo curto do botão que mostra/esconde o código hex"
+  },
+  "liveDragHint": "Arraste a mira para escolher o ponto",
+  "@liveDragHint": {
+    "description": "Aviso sobre a imagem congelada: a mira pode ser movida"
   }
 }

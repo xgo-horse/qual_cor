@@ -24,7 +24,9 @@ A mira ao vivo precisa de câmera de verdade; no simulador do iOS use
 
 - **Início:** três botões grandes: *Mira ao vivo*, *Tirar foto* e *Escolher da galeria*.
 - **Mira ao vivo:** prévia da câmera na metade de cima da tela, com uma mira
-  no centro. A área dentro do círculo é lida até ~20 vezes por segundo. Botões *Congelar /
+  no centro. A área dentro do círculo é lida até ~20 vezes por segundo. Em
+  *Congelar*, a imagem para e a mira pode ser tocada ou arrastada para
+  qualquer ponto; *Continuar* volta ao vivo com a mira no centro. Botões *Congelar /
   Continuar* e *lanterna*.
 - **Foto:** a foto aparece inteira; toque (ou arraste) no ponto desejado. Um
   marcador mostra a área lida, e um controle ajusta o tamanho dela.
@@ -120,6 +122,20 @@ própria lista (`color_names_xx.dart`).
 - `enableAudio: false`: o app nunca pede o microfone.
 - A cor medida depende da luz e do balanço de branco da câmera. Os avisos
   ajudam, mas luz natural difusa dá os melhores resultados.
+
+### Mira móvel na imagem congelada
+
+Ao congelar, o app guarda o último quadro do stream e passa a ler a área em
+volta do ponto escolhido nesse quadro, sem suavização (o resultado acompanha o
+dedo). A conversão tela → pixel do quadro fica em
+`lib/camera/frame_mapper.dart` e considera:
+
+- a **rotação** do quadro: o Android entrega na orientação do sensor
+  (`sensorOrientation`, normalmente 90°); o plugin do iOS já entrega em pé;
+- o **corte de preenchimento** da prévia (as bordas cortadas não podem ser
+  escolhidas);
+- o **espelhamento** da câmera frontal;
+- o **limite**: o círculo da área nunca sai do quadro.
 
 ### Fotos
 

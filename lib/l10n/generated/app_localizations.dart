@@ -345,6 +345,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Código'**
   String get hexToggle;
+
+  /// Aviso sobre a imagem congelada: a mira pode ser movida
+  ///
+  /// In pt, this message translates to:
+  /// **'Arraste a mira para escolher o ponto'**
+  String get liveDragHint;
 }
 
 class _AppLocalizationsDelegate

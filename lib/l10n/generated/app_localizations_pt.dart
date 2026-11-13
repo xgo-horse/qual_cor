@@ -215,4 +215,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get hexToggle => 'Código';
+
+  @override
+  String get liveDragHint => 'Arraste a mira para escolher o ponto';
 }
