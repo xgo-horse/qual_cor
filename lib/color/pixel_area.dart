@@ -1,8 +1,6 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
-import 'package:image/image.dart' as img;
-
 /// Funções que leem os pixels de uma área circular e devolvem inteiros
 /// 0xRRGGBB. O passo entre pixels cresce com o raio para limitar a conta a
 /// cerca de [maxSamples] pixels.
@@ -12,12 +10,15 @@ int _stepFor(int radius, int maxSamples) {
   return math.max(1, math.sqrt(area / maxSamples).ceil());
 }
 
-/// Pixels de uma imagem já decodificada (package:image).
-List<int> pixelsFromImage(
-  img.Image image,
-  int cx,
-  int cy,
-  int radius, {
+/// Pixels de uma imagem em RGBA (4 bytes por pixel, linha após linha), como
+/// sai de `ui.Image.toByteData(format: rawRgba)`.
+List<int> pixelsFromRgba({
+  required int width,
+  required int height,
+  required Uint8List bytes,
+  required int cx,
+  required int cy,
+  required int radius,
   int maxSamples = 2500,
 }) {
   final out = <int>[];
@@ -26,17 +27,14 @@ List<int> pixelsFromImage(
   final r2 = r * r;
   for (var dy = -r; dy <= r; dy += step) {
     final y = cy + dy;
-    if (y < 0 || y >= image.height) continue;
+    if (y < 0 || y >= height) continue;
     for (var dx = -r; dx <= r; dx += step) {
       if (dx * dx + dy * dy > r2) continue;
       final x = cx + dx;
-      if (x < 0 || x >= image.width) continue;
-      final p = image.getPixel(x, y);
-      out.add(
-        (p.rNormalized * 255).round() << 16 |
-            (p.gNormalized * 255).round() << 8 |
-            (p.bNormalized * 255).round(),
-      );
+      if (x < 0 || x >= width) continue;
+      final i = (y * width + x) * 4;
+      if (i + 2 >= bytes.length) continue;
+      out.add(bytes[i] << 16 | bytes[i + 1] << 8 | bytes[i + 2]);
     }
   }
   return out;

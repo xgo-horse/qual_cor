@@ -1,10 +1,6 @@
-import 'dart:async';
 import 'dart:math' as math;
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart' show compute;
-import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -13,48 +9,8 @@ import '../color/color_namer.dart';
 import '../color/pixel_area.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'frame.dart';
+import 'photo_decode.dart';
 import 'result_panel.dart';
-
-/// Lado maior máximo da foto em memória. Fotos de celular têm 12+ MP; para
-/// achar a cor de uma área isso basta e deixa tudo rápido.
-const int _maxSide = 1600;
-
-/// Decodifica, aplica a orientação do EXIF e reduz. Roda em outro isolate
-/// (compute), uma vez por foto: uma foto de 12 MP leva ~0,5 s e travaria a
-/// tela (ver test/bench/photo_decode_test.dart).
-img.Image? decodeForSampling(Uint8List bytes) {
-  final decoded = img.decodeImage(bytes);
-  if (decoded == null) return null;
-  var image = img.bakeOrientation(decoded);
-  final longest = math.max(image.width, image.height);
-  if (longest > _maxSide) {
-    image = image.width >= image.height
-        ? img.copyResize(
-            image,
-            width: _maxSide,
-            interpolation: img.Interpolation.average,
-          )
-        : img.copyResize(
-            image,
-            height: _maxSide,
-            interpolation: img.Interpolation.average,
-          );
-  }
-  return image.convert(format: img.Format.uint8, numChannels: 4);
-}
-
-Future<ui.Image> _toUiImage(img.Image image) {
-  final rgba = image.getBytes(order: img.ChannelOrder.rgba);
-  final completer = Completer<ui.Image>();
-  ui.decodeImageFromPixels(
-    rgba,
-    image.width,
-    image.height,
-    ui.PixelFormat.rgba8888,
-    completer.complete,
-  );
-  return completer.future;
-}
 
 /// Onde a imagem fica dentro da caixa com BoxFit.contain (centralizada) e
 /// a conversão de um toque na tela para o pixel da imagem.
@@ -98,8 +54,7 @@ class _PhotoPageState extends State<PhotoPage> {
   final _sampler = const AreaSampler();
   final _namer = ColorNamer();
 
-  img.Image? _image;
-  ui.Image? _uiImage;
+  DecodedPhoto? _photo;
   bool _loading = true;
   bool _failed = false;
   double _areaFraction = 0.03;
@@ -117,7 +72,7 @@ class _PhotoPageState extends State<PhotoPage> {
 
   @override
   void dispose() {
-    _uiImage?.dispose();
+    _photo?.dispose();
     super.dispose();
   }
 
@@ -131,7 +86,7 @@ class _PhotoPageState extends State<PhotoPage> {
       if (!mounted) return;
       if (file == null) {
         // Cancelou sem nenhuma foto aberta: volta para o início.
-        if (_image == null) {
+        if (_photo == null) {
           Navigator.of(context).pop();
         } else {
           setState(() => _loading = false);
@@ -139,17 +94,16 @@ class _PhotoPageState extends State<PhotoPage> {
         return;
       }
       final bytes = await file.readAsBytes();
-      final image = await compute(decodeForSampling, bytes);
-      if (image == null) throw const FormatException('decode');
-      final uiImage = await _toUiImage(image);
+      // Decodificador nativo do Flutter: fora da thread da interface, já
+      // reduzido e com a orientação EXIF aplicada.
+      final photo = await decodePhoto(bytes);
       if (!mounted) {
-        uiImage.dispose();
+        photo.dispose();
         return;
       }
       setState(() {
-        _uiImage?.dispose();
-        _image = image;
-        _uiImage = uiImage;
+        _photo?.dispose();
+        _photo = photo;
         _point = null;
         _description = null;
         _loading = false;
@@ -158,24 +112,26 @@ class _PhotoPageState extends State<PhotoPage> {
       if (!mounted) return;
       setState(() {
         _loading = false;
-        _failed = _image == null;
+        _failed = _photo == null;
       });
     }
   }
 
-  int _radiusPx(img.Image image) => math.max(
+  int _radiusPx(DecodedPhoto photo) => math.max(
     2,
-    (math.min(image.width, image.height) * _areaFraction).round(),
+    (math.min(photo.width, photo.height) * _areaFraction).round(),
   );
 
   void _sampleAt(Offset point) {
-    final image = _image;
-    if (image == null) return;
-    final pixels = pixelsFromImage(
-      image,
-      point.dx.round(),
-      point.dy.round(),
-      _radiusPx(image),
+    final photo = _photo;
+    if (photo == null) return;
+    final pixels = pixelsFromRgba(
+      width: photo.width,
+      height: photo.height,
+      bytes: photo.rgba,
+      cx: point.dx.round(),
+      cy: point.dy.round(),
+      radius: _radiusPx(photo),
     );
     final result = _sampler.sample(pixels);
     setState(() {
@@ -190,7 +146,7 @@ class _PhotoPageState extends State<PhotoPage> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final uiImage = _uiImage;
+    final uiImage = _photo?.image;
 
     return Scaffold(
       body: SafeArea(
@@ -216,7 +172,7 @@ class _PhotoPageState extends State<PhotoPage> {
                       : _TappableImage(
                           image: uiImage,
                           point: _point,
-                          radiusPx: _radiusPx(_image!).toDouble(),
+                          radiusPx: _radiusPx(_photo!).toDouble(),
                           onPoint: _sampleAt,
                         ),
                 ),

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:image/image.dart' as img;
 import 'package:qual_cor/color/area_sampler.dart';
 import 'package:qual_cor/color/oklab.dart';
 import 'package:qual_cor/color/pixel_area.dart';
@@ -69,22 +68,40 @@ void main() {
   });
 
   group('leitura de pixels', () {
-    test('imagem: só a área circular em volta do ponto', () {
-      final image = img.Image(width: 50, height: 50);
-      img.fill(image, color: img.ColorRgb8(0, 0, 255));
-      img.fillRect(
-        image,
-        x1: 20,
-        y1: 20,
-        x2: 30,
-        y2: 30,
-        color: img.ColorRgb8(255, 0, 0),
+    test('RGBA: só a área circular em volta do ponto', () {
+      const w = 50, h = 50;
+      final bytes = Uint8List(w * h * 4);
+      for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          final red = x >= 20 && x <= 30 && y >= 20 && y <= 30;
+          final i = (y * w + x) * 4;
+          bytes[i] = red ? 255 : 0;
+          bytes[i + 2] = red ? 0 : 255;
+          bytes[i + 3] = 255;
+        }
+      }
+      final px = pixelsFromRgba(
+        width: w,
+        height: h,
+        bytes: bytes,
+        cx: 25,
+        cy: 25,
+        radius: 4,
       );
-      final px = pixelsFromImage(image, 25, 25, 4);
       expect(px, isNotEmpty);
       expect(px.every((p) => p == 0xFF0000), isTrue);
       // borda da imagem: não estoura
-      expect(pixelsFromImage(image, 0, 0, 5), isNotEmpty);
+      expect(
+        pixelsFromRgba(
+          width: w,
+          height: h,
+          bytes: bytes,
+          cx: 0,
+          cy: 0,
+          radius: 5,
+        ),
+        isNotEmpty,
+      );
     });
 
     test('BGRA8888', () {

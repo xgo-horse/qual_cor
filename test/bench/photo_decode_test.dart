@@ -1,30 +1,27 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:image/image.dart' as img;
-import 'package:qual_cor/ui/photo_page.dart';
+import 'dart:io';
 
-/// Quanto custa decodificar uma foto de 12 MP (4032x3024, JPEG) com
-/// package:image + orientação + redução para 1600 px. É esse tempo que
-/// travaria a tela se a decodificação não fosse num isolate (compute).
+import 'package:flutter_test/flutter_test.dart';
+import 'package:qual_cor/ui/photo_decode.dart';
+
+/// Tempo de decodificação de uma foto de 12 MP (4032x3024) com o
+/// decodificador nativo, reduzindo para 2048 no lado maior. Usa a foto em
+/// FOTO_12MP (caminho de um JPEG); sem ela, o teste é pulado.
+/// Referência: com o package:image (versão anterior) eram ~540 ms no Mac,
+/// tudo num isolate.
 void main() {
-  test('decodificação de foto 12 MP', () {
-    final src = img.Image(width: 4032, height: 3024);
-    for (final p in src) {
-      p
-        ..r = (p.x * 255 ~/ 4032)
-        ..g = (p.y * 255 ~/ 3024)
-        ..b = ((p.x * 7 + p.y * 13) % 256);
+  final path = Platform.environment['FOTO_12MP'];
+  testWidgets('decodificação de foto 12 MP', (tester) async {
+    final bytes = File(path!).readAsBytesSync();
+    final times = <int>[];
+    for (var i = 0; i < 3; i++) {
+      final sw = Stopwatch()..start();
+      final p = (await tester.runAsync(() => decodePhoto(bytes)))!;
+      sw.stop();
+      times.add(sw.elapsedMilliseconds);
+      expect(p.width, 2048);
+      p.dispose();
     }
-    final jpeg = img.encodeJpg(src, quality: 90);
-    final sw = Stopwatch()..start();
-    const runs = 3;
-    for (var i = 0; i < runs; i++) {
-      expect(decodeForSampling(jpeg), isNotNull);
-    }
-    sw.stop();
     // ignore: avoid_print
-    print(
-      'foto 12 MP (${(jpeg.length / 1e6).toStringAsFixed(1)} MB JPEG): '
-      '${sw.elapsedMilliseconds ~/ runs} ms por foto',
-    );
-  });
+    print('foto 12 MP nativa: $times ms (inclui a cópia RGBA)');
+  }, skip: path == null);
 }
