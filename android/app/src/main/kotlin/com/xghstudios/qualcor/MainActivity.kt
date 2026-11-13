@@ -1,4 +1,4 @@
-package br.qualcor.qual_cor
+package com.xghstudios.qualcor
 
 import io.flutter.embedding.android.FlutterActivity
 
