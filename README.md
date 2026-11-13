@@ -25,13 +25,13 @@ A mira ao vivo precisa de câmera de verdade; no simulador do iOS use
 - **Início:** três botões grandes: *Mira ao vivo*, *Tirar foto* e *Escolher da galeria*.
 - **Mira ao vivo:** prévia da câmera com uma mira no centro. A área dentro do
   círculo é lida umas 4 vezes por segundo e suavizada. Botões *Congelar /
-  Continuar*, *lanterna* e *Falar*.
+  Continuar* e *lanterna*.
 - **Foto:** a foto aparece inteira; toque (ou arraste) no ponto desejado. Um
   marcador mostra a área lida, e um controle ajusta o tamanho dela.
 - **Resultado:** a família da cor em letras bem grandes, uma linha de
   descrição, o nome popular mais próximo, os avisos e, em segundo plano, uma
-  amostra pequena e o código hex (escondido por padrão). O botão *Falar* lê
-  tudo em pt-BR (flutter_tts, voz do sistema).
+  amostra pequena e o código hex (escondido por padrão). Com VoiceOver ou
+  TalkBack, o resultado inteiro é anunciado automaticamente.
 
 ## Decisões de projeto
 

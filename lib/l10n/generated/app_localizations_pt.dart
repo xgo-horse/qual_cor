@@ -136,9 +136,6 @@ class AppLocalizationsPt extends AppLocalizations {
       'A área tem mais de uma cor; mostro a predominante. Diminua a área para mais precisão.';
 
   @override
-  String get speak => 'Falar';
-
-  @override
   String get showHex => 'Mostrar código';
 
   @override
@@ -153,7 +150,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get swatchLabel => 'Amostra da cor';
 
   @override
-  String spokenResult(String main, String details) {
+  String resultSummary(String main, String details) {
     return '$main $details.';
   }
 

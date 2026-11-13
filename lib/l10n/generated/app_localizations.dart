@@ -196,12 +196,6 @@ abstract class AppLocalizations {
   /// **'A área tem mais de uma cor; mostro a predominante. Diminua a área para mais precisão.'**
   String get warningMixed;
 
-  /// Botão que lê o resultado em voz alta
-  ///
-  /// In pt, this message translates to:
-  /// **'Falar'**
-  String get speak;
-
   /// No description provided for @showHex.
   ///
   /// In pt, this message translates to:
@@ -226,11 +220,11 @@ abstract class AppLocalizations {
   /// **'Amostra da cor'**
   String get swatchLabel;
 
-  /// Texto falado: nome principal e detalhes
+  /// Resumo do resultado para o leitor de tela: nome principal e detalhes
   ///
   /// In pt, this message translates to:
   /// **'{main} {details}.'**
-  String spokenResult(String main, String details);
+  String resultSummary(String main, String details);
 
   /// No description provided for @liveTitle.
   ///

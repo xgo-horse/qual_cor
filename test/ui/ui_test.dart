@@ -31,7 +31,7 @@ void main() {
       expect(t.main, 'Azul');
       expect(t.details, 'escuro');
       expect(t.popularName, 'Parecido com: azul-marinho');
-      expect(t.spoken, 'Azul escuro. Parecido com: azul-marinho.');
+      expect(t.accessibleText, 'Azul escuro. Parecido com: azul-marinho.');
     });
 
     test('entre duas famílias', () {
@@ -44,7 +44,7 @@ void main() {
       expect(t.main, 'Cinza');
       expect(t.details, 'puxando para o azul');
       expect(t.warningTexts, [l10n.warningLowLight]);
-      expect(t.spoken, contains(l10n.warningLowLight));
+      expect(t.accessibleText, contains(l10n.warningLowLight));
     });
   });
 
@@ -57,16 +57,14 @@ void main() {
     expect(find.text('Escolher da galeria'), findsOneWidget);
   });
 
-  testWidgets('cartão de resultado: textos, falar, código e acessibilidade', (
+  testWidgets('cartão de resultado: textos, código e acessibilidade', (
     tester,
   ) async {
-    String? spoken;
     await tester.pumpWidget(
       wrap(
         ResultCard(
           description: d('#000080'),
           warnings: const {SampleWarning.mixedColors},
-          onSpeak: (t) => spoken = t,
         ),
       ),
     );
@@ -80,9 +78,7 @@ void main() {
     await tester.tap(find.text('Mostrar código'));
     await tester.pump();
     expect(find.text('Código: #000080'), findsOneWidget);
-
-    await tester.tap(find.text('Falar'));
-    expect(spoken, startsWith('Azul escuro.'));
+    expect(find.text('Falar'), findsNothing);
 
     // região "ao vivo" com o resultado completo para o leitor de tela
     final handle = tester.ensureSemantics();

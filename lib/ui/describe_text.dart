@@ -57,10 +57,10 @@ class DescriptionTexts {
         },
   ];
 
-  /// Texto para a voz e para o leitor de tela.
-  String get spoken {
+  /// Resumo completo para o leitor de tela (VoiceOver/TalkBack).
+  String get accessibleText {
     final buf = StringBuffer(
-      details.isEmpty ? '$main.' : l10n.spokenResult(main, details),
+      details.isEmpty ? '$main.' : l10n.resultSummary(main, details),
     );
     final name = popularName;
     if (name != null) buf.write(' $name.');

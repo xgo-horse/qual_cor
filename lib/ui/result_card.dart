@@ -4,23 +4,18 @@ import '../color/area_sampler.dart';
 import '../color/color_namer.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'describe_text.dart';
-import 'speech.dart';
 
 /// Cartão com o resultado: família em letras bem grandes, descrição,
-/// nome popular, avisos, amostra pequena (secundária) e botão "Falar".
+/// nome popular, avisos, amostra pequena (secundária) e código hex opcional.
 class ResultCard extends StatefulWidget {
   const ResultCard({
     super.key,
     required this.description,
     this.warnings = const {},
-    this.onSpeak,
   });
 
   final ColorDescription description;
   final Set<SampleWarning> warnings;
-
-  /// Por padrão fala com [Speech]; os testes trocam por um callback.
-  final void Function(String text)? onSpeak;
 
   @override
   State<ResultCard> createState() => _ResultCardState();
@@ -52,7 +47,7 @@ class _ResultCardState extends State<ResultCard> {
             Semantics(
               container: true,
               liveRegion: true,
-              label: texts.spoken,
+              label: texts.accessibleText,
               child: ExcludeSemantics(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -121,33 +116,16 @@ class _ResultCardState extends State<ResultCard> {
               ),
             ),
             const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: FilledButton.icon(
-                    onPressed: () {
-                      final speak = widget.onSpeak ?? Speech.instance.speak;
-                      speak(texts.spoken);
-                    },
-                    icon: const Icon(Icons.volume_up),
-                    label: Text(l10n.speak),
-                  ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => setState(() => _showHex = !_showHex),
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(48, 48),
                 ),
-                const SizedBox(width: 8),
-                Flexible(
-                  child: TextButton(
-                    onPressed: () => setState(() => _showHex = !_showHex),
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(48, 48),
-                    ),
-                    child: Text(
-                      _showHex ? l10n.hideHex : l10n.showHex,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ],
+                child: Text(_showHex ? l10n.hideHex : l10n.showHex),
+              ),
             ),
           ],
         ),

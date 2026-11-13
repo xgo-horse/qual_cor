@@ -86,10 +86,6 @@
   "warningOverexposed": "Muita luz ou reflexo forte: a cor pode estar lavada.",
   "warningHighlight": "Ignorei um brilho/reflexo na área.",
   "warningMixed": "A área tem mais de uma cor; mostro a predominante. Diminua a área para mais precisão.",
-  "speak": "Falar",
-  "@speak": {
-    "description": "Botão que lê o resultado em voz alta"
-  },
   "showHex": "Mostrar código",
   "hideHex": "Esconder código",
   "hexCode": "Código: {hex}",
@@ -104,9 +100,9 @@
   "@swatchLabel": {
     "description": "Rótulo de acessibilidade do quadradinho de cor"
   },
-  "spokenResult": "{main} {details}.",
-  "@spokenResult": {
-    "description": "Texto falado: nome principal e detalhes",
+  "resultSummary": "{main} {details}.",
+  "@resultSummary": {
+    "description": "Resumo do resultado para o leitor de tela: nome principal e detalhes",
     "placeholders": {
       "main": {
         "type": "String"
