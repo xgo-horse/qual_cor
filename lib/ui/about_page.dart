@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../l10n/generated/app_localizations.dart';
+import 'licenses_page.dart';
 import 'style.dart';
 
 /// Versão mostrada em Sobre. Mantenha igual ao `version` do pubspec.yaml
@@ -8,8 +9,8 @@ import 'style.dart';
 const appVersion = '0.1.0';
 
 /// Tela "Sobre o app", no estilo cartela: nome, versão, descrição e o item
-/// "Licenças" (abre a tela de licenças do Flutter; licenças extras são
-/// registradas em `lib/licenses.dart`).
+/// "Licenças" (abre [LicensesPage]; licenças próprias do app ficam em
+/// `lib/licenses.dart`).
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
@@ -60,10 +61,8 @@ class AboutPage extends StatelessWidget {
                   style: Txt.sans(size: 13, color: Palette.muted),
                 ),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => showLicensePage(
-                  context: context,
-                  applicationName: l10n.appTitle,
-                  applicationVersion: appVersion,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (_) => const LicensesPage()),
                 ),
               ),
             ),

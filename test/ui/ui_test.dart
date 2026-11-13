@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:qual_cor/app.dart';
 import 'package:qual_cor/licenses.dart';
 import 'package:qual_cor/ui/about_page.dart';
+import 'package:qual_cor/ui/licenses_page.dart';
 import 'package:qual_cor/ui/style.dart';
 import 'package:qual_cor/color/area_sampler.dart';
 import 'package:qual_cor/color/color_namer.dart';
@@ -145,7 +146,7 @@ void main() {
     expect(find.byKey(const Key('about-licenses')), findsOneWidget);
     await tester.tap(find.byKey(const Key('about-licenses')));
     await tester.pumpAndSettle();
-    expect(find.byType(LicensePage), findsOneWidget);
+    expect(find.byType(LicensesPage), findsOneWidget);
   });
 
   test('versão de Sobre = versão do pubspec', () {
@@ -164,5 +165,68 @@ void main() {
       names.addAll(entry.packages);
     }
     expect(names, containsAll(['Fraunces', 'Inter', 'JetBrains Mono']));
+  });
+
+  group('tela de licenças', () {
+    Widget app() => MaterialApp(
+      theme: buildTheme(),
+      locale: const Locale('pt'),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        ...GlobalMaterialLocalizations.delegates,
+      ],
+      home: const LicensesPage(),
+    );
+
+    setUpAll(() {
+      registerLicenses();
+      // Um pacote de mentira, para a contagem não depender do NOTICES.
+      LicenseRegistry.addLicense(() async* {
+        yield const LicenseEntryWithLineBreaks(['pacote_de_teste'], 'MIT');
+      });
+    });
+
+    testWidgets('mostra o app, as fontes e o item de componentes', (
+      tester,
+    ) async {
+      await tester.pumpWidget(app());
+      await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+      await tester.pumpAndSettle();
+      expect(find.text('ESTE APP'), findsOneWidget);
+      expect(find.text('Qual cor?'), findsOneWidget);
+      expect(find.text('FONTES'), findsOneWidget);
+      for (final l in appLicenses) {
+        expect(find.byKey(Key('license-${l.name}')), findsOneWidget);
+      }
+      // Sem conjunto de dados por enquanto: a seção nem aparece.
+      expect(find.text('DADOS'), findsNothing);
+      expect(find.byKey(const Key('licenses-components')), findsOneWidget);
+      // Contagem > 0 e sem contar as fontes.
+      final count = await tester.runAsync(countPackageLicenses);
+      expect(count, greaterThan(0));
+      expect(find.textContaining('pacote'), findsOneWidget);
+    });
+
+    testWidgets('fonte abre o texto da OFL', (tester) async {
+      await tester.pumpWidget(app());
+      await tester.tap(find.byKey(const Key('license-Fraunces')));
+      await tester.pumpAndSettle();
+      await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+      await tester.pumpAndSettle();
+      final text = tester.widget<Text>(find.byKey(const Key('license-text')));
+      expect(text.data, contains('SIL Open Font License'));
+      expect(text.data, contains('Fraunces'));
+    });
+
+    testWidgets('componentes abre a lista completa do Flutter', (tester) async {
+      await tester.pumpWidget(app());
+      await tester.tap(find.byKey(const Key('licenses-components')));
+      // A LicensePage mostra um indicador girando enquanto carrega: avança
+      // o tempo em vez de esperar "assentar".
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+      expect(find.byType(LicensePage), findsOneWidget);
+    });
   });
 }

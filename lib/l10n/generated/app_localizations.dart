@@ -411,6 +411,66 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'{first} e {second}'**
   String familyPair(String first, String second);
+
+  /// Título da tela de licenças
+  ///
+  /// In pt, this message translates to:
+  /// **'Licenças'**
+  String get licensesTitle;
+
+  /// No description provided for @licensesThisApp.
+  ///
+  /// In pt, this message translates to:
+  /// **'ESTE APP'**
+  String get licensesThisApp;
+
+  /// No description provided for @licensesFonts.
+  ///
+  /// In pt, this message translates to:
+  /// **'FONTES'**
+  String get licensesFonts;
+
+  /// No description provided for @licensesData.
+  ///
+  /// In pt, this message translates to:
+  /// **'DADOS'**
+  String get licensesData;
+
+  /// No description provided for @licensesOpenSource.
+  ///
+  /// In pt, this message translates to:
+  /// **'CÓDIGO ABERTO'**
+  String get licensesOpenSource;
+
+  /// No description provided for @licensesAppLine.
+  ///
+  /// In pt, this message translates to:
+  /// **'Feito para ajudar quem é daltônico a saber o nome das cores. Funciona sem internet; nenhuma imagem sai do aparelho.'**
+  String get licensesAppLine;
+
+  /// Direitos do app
+  ///
+  /// In pt, this message translates to:
+  /// **'© xghstudios'**
+  String get appCopyright;
+
+  /// No description provided for @licensesComponents.
+  ///
+  /// In pt, this message translates to:
+  /// **'Componentes de código aberto'**
+  String get licensesComponents;
+
+  /// No description provided for @licensesComponentsCount.
+  ///
+  /// In pt, this message translates to:
+  /// **'Flutter e pacotes · {count, plural, =1{1 pacote} other{{count} pacotes}}'**
+  String licensesComponentsCount(int count);
+
+  /// No description provided for @licensesCounting.
+  ///
+  /// In pt, this message translates to:
+  /// **'Flutter e pacotes'**
+  String get licensesCounting;
 }
 
 class _AppLocalizationsDelegate

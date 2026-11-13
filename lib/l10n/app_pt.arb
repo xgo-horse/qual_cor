@@ -218,5 +218,28 @@
         "type": "String"
       }
     }
-  }
+  },
+  "licensesTitle": "Licenças",
+  "@licensesTitle": {
+    "description": "Título da tela de licenças"
+  },
+  "licensesThisApp": "ESTE APP",
+  "licensesFonts": "FONTES",
+  "licensesData": "DADOS",
+  "licensesOpenSource": "CÓDIGO ABERTO",
+  "licensesAppLine": "Feito para ajudar quem é daltônico a saber o nome das cores. Funciona sem internet; nenhuma imagem sai do aparelho.",
+  "appCopyright": "© xghstudios",
+  "@appCopyright": {
+    "description": "Direitos do app"
+  },
+  "licensesComponents": "Componentes de código aberto",
+  "licensesComponentsCount": "Flutter e pacotes · {count, plural, =1{1 pacote} other{{count} pacotes}}",
+  "@licensesComponentsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "licensesCounting": "Flutter e pacotes"
 }

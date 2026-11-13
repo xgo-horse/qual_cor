@@ -254,4 +254,43 @@ class AppLocalizationsPt extends AppLocalizations {
   String familyPair(String first, String second) {
     return '$first e $second';
   }
+
+  @override
+  String get licensesTitle => 'Licenças';
+
+  @override
+  String get licensesThisApp => 'ESTE APP';
+
+  @override
+  String get licensesFonts => 'FONTES';
+
+  @override
+  String get licensesData => 'DADOS';
+
+  @override
+  String get licensesOpenSource => 'CÓDIGO ABERTO';
+
+  @override
+  String get licensesAppLine =>
+      'Feito para ajudar quem é daltônico a saber o nome das cores. Funciona sem internet; nenhuma imagem sai do aparelho.';
+
+  @override
+  String get appCopyright => '© xghstudios';
+
+  @override
+  String get licensesComponents => 'Componentes de código aberto';
+
+  @override
+  String licensesComponentsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pacotes',
+      one: '1 pacote',
+    );
+    return 'Flutter e pacotes · $_temp0';
+  }
+
+  @override
+  String get licensesCounting => 'Flutter e pacotes';
 }
