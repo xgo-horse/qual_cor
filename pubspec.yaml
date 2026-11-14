@@ -29,6 +29,8 @@ flutter:
   # Licenças das fontes (aparecem em Sobre > Licenças, via lib/licenses.dart).
   assets:
     - assets/licenses/
+    # Tintas Citadel do Modo Warhammer (lib/color/citadel_namer.dart).
+    - assets/data/
 
   # Fontes embutidas (variáveis; o peso vai por FontVariation 'wght').
   # Fonte: github.com/google/fonts, licença SIL OFL 1.1.
