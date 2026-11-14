@@ -251,7 +251,7 @@ class ResultCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Slot(
-                                texts?.label ?? l10n.labelFamily,
+                                texts?.label ?? l10n.tLabelFamily,
                                 Txt.label(),
                               ),
                               const SizedBox(height: 2),

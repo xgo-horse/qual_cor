@@ -14,5 +14,6 @@ extension ThemedTexts on AppLocalizations {
   String get tFrozenChip => _grim ? whFrozenChip : frozenChip;
   String get tLiveHint => _grim ? whLiveHint : liveHint;
   String get tPhotoTapHint => _grim ? whPhotoTapHint : photoTapHint;
+  String get tLabelFamily => _grim ? whLabelEmpty : labelFamily;
   String get tCrosshairLabel => _grim ? whCrosshairLabel : crosshairLabel;
 }

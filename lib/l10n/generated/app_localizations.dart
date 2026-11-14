@@ -633,6 +633,12 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Auspex no centro da imagem'**
   String get whCrosshairLabel;
+
+  /// Rótulo do cartão vazio no Modo Warhammer
+  ///
+  /// In pt, this message translates to:
+  /// **'PIGMENTO'**
+  String get whLabelEmpty;
 }
 
 class _AppLocalizationsDelegate

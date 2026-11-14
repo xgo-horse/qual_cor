@@ -399,4 +399,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get whCrosshairLabel => 'Auspex no centro da imagem';
+
+  @override
+  String get whLabelEmpty => 'PIGMENTO';
 }

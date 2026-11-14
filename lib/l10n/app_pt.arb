@@ -395,5 +395,9 @@
   "@whTakePhoto": {
     "description": "Câmera (tirar foto), no Modo Warhammer"
   },
-  "whCrosshairLabel": "Auspex no centro da imagem"
+  "whCrosshairLabel": "Auspex no centro da imagem",
+  "whLabelEmpty": "PIGMENTO",
+  "@whLabelEmpty": {
+    "description": "Rótulo do cartão vazio no Modo Warhammer"
+  }
 }

@@ -155,7 +155,9 @@ class BarButton extends StatelessWidget {
         : (primary ? Palette.onPrimary : Palette.text);
     final button = Material(
       color: primary
-          ? (enabled ? Palette.primary : Palette.hairline)
+          ? (enabled
+                ? Palette.primary
+                : (Palette.grim ? Palette.hairlineLight : Palette.hairline))
           : Colors.transparent,
       child: InkWell(
         onTap: onPressed,
