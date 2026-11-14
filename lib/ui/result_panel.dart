@@ -73,7 +73,7 @@ class ResultPanel extends StatelessWidget {
                       width: 22,
                       child: warningText.isEmpty
                           ? null
-                          : const Icon(
+                          : Icon(
                               Icons.error_outline,
                               size: 16,
                               color: Palette.muted,
@@ -106,11 +106,7 @@ class BottomBar extends StatelessWidget {
     for (var i = 0; i < buttons.length; i++) {
       if (i > 0) {
         children.add(
-          const VerticalDivider(
-            width: 1,
-            thickness: 1,
-            color: Palette.hairline,
-          ),
+          VerticalDivider(width: 1, thickness: 1, color: Palette.hairline),
         );
       }
       children.add(
@@ -118,7 +114,7 @@ class BottomBar extends StatelessWidget {
       );
     }
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(top: BorderSide(color: Palette.hairline)),
       ),
       child: SizedBox(height: 60, child: Row(children: children)),
@@ -143,7 +139,8 @@ class BarButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String? tooltip;
 
-  /// Ação principal: fundo quase preto, texto branco.
+  /// Ação principal: fundo quase preto, texto branco (Modo Warhammer:
+  /// vermelho-sangue e pergaminho).
   final bool primary;
 
   /// Estado de alternância (lanterna), para o leitor de tela.
@@ -155,10 +152,10 @@ class BarButton extends StatelessWidget {
     final enabled = onPressed != null;
     final fg = !enabled
         ? Palette.disabled
-        : (primary ? Colors.white : Palette.text);
+        : (primary ? Palette.onPrimary : Palette.text);
     final button = Material(
       color: primary
-          ? (enabled ? Palette.text : Palette.hairline)
+          ? (enabled ? Palette.primary : Palette.hairline)
           : Colors.transparent,
       child: InkWell(
         onTap: onPressed,

@@ -61,6 +61,7 @@ void main() {
     final m = namer.match(Oklab.fromHex('#00FF00'));
     expect(m.isLoose, isTrue);
     expect(m.distance, greaterThan(CitadelNamer.lembraFrom));
+    expect(m.isBetween, isFalse);
   });
 
   group('lista pequena', () {
@@ -71,7 +72,7 @@ void main() {
       lab: Oklab.fromHex(hex),
     );
     final a = paint('A', '#800000');
-    final b = paint('B', '#000080');
+    final b = paint('B', '#8C0000');
     final small = CitadelNamer([a, b, paint('A2', '#800000')]);
 
     test('hex repetido fica só a primeira', () {

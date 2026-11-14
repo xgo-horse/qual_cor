@@ -102,7 +102,7 @@ class CitadelNamer {
   static const double lembraFrom = 0.06;
 
   /// Se a segunda tinta estiver a menos disto além da primeira, o
-  /// resultado vira "entre X e Y".
+  /// resultado vira "entre X e Y" (só quando a primeira não está longe).
   static const double tieMargin = 0.006;
 
   /// Perto assim de uma tinta, ela ganha sozinha mesmo com outra quase
@@ -124,7 +124,12 @@ class CitadelNamer {
         d2 = d;
       }
     }
-    final tie = second != null && d1 > exactMax && d2 - d1 < tieMargin;
+    // Longe de tudo ("lembra"), um empate não diz nada: fica só a primeira.
+    final tie =
+        second != null &&
+        d1 > exactMax &&
+        d1 <= lembraFrom &&
+        d2 - d1 < tieMargin;
     return CitadelMatch(
       paint: best!,
       distance: d1,

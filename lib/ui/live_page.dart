@@ -19,6 +19,7 @@ import 'frame.dart';
 import 'photo_page.dart';
 import 'result_panel.dart';
 import 'style.dart';
+import 'themed_texts.dart';
 
 /// Mira ao vivo: câmera com uma mira no centro, amostrada até ~20 vezes por
 /// segundo, com suavização adaptativa ([LiveSmoother]). A amostragem custa
@@ -292,7 +293,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
               title: Text(l10n.homeGallery, style: Txt.sans(size: 16)),
               onTap: () => Navigator.pop(context, ImageSource.gallery),
             ),
-            const Divider(height: 1, color: Palette.hairlineLight),
+            Divider(height: 1, color: Palette.hairlineLight),
             ListTile(
               minTileHeight: 56,
               leading: const Icon(Icons.photo_camera_outlined),
@@ -324,7 +325,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                 child: CameraFrame(
                   frozen: frozen,
-                  frozenLabel: l10n.frozenChip,
+                  frozenLabel: l10n.tFrozenChip,
                   trailing: InfoButton(
                     onPressed: () => _pushPaused(const AboutPage()),
                   ),
@@ -390,13 +391,13 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                       BarButton(
                         key: const Key('gallery'),
                         icon: Icons.photo_library_outlined,
-                        label: l10n.barGallery,
+                        label: l10n.tBarGallery,
                         onPressed: _openGallery,
                       ),
                       BarButton(
                         key: const Key('freeze'),
                         icon: _frozen ? Icons.play_arrow : Icons.pause,
-                        label: _frozen ? l10n.liveContinue : l10n.liveFreeze,
+                        label: _frozen ? l10n.tContinue : l10n.tFreeze,
                         primary: true,
                         flex: 1.4,
                         onPressed: controller == null ? null : _toggleFreeze,
@@ -546,7 +547,7 @@ class _Crosshair extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: AppLocalizations.of(context).crosshairLabel,
+      label: AppLocalizations.of(context).tCrosshairLabel,
       child: CustomPaint(painter: _CrosshairPainter(radius, center)),
     );
   }
@@ -554,6 +555,9 @@ class _Crosshair extends StatelessWidget {
 
 class _CrosshairPainter extends CustomPainter {
   _CrosshairPainter(this.radius, this.center);
+
+  /// Modo Warhammer na hora de desenhar (a cor da mira muda).
+  final bool grim = Palette.grim;
 
   final double radius;
   final Offset? center;
@@ -565,5 +569,5 @@ class _CrosshairPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_CrosshairPainter old) =>
-      old.radius != radius || old.center != center;
+      old.radius != radius || old.center != center || old.grim != grim;
 }

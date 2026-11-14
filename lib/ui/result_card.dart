@@ -8,6 +8,7 @@ import '../color/color_namer.dart';
 import '../l10n/generated/app_localizations.dart';
 import 'describe_text.dart';
 import 'style.dart';
+import 'themed_texts.dart';
 
 /// Altura de [lines] linhas no [style], já com o tamanho de texto do sistema.
 double slotHeight(BuildContext context, TextStyle style, int lines) {
@@ -184,14 +185,16 @@ class ResultCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final d = description;
     final texts = d == null ? null : DescriptionTexts(l10n, d, warnings);
-    final hex = d?.color.toHex();
-    final hint = placeholder ?? l10n.liveHint;
-    final details = texts?.details ?? '';
+    final hex = texts?.hex;
+    final hint = placeholder ?? l10n.tLiveHint;
+    final details = texts?.cardDescription ?? '';
+    final paintHex = texts?.paint?.paint.hex;
 
     return DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Palette.surface,
         boxShadow: Palette.cardShadow,
+        border: Palette.cardBorder,
       ),
       child: IntrinsicHeight(
         child: Row(
@@ -202,8 +205,32 @@ class ResultCard extends StatelessWidget {
             SizedBox(
               width: swatchWidth,
               child: d == null
-                  ? const CustomPaint(painter: _HatchPainter())
-                  : ColoredBox(color: Color(0xFF000000 | d.color.toRgbInt())),
+                  ? CustomPaint(painter: _HatchPainter(grim: Palette.grim))
+                  : paintHex == null
+                  ? ColoredBox(color: Color(0xFF000000 | d.color.toRgbInt()))
+                  // Modo Warhammer: em cima a cor medida, embaixo uma faixa
+                  // com a tinta, para comparar.
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
+                          child: ColoredBox(
+                            color: Color(0xFF000000 | d.color.toRgbInt()),
+                          ),
+                        ),
+                        Container(height: 1, color: Palette.hairline),
+                        SizedBox(
+                          key: const Key('paint-swatch'),
+                          height: 28,
+                          child: ColoredBox(
+                            color: Color(
+                              0xFF000000 |
+                                  int.parse(paintHex.substring(1), radix: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
             ),
             Expanded(
               child: Padding(
@@ -238,7 +265,7 @@ class ResultCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const Divider(
+                    Divider(
                       height: 1,
                       thickness: 1,
                       color: Palette.hairlineLight,
@@ -250,7 +277,7 @@ class ResultCard extends StatelessWidget {
                           Expanded(
                             child: ExcludeSemantics(
                               child: Text(
-                                d?.popularName ?? '',
+                                texts?.footer ?? '',
                                 style: Txt.popular(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -260,7 +287,7 @@ class ResultCard extends StatelessWidget {
                           if (hex != null) ...[
                             const SizedBox(width: 8),
                             Semantics(
-                              label: l10n.colorCode(hex),
+                              label: texts!.hexLabel,
                               child: ExcludeSemantics(
                                 child: Text(
                                   hex.substring(1),
@@ -350,13 +377,16 @@ class _CopyHexButtonState extends State<CopyHexButton> {
 
 /// Hachurado claro para a "tinta" vazia.
 class _HatchPainter extends CustomPainter {
-  const _HatchPainter();
+  const _HatchPainter({required this.grim});
+
+  /// Modo Warhammer (as cores vêm da [Palette]).
+  final bool grim;
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawRect(
       Offset.zero & size,
-      Paint()..color = const Color(0xFFF1F0EC),
+      Paint()..color = grim ? Palette.ground : const Color(0xFFF1F0EC),
     );
     final p = Paint()
       ..color = Palette.hairline
@@ -370,5 +400,5 @@ class _HatchPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_HatchPainter oldDelegate) => false;
+  bool shouldRepaint(_HatchPainter oldDelegate) => oldDelegate.grim != grim;
 }

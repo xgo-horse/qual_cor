@@ -103,7 +103,7 @@ class _Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DecoratedBox(
-    decoration: const BoxDecoration(
+    decoration: BoxDecoration(
       color: Palette.surface,
       boxShadow: Palette.cardShadow,
     ),
@@ -122,7 +122,7 @@ class _LicenseList extends StatelessWidget {
       children: [
         for (var i = 0; i < items.length; i++) ...[
           if (i > 0)
-            const Divider(height: 1, indent: 18, color: Palette.hairlineLight),
+            Divider(height: 1, indent: 18, color: Palette.hairlineLight),
           _Row(
             key: Key('license-${items[i].name}'),
             title: items[i].name,
@@ -176,7 +176,7 @@ class _Row extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: Palette.muted),
+            Icon(Icons.chevron_right, color: Palette.muted),
           ],
         ),
       ),

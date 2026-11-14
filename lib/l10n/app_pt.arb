@@ -241,5 +241,159 @@
       }
     }
   },
-  "licensesCounting": "Flutter e pacotes"
+  "licensesCounting": "Flutter e pacotes",
+  "whModeOn": "Modo Warhammer ativado",
+  "@whModeOn": {
+    "description": "Aviso ao ligar o easter egg (7 toques na versão)"
+  },
+  "whModeOff": "Modo Warhammer desativado",
+  "whSwitch": "Modo Warhammer",
+  "@whSwitch": {
+    "description": "Switch na tela Sobre, depois de descoberto"
+  },
+  "whSwitchSubtitle": "Nomes de tintas Citadel e visual sombrio",
+  "whDisclaimer": "Citadel e os nomes das tintas são marcas da Games Workshop Ltd. Este app não é afiliado nem endossado pela Games Workshop. Cores aproximadas.",
+  "whLabelPigment": "PIGMENTO · {range}",
+  "@whLabelPigment": {
+    "description": "Rótulo do cartão no Modo Warhammer; range = linha da tinta (Base, Layer...)",
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "whLabelLembra": "LEMBRA · {range}",
+  "@whLabelLembra": {
+    "description": "Rótulo quando a tinta mais próxima está longe",
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "whLabelBetween": "ENTRE DOIS PIGMENTOS",
+  "whPaintPair": "{first} e {second}",
+  "@whPaintPair": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "whFamilyLine": "Cor: {family}",
+  "@whFamilyLine": {
+    "description": "Linha menor com a família em português, no Modo Warhammer",
+    "placeholders": {
+      "family": {
+        "type": "String"
+      }
+    }
+  },
+  "whFamilyLineDetails": "Cor: {family}, {details}",
+  "@whFamilyLineDetails": {
+    "placeholders": {
+      "family": {
+        "type": "String"
+      },
+      "details": {
+        "type": "String"
+      }
+    }
+  },
+  "whRangeLine": "Citadel {range}",
+  "@whRangeLine": {
+    "description": "Rodapé do cartão: linha da tinta",
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "whRangePair": "Citadel {first} / {second}",
+  "@whRangePair": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "whIdentified": "O cogitador identificou: {paint}, linha {range}.",
+  "@whIdentified": {
+    "description": "Início do texto do leitor de tela no Modo Warhammer",
+    "placeholders": {
+      "paint": {
+        "type": "String"
+      },
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "whIdentifiedLembra": "O cogitador identificou algo que lembra {paint}, linha {range}.",
+  "@whIdentifiedLembra": {
+    "placeholders": {
+      "paint": {
+        "type": "String"
+      },
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "whIdentifiedBetween": "O cogitador identificou: entre {first} e {second}.",
+  "@whIdentifiedBetween": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "second": {
+        "type": "String"
+      }
+    }
+  },
+  "whColorSummary": "Cor: {main}.",
+  "@whColorSummary": {
+    "description": "Família em português para o leitor de tela no Modo Warhammer",
+    "placeholders": {
+      "main": {
+        "type": "String"
+      }
+    }
+  },
+  "whPaintCode": "Pigmento {hex}",
+  "@whPaintCode": {
+    "description": "Leitura do hex da tinta para o leitor de tela",
+    "placeholders": {
+      "hex": {
+        "type": "String"
+      }
+    }
+  },
+  "whAuspex": "Auspex",
+  "@whAuspex": {
+    "description": "Mira, no Modo Warhammer (botão de voltar para a mira)"
+  },
+  "whLiveHint": "Aponte o auspex para um alvo",
+  "whPhotoTapHint": "Toque no alvo da pict-captura",
+  "whFreeze": "Estase",
+  "@whFreeze": {
+    "description": "Congelar, no Modo Warhammer"
+  },
+  "whContinue": "Retomar",
+  "whFrozenChip": "EM ESTASE",
+  "whGallery": "Arquivo",
+  "@whGallery": {
+    "description": "Galeria, no Modo Warhammer"
+  },
+  "whTakePhoto": "Pict",
+  "@whTakePhoto": {
+    "description": "Câmera (tirar foto), no Modo Warhammer"
+  },
+  "whCrosshairLabel": "Auspex no centro da imagem"
 }

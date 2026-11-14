@@ -293,4 +293,110 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get licensesCounting => 'Flutter e pacotes';
+
+  @override
+  String get whModeOn => 'Modo Warhammer ativado';
+
+  @override
+  String get whModeOff => 'Modo Warhammer desativado';
+
+  @override
+  String get whSwitch => 'Modo Warhammer';
+
+  @override
+  String get whSwitchSubtitle => 'Nomes de tintas Citadel e visual sombrio';
+
+  @override
+  String get whDisclaimer =>
+      'Citadel e os nomes das tintas são marcas da Games Workshop Ltd. Este app não é afiliado nem endossado pela Games Workshop. Cores aproximadas.';
+
+  @override
+  String whLabelPigment(String range) {
+    return 'PIGMENTO · $range';
+  }
+
+  @override
+  String whLabelLembra(String range) {
+    return 'LEMBRA · $range';
+  }
+
+  @override
+  String get whLabelBetween => 'ENTRE DOIS PIGMENTOS';
+
+  @override
+  String whPaintPair(String first, String second) {
+    return '$first e $second';
+  }
+
+  @override
+  String whFamilyLine(String family) {
+    return 'Cor: $family';
+  }
+
+  @override
+  String whFamilyLineDetails(String family, String details) {
+    return 'Cor: $family, $details';
+  }
+
+  @override
+  String whRangeLine(String range) {
+    return 'Citadel $range';
+  }
+
+  @override
+  String whRangePair(String first, String second) {
+    return 'Citadel $first / $second';
+  }
+
+  @override
+  String whIdentified(String paint, String range) {
+    return 'O cogitador identificou: $paint, linha $range.';
+  }
+
+  @override
+  String whIdentifiedLembra(String paint, String range) {
+    return 'O cogitador identificou algo que lembra $paint, linha $range.';
+  }
+
+  @override
+  String whIdentifiedBetween(String first, String second) {
+    return 'O cogitador identificou: entre $first e $second.';
+  }
+
+  @override
+  String whColorSummary(String main) {
+    return 'Cor: $main.';
+  }
+
+  @override
+  String whPaintCode(String hex) {
+    return 'Pigmento $hex';
+  }
+
+  @override
+  String get whAuspex => 'Auspex';
+
+  @override
+  String get whLiveHint => 'Aponte o auspex para um alvo';
+
+  @override
+  String get whPhotoTapHint => 'Toque no alvo da pict-captura';
+
+  @override
+  String get whFreeze => 'Estase';
+
+  @override
+  String get whContinue => 'Retomar';
+
+  @override
+  String get whFrozenChip => 'EM ESTASE';
+
+  @override
+  String get whGallery => 'Arquivo';
+
+  @override
+  String get whTakePhoto => 'Pict';
+
+  @override
+  String get whCrosshairLabel => 'Auspex no centro da imagem';
 }

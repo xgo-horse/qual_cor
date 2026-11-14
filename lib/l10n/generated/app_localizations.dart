@@ -471,6 +471,168 @@ abstract class AppLocalizations {
   /// In pt, this message translates to:
   /// **'Flutter e pacotes'**
   String get licensesCounting;
+
+  /// Aviso ao ligar o easter egg (7 toques na versão)
+  ///
+  /// In pt, this message translates to:
+  /// **'Modo Warhammer ativado'**
+  String get whModeOn;
+
+  /// No description provided for @whModeOff.
+  ///
+  /// In pt, this message translates to:
+  /// **'Modo Warhammer desativado'**
+  String get whModeOff;
+
+  /// Switch na tela Sobre, depois de descoberto
+  ///
+  /// In pt, this message translates to:
+  /// **'Modo Warhammer'**
+  String get whSwitch;
+
+  /// No description provided for @whSwitchSubtitle.
+  ///
+  /// In pt, this message translates to:
+  /// **'Nomes de tintas Citadel e visual sombrio'**
+  String get whSwitchSubtitle;
+
+  /// No description provided for @whDisclaimer.
+  ///
+  /// In pt, this message translates to:
+  /// **'Citadel e os nomes das tintas são marcas da Games Workshop Ltd. Este app não é afiliado nem endossado pela Games Workshop. Cores aproximadas.'**
+  String get whDisclaimer;
+
+  /// Rótulo do cartão no Modo Warhammer; range = linha da tinta (Base, Layer...)
+  ///
+  /// In pt, this message translates to:
+  /// **'PIGMENTO · {range}'**
+  String whLabelPigment(String range);
+
+  /// Rótulo quando a tinta mais próxima está longe
+  ///
+  /// In pt, this message translates to:
+  /// **'LEMBRA · {range}'**
+  String whLabelLembra(String range);
+
+  /// No description provided for @whLabelBetween.
+  ///
+  /// In pt, this message translates to:
+  /// **'ENTRE DOIS PIGMENTOS'**
+  String get whLabelBetween;
+
+  /// No description provided for @whPaintPair.
+  ///
+  /// In pt, this message translates to:
+  /// **'{first} e {second}'**
+  String whPaintPair(String first, String second);
+
+  /// Linha menor com a família em português, no Modo Warhammer
+  ///
+  /// In pt, this message translates to:
+  /// **'Cor: {family}'**
+  String whFamilyLine(String family);
+
+  /// No description provided for @whFamilyLineDetails.
+  ///
+  /// In pt, this message translates to:
+  /// **'Cor: {family}, {details}'**
+  String whFamilyLineDetails(String family, String details);
+
+  /// Rodapé do cartão: linha da tinta
+  ///
+  /// In pt, this message translates to:
+  /// **'Citadel {range}'**
+  String whRangeLine(String range);
+
+  /// No description provided for @whRangePair.
+  ///
+  /// In pt, this message translates to:
+  /// **'Citadel {first} / {second}'**
+  String whRangePair(String first, String second);
+
+  /// Início do texto do leitor de tela no Modo Warhammer
+  ///
+  /// In pt, this message translates to:
+  /// **'O cogitador identificou: {paint}, linha {range}.'**
+  String whIdentified(String paint, String range);
+
+  /// No description provided for @whIdentifiedLembra.
+  ///
+  /// In pt, this message translates to:
+  /// **'O cogitador identificou algo que lembra {paint}, linha {range}.'**
+  String whIdentifiedLembra(String paint, String range);
+
+  /// No description provided for @whIdentifiedBetween.
+  ///
+  /// In pt, this message translates to:
+  /// **'O cogitador identificou: entre {first} e {second}.'**
+  String whIdentifiedBetween(String first, String second);
+
+  /// Família em português para o leitor de tela no Modo Warhammer
+  ///
+  /// In pt, this message translates to:
+  /// **'Cor: {main}.'**
+  String whColorSummary(String main);
+
+  /// Leitura do hex da tinta para o leitor de tela
+  ///
+  /// In pt, this message translates to:
+  /// **'Pigmento {hex}'**
+  String whPaintCode(String hex);
+
+  /// Mira, no Modo Warhammer (botão de voltar para a mira)
+  ///
+  /// In pt, this message translates to:
+  /// **'Auspex'**
+  String get whAuspex;
+
+  /// No description provided for @whLiveHint.
+  ///
+  /// In pt, this message translates to:
+  /// **'Aponte o auspex para um alvo'**
+  String get whLiveHint;
+
+  /// No description provided for @whPhotoTapHint.
+  ///
+  /// In pt, this message translates to:
+  /// **'Toque no alvo da pict-captura'**
+  String get whPhotoTapHint;
+
+  /// Congelar, no Modo Warhammer
+  ///
+  /// In pt, this message translates to:
+  /// **'Estase'**
+  String get whFreeze;
+
+  /// No description provided for @whContinue.
+  ///
+  /// In pt, this message translates to:
+  /// **'Retomar'**
+  String get whContinue;
+
+  /// No description provided for @whFrozenChip.
+  ///
+  /// In pt, this message translates to:
+  /// **'EM ESTASE'**
+  String get whFrozenChip;
+
+  /// Galeria, no Modo Warhammer
+  ///
+  /// In pt, this message translates to:
+  /// **'Arquivo'**
+  String get whGallery;
+
+  /// Câmera (tirar foto), no Modo Warhammer
+  ///
+  /// In pt, this message translates to:
+  /// **'Pict'**
+  String get whTakePhoto;
+
+  /// No description provided for @whCrosshairLabel.
+  ///
+  /// In pt, this message translates to:
+  /// **'Auspex no centro da imagem'**
+  String get whCrosshairLabel;
 }
 
 class _AppLocalizationsDelegate

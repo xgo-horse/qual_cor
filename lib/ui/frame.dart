@@ -32,7 +32,9 @@ class CameraFrame extends StatelessWidget {
       foregroundDecoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
-          color: frozen ? Palette.text : const Color(0x26000000),
+          color: frozen
+              ? (Palette.grim ? Palette.primary : Palette.text)
+              : (Palette.grim ? Palette.hairline : const Color(0x26000000)),
           width: frozen ? 2 : 1,
         ),
       ),
@@ -45,7 +47,7 @@ class CameraFrame extends StatelessWidget {
               left: 10,
               top: 10,
               child: DecoratedBox(
-                decoration: const BoxDecoration(color: Palette.surface),
+                decoration: BoxDecoration(color: Palette.surface),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -53,7 +55,9 @@ class CameraFrame extends StatelessWidget {
                   ),
                   child: Text(
                     frozenLabel!,
-                    style: Txt.label(color: Palette.text),
+                    style: Txt.label(
+                      color: Palette.grim ? Palette.muted : Palette.text,
+                    ),
                   ),
                 ),
               ),
@@ -153,15 +157,17 @@ class StatusMessage extends StatelessWidget {
 
 /// Mira fina: círculo branco de 1,5 px do tamanho da área lida e quatro
 /// traços curtos (2×12) em cima, embaixo e dos lados, com uma sombra leve
-/// para aparecer também sobre fundos claros.
+/// para aparecer também sobre fundos claros. No Modo Warhammer (o
+/// "auspex"), cor de pergaminho.
 void paintCrosshair(Canvas canvas, Offset c, double radius) {
   final shadow = Paint()
     ..color = const Color(0x59000000)
     ..style = PaintingStyle.stroke
     ..strokeWidth = 3
     ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.5);
+  final ink = Palette.grim ? Grim.parchment : Colors.white;
   final circle = Paint()
-    ..color = Colors.white
+    ..color = ink
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.5;
   canvas.drawCircle(c, radius, shadow);
@@ -192,7 +198,7 @@ void paintCrosshair(Canvas canvas, Offset c, double radius) {
   final shadowFill = Paint()
     ..color = const Color(0x59000000)
     ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 1.5);
-  final fill = Paint()..color = Colors.white;
+  final fill = Paint()..color = ink;
   for (final t in ticks) {
     canvas.drawRect(t.inflate(0.5), shadowFill);
     canvas.drawRect(t, fill);

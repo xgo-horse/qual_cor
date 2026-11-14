@@ -11,6 +11,7 @@ import '../l10n/generated/app_localizations.dart';
 import 'frame.dart';
 import 'photo_decode.dart';
 import 'result_panel.dart';
+import 'themed_texts.dart';
 
 /// Onde a imagem fica dentro da caixa com BoxFit.contain (centralizada) e
 /// a conversão de um toque na tela para o pixel da imagem.
@@ -182,7 +183,7 @@ class _PhotoPageState extends State<PhotoPage> {
               child: ResultPanel(
                 description: _description,
                 warnings: _warnings,
-                placeholder: l10n.photoTapHint,
+                placeholder: l10n.tPhotoTapHint,
                 areaFraction: _areaFraction,
                 onAreaChanged: (v) {
                   setState(() => _areaFraction = v);
@@ -194,7 +195,7 @@ class _PhotoPageState extends State<PhotoPage> {
                     BarButton(
                       key: const Key('back'),
                       icon: Icons.center_focus_strong_outlined,
-                      label: l10n.barBack,
+                      label: l10n.tBarBack,
                       onPressed: () => Navigator.of(context).maybePop(),
                     ),
                     BarButton(
@@ -210,7 +211,7 @@ class _PhotoPageState extends State<PhotoPage> {
                     BarButton(
                       key: const Key('camera'),
                       icon: Icons.photo_camera_outlined,
-                      label: l10n.barTakePhoto,
+                      label: l10n.tBarTakePhoto,
                       onPressed: _loading
                           ? null
                           : () => _pick(ImageSource.camera),
@@ -267,7 +268,7 @@ class _TappableImage extends StatelessWidget {
                 rect: dest,
                 child: Semantics(
                   image: true,
-                  label: l10n.photoTapHint,
+                  label: l10n.tPhotoTapHint,
                   child: RawImage(image: image, fit: BoxFit.fill),
                 ),
               ),
