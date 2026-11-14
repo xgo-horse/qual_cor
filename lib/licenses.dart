@@ -58,6 +58,12 @@ const appLicenses = <AppLicense>[
     licenseName: 'SIL Open Font License 1.1',
   ),
   AppLicense(
+    name: 'Cinzel',
+    kind: AppLicenseKind.font,
+    asset: 'assets/licenses/OFL-Cinzel.txt',
+    licenseName: 'SIL Open Font License 1.1',
+  ),
+  AppLicense(
     name: 'miniature-paints (cores Citadel)',
     kind: AppLicenseKind.data,
     asset: 'assets/licenses/LICENSE-miniature-paints.txt',

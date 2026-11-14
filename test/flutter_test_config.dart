@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 /// Vale para todos os testes: carrega as fontes embutidas de verdade
-/// (Fraunces, Inter, JetBrains Mono). Sem isso o flutter_test usa uma
+/// (Fraunces, Inter, JetBrains Mono, Cinzel). Sem isso o flutter_test usa uma
 /// fonte de letras quadradas, bem mais larga, e as medições de "cabe numa
 /// linha" ficariam irreais.
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
@@ -20,5 +20,6 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   await load('Fraunces', ['Fraunces.ttf', 'Fraunces-Italic.ttf']);
   await load('Inter', ['Inter.ttf']);
   await load('JetBrains Mono', ['JetBrainsMono.ttf']);
+  await load('Cinzel', ['Cinzel.ttf']);
   await testMain();
 }

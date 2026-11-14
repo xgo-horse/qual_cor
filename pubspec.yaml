@@ -46,6 +46,10 @@ flutter:
     - family: JetBrains Mono
       fonts:
         - asset: assets/fonts/JetBrainsMono.ttf
+    # Modo Warhammer (títulos).
+    - family: Cinzel
+      fonts:
+        - asset: assets/fonts/Cinzel.ttf
 
 # Ícone e tela de abertura: gerados a partir de assets/icon/ (criados por
 # tool/make_icon.dart). Os geradores NÃO ficam como dependência porque o
