@@ -158,13 +158,22 @@ void main() {
     expect(appVersion, v);
   });
 
-  test('licenças das fontes embutidas aparecem em Licenças', () async {
+  test('licenças das fontes e dos dados aparecem em Licenças', () async {
     registerLicenses();
     final names = <String>{};
     await for (final entry in LicenseRegistry.licenses) {
       names.addAll(entry.packages);
     }
-    expect(names, containsAll(['Fraunces', 'Inter', 'JetBrains Mono']));
+    expect(
+      names,
+      containsAll([
+        'Fraunces',
+        'Inter',
+        'JetBrains Mono',
+        'miniature-paints (cores Citadel)',
+        'MiniToTheMax (cores Citadel)',
+      ]),
+    );
   });
 
   group('tela de licenças', () {
@@ -196,11 +205,19 @@ void main() {
       expect(find.text('ESTE APP'), findsOneWidget);
       expect(find.text('Qual cor?'), findsOneWidget);
       expect(find.text('FONTES'), findsOneWidget);
+      // A lista é preguiçosa: rola até cada item antes de procurá-lo.
+      Future<void> see(Finder f) => tester.scrollUntilVisible(
+        f,
+        100,
+        scrollable: find.byType(Scrollable).first,
+      );
       for (final l in appLicenses) {
+        await see(find.byKey(Key('license-${l.name}')));
         expect(find.byKey(Key('license-${l.name}')), findsOneWidget);
       }
-      // Sem conjunto de dados por enquanto: a seção nem aparece.
-      expect(find.text('DADOS'), findsNothing);
+      // Conjuntos de dados de cores Citadel: a seção aparece.
+      expect(find.text('DADOS'), findsOneWidget);
+      await see(find.byKey(const Key('licenses-components')));
       expect(find.byKey(const Key('licenses-components')), findsOneWidget);
       // Contagem > 0 e sem contar as fontes.
       final count = await tester.runAsync(countPackageLicenses);
@@ -221,6 +238,11 @@ void main() {
 
     testWidgets('componentes abre a lista completa do Flutter', (tester) async {
       await tester.pumpWidget(app());
+      await tester.scrollUntilVisible(
+        find.byKey(const Key('licenses-components')),
+        100,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.tap(find.byKey(const Key('licenses-components')));
       // A LicensePage mostra um indicador girando enquanto carrega: avança
       // o tempo em vez de esperar "assentar".

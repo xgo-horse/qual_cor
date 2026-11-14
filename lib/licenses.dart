@@ -57,6 +57,18 @@ const appLicenses = <AppLicense>[
     asset: 'assets/licenses/OFL-JetBrainsMono.txt',
     licenseName: 'SIL Open Font License 1.1',
   ),
+  AppLicense(
+    name: 'miniature-paints (cores Citadel)',
+    kind: AppLicenseKind.data,
+    asset: 'assets/licenses/LICENSE-miniature-paints.txt',
+    licenseName: 'MIT',
+  ),
+  AppLicense(
+    name: 'MiniToTheMax (cores Citadel)',
+    kind: AppLicenseKind.data,
+    asset: 'assets/licenses/LICENSE-MiniToTheMax.txt',
+    licenseName: 'MIT',
+  ),
 ];
 
 bool _registered = false;
