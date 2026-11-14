@@ -1,0 +1,2319 @@
+{
+ "meta": {
+  "description": "Citadel Colour (Games Workshop) - mapa aproximado de cores. Valores hex sao aproximacoes da comunidade, NAO oficiais (GW nao publica hex). Shade/Contrast representam a cor aplicada sobre primer branco/claro.",
+  "sources": [
+   "https://github.com/Arcturus5404/miniature-paints (MIT) - fonte primaria",
+   "https://github.com/piemasters/MiniToTheMax (MIT) - complemento (Contrast/Shade novas) e hex_alt"
+  ],
+  "generated": "2026-11-13",
+  "oklch": "calculado a partir do hex (sRGB D65, Ottosson 2020); L 0-1, C ~0-0.37, H graus",
+  "trademark": "Citadel e os nomes das tintas sao marcas da Games Workshop; uso apenas referencial.",
+  "egg_notes": "1 entrada por nome (prefere Base>Layer>Shade>Contrast>Dry>Glaze>Spray>Air); sem descontinuadas, Technical e metalicas; Shade usa a cor do pote (escura) quando disponivel."
+ },
+ "paints": [
+  {
+   "name": "Abaddon Black",
+   "range": "Base",
+   "hex": "#000000",
+   "oklch_l": 0.0,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Administratum Grey",
+   "range": "Layer",
+   "hex": "#989C94",
+   "oklch_l": 0.6871,
+   "oklch_c": 0.0124,
+   "oklch_h": 128.7,
+   "metallic": false
+  },
+  {
+   "name": "Aeldari Emerald",
+   "range": "Contrast",
+   "hex": "#008973",
+   "oklch_l": 0.563,
+   "oklch_c": 0.1052,
+   "oklch_h": 176.1,
+   "metallic": false
+  },
+  {
+   "name": "Aethermatic Blue",
+   "range": "Contrast",
+   "hex": "#1C7E92",
+   "oklch_l": 0.5487,
+   "oklch_c": 0.0897,
+   "oklch_h": 215.3,
+   "metallic": false
+  },
+  {
+   "name": "Aggaros Dunes",
+   "range": "Contrast",
+   "hex": "#706542",
+   "oklch_l": 0.5081,
+   "oklch_c": 0.0528,
+   "oklch_h": 92.7,
+   "metallic": false
+  },
+  {
+   "name": "Agrax Earthshade",
+   "range": "Shade",
+   "hex": "#2D190C",
+   "oklch_l": 0.237,
+   "oklch_c": 0.0392,
+   "oklch_h": 52.8,
+   "metallic": false
+  },
+  {
+   "name": "Agrax Earthshade Gloss",
+   "range": "Shade",
+   "hex": "#2D190C",
+   "oklch_l": 0.237,
+   "oklch_c": 0.0392,
+   "oklch_h": 52.8,
+   "metallic": false
+  },
+  {
+   "name": "Ahriman Blue",
+   "range": "Layer",
+   "hex": "#00708A",
+   "oklch_l": 0.505,
+   "oklch_c": 0.0928,
+   "oklch_h": 221.3,
+   "metallic": false
+  },
+  {
+   "name": "Air Caste Thinner",
+   "range": "Air",
+   "hex": "#F9F9F9",
+   "oklch_l": 0.9821,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Akhelian Green",
+   "range": "Contrast",
+   "hex": "#004F63",
+   "oklch_l": 0.3965,
+   "oklch_c": 0.0734,
+   "oklch_h": 222.3,
+   "metallic": false
+  },
+  {
+   "name": "Alaitoc Blue",
+   "range": "Layer",
+   "hex": "#2F4F85",
+   "oklch_l": 0.4308,
+   "oklch_c": 0.0975,
+   "oklch_h": 260.3,
+   "metallic": false
+  },
+  {
+   "name": "Altdorf Guard Blue",
+   "range": "Layer",
+   "hex": "#2D4696",
+   "oklch_l": 0.4216,
+   "oklch_c": 0.1347,
+   "oklch_h": 267.3,
+   "metallic": false
+  },
+  {
+   "name": "Angron Red Clear",
+   "range": "Air",
+   "hex": "#E21823",
+   "oklch_l": 0.581,
+   "oklch_c": 0.2272,
+   "oklch_h": 26.6,
+   "metallic": false
+  },
+  {
+   "name": "Apothecary White",
+   "range": "Contrast",
+   "hex": "#A5BED4",
+   "oklch_l": 0.7899,
+   "oklch_c": 0.0416,
+   "oklch_h": 244.9,
+   "metallic": false
+  },
+  {
+   "name": "Astorath Red",
+   "range": "Dry",
+   "hex": "#A9311E",
+   "oklch_l": 0.4935,
+   "oklch_c": 0.1595,
+   "oklch_h": 31.8,
+   "metallic": false
+  },
+  {
+   "name": "Asurmen Blue",
+   "range": "Contrast",
+   "hex": "#0083CA",
+   "oklch_l": 0.5868,
+   "oklch_c": 0.1434,
+   "oklch_h": 243.5,
+   "metallic": false
+  },
+  {
+   "name": "Athonian Camoshade",
+   "range": "Shade",
+   "hex": "#1C1C10",
+   "oklch_l": 0.2225,
+   "oklch_c": 0.0218,
+   "oklch_h": 108.1,
+   "metallic": false
+  },
+  {
+   "name": "Averland Sunset",
+   "range": "Base",
+   "hex": "#FBB81C",
+   "oklch_l": 0.8233,
+   "oklch_c": 0.165,
+   "oklch_h": 81.1,
+   "metallic": false
+  },
+  {
+   "name": "Baal Red",
+   "range": "Contrast",
+   "hex": "#D51C29",
+   "oklch_l": 0.5591,
+   "oklch_c": 0.214,
+   "oklch_h": 25.3,
+   "metallic": false
+  },
+  {
+   "name": "Bad Moon Yellow",
+   "range": "Contrast",
+   "hex": "#FFE100",
+   "oklch_l": 0.9067,
+   "oklch_c": 0.1882,
+   "oklch_h": 99.5,
+   "metallic": false
+  },
+  {
+   "name": "Baharroth Blue",
+   "range": "Layer",
+   "hex": "#54BDCA",
+   "oklch_l": 0.742,
+   "oklch_c": 0.0978,
+   "oklch_h": 206.3,
+   "metallic": false
+  },
+  {
+   "name": "Balor Brown",
+   "range": "Layer",
+   "hex": "#875408",
+   "oklch_l": 0.4922,
+   "oklch_c": 0.1046,
+   "oklch_h": 68.5,
+   "metallic": false
+  },
+  {
+   "name": "Baneblade Brown",
+   "range": "Layer",
+   "hex": "#8F7C68",
+   "oklch_l": 0.5983,
+   "oklch_c": 0.0375,
+   "oklch_h": 68.5,
+   "metallic": false
+  },
+  {
+   "name": "Barak-Nar Burgundy",
+   "range": "Base",
+   "hex": "#451636",
+   "oklch_l": 0.2871,
+   "oklch_c": 0.084,
+   "oklch_h": 342.1,
+   "metallic": false
+  },
+  {
+   "name": "Basilicanum Grey",
+   "range": "Contrast",
+   "hex": "#212121",
+   "oklch_l": 0.2478,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Berserker Bloodshade",
+   "range": "Shade",
+   "hex": "#B8083E",
+   "oklch_l": 0.5,
+   "oklch_c": 0.1965,
+   "oklch_h": 14.7,
+   "metallic": false
+  },
+  {
+   "name": "Bestigor Flesh",
+   "range": "Layer",
+   "hex": "#D08951",
+   "oklch_l": 0.6913,
+   "oklch_c": 0.113,
+   "oklch_h": 57.7,
+   "metallic": false
+  },
+  {
+   "name": "Biel-Tan Green",
+   "range": "Shade",
+   "hex": "#132E21",
+   "oklch_l": 0.2753,
+   "oklch_c": 0.0414,
+   "oklch_h": 161.0,
+   "metallic": false
+  },
+  {
+   "name": "Black Legion",
+   "range": "Contrast",
+   "hex": "#232324",
+   "oklch_l": 0.2565,
+   "oklch_c": 0.0019,
+   "oklch_h": 286.3,
+   "metallic": false
+  },
+  {
+   "name": "Black Templar",
+   "range": "Contrast",
+   "hex": "#171717",
+   "oklch_l": 0.2046,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Blood Angels Red",
+   "range": "Contrast",
+   "hex": "#860B0E",
+   "oklch_l": 0.3952,
+   "oklch_c": 0.1538,
+   "oklch_h": 27.4,
+   "metallic": false
+  },
+  {
+   "name": "Bloodletter",
+   "range": "Glaze",
+   "hex": "#F37355",
+   "oklch_l": 0.7016,
+   "oklch_c": 0.1642,
+   "oklch_h": 34.5,
+   "metallic": false
+  },
+  {
+   "name": "Bloodreaver Flesh",
+   "range": "Layer",
+   "hex": "#6A4848",
+   "oklch_l": 0.4394,
+   "oklch_c": 0.0468,
+   "oklch_h": 19.1,
+   "metallic": false
+  },
+  {
+   "name": "Blue Horror",
+   "range": "Layer",
+   "hex": "#9EB5CE",
+   "oklch_l": 0.764,
+   "oklch_c": 0.044,
+   "oklch_h": 250.6,
+   "metallic": false
+  },
+  {
+   "name": "Briar Queen Chill",
+   "range": "Contrast",
+   "hex": "#91BDCA",
+   "oklch_l": 0.7713,
+   "oklch_c": 0.0502,
+   "oklch_h": 217.8,
+   "metallic": false
+  },
+  {
+   "name": "Bugman Glow",
+   "range": "Base",
+   "hex": "#804C43",
+   "oklch_l": 0.4746,
+   "oklch_c": 0.0727,
+   "oklch_h": 30.5,
+   "metallic": false
+  },
+  {
+   "name": "Bugmans Glow",
+   "range": "Base",
+   "hex": "#804C43",
+   "oklch_l": 0.4746,
+   "oklch_c": 0.0727,
+   "oklch_h": 30.5,
+   "metallic": false
+  },
+  {
+   "name": "Cadian Fleshtone",
+   "range": "Layer",
+   "hex": "#C47652",
+   "oklch_l": 0.6426,
+   "oklch_c": 0.1104,
+   "oklch_h": 45.1,
+   "metallic": false
+  },
+  {
+   "name": "Caledor Sky",
+   "range": "Base",
+   "hex": "#366699",
+   "oklch_l": 0.5006,
+   "oklch_c": 0.0973,
+   "oklch_h": 251.6,
+   "metallic": false
+  },
+  {
+   "name": "Calgar Blue",
+   "range": "Layer",
+   "hex": "#2A497F",
+   "oklch_l": 0.4102,
+   "oklch_c": 0.0981,
+   "oklch_h": 260.7,
+   "metallic": false
+  },
+  {
+   "name": "Caliban Green",
+   "range": "Base",
+   "hex": "#003D15",
+   "oklch_l": 0.3143,
+   "oklch_c": 0.0891,
+   "oklch_h": 148.8,
+   "metallic": false
+  },
+  {
+   "name": "Calth Blue Clear",
+   "range": "Air",
+   "hex": "#0087D1",
+   "oklch_l": 0.6004,
+   "oklch_c": 0.1477,
+   "oklch_h": 243.9,
+   "metallic": false
+  },
+  {
+   "name": "Carroburg Crimson",
+   "range": "Shade",
+   "hex": "#310808",
+   "oklch_l": 0.2116,
+   "oklch_c": 0.0664,
+   "oklch_h": 24.9,
+   "metallic": false
+  },
+  {
+   "name": "Casandora Yellow",
+   "range": "Shade",
+   "hex": "#E78035",
+   "oklch_l": 0.7016,
+   "oklch_c": 0.1531,
+   "oklch_h": 52.8,
+   "metallic": false
+  },
+  {
+   "name": "Cassandora Yellow",
+   "range": "Shade",
+   "hex": "#F5CC92",
+   "oklch_l": 0.8674,
+   "oklch_c": 0.0876,
+   "oklch_h": 75.8,
+   "metallic": false
+  },
+  {
+   "name": "Castellan Green",
+   "range": "Base",
+   "hex": "#264715",
+   "oklch_l": 0.3601,
+   "oklch_c": 0.0862,
+   "oklch_h": 136.6,
+   "metallic": false
+  },
+  {
+   "name": "Catachan Flesh",
+   "range": "Base",
+   "hex": "#442B25",
+   "oklch_l": 0.3179,
+   "oklch_c": 0.0391,
+   "oklch_h": 34.1,
+   "metallic": false
+  },
+  {
+   "name": "Catachan Fleshtone",
+   "range": "Base",
+   "hex": "#442B25",
+   "oklch_l": 0.3179,
+   "oklch_c": 0.0391,
+   "oklch_h": 34.1,
+   "metallic": false
+  },
+  {
+   "name": "Celestium Blue",
+   "range": "Contrast",
+   "hex": "#275996",
+   "oklch_l": 0.4618,
+   "oklch_c": 0.1132,
+   "oklch_h": 255.0,
+   "metallic": false
+  },
+  {
+   "name": "Celestra Grey",
+   "range": "Base",
+   "hex": "#8BA3A3",
+   "oklch_l": 0.697,
+   "oklch_c": 0.0268,
+   "oklch_h": 196.6,
+   "metallic": false
+  },
+  {
+   "name": "Changeling Pink",
+   "range": "Dry",
+   "hex": "#F3ABCA",
+   "oklch_l": 0.8184,
+   "oklch_c": 0.0926,
+   "oklch_h": 351.8,
+   "metallic": false
+  },
+  {
+   "name": "Chaos Black",
+   "range": "Spray",
+   "hex": "#000000",
+   "oklch_l": 0.0,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Chemos Purple",
+   "range": "Air",
+   "hex": "#4F356C",
+   "oklch_l": 0.3852,
+   "oklch_c": 0.0942,
+   "oklch_h": 304.2,
+   "metallic": false
+  },
+  {
+   "name": "Chronus Blue",
+   "range": "Dry",
+   "hex": "#4B90CF",
+   "oklch_l": 0.6361,
+   "oklch_c": 0.1182,
+   "oklch_h": 248.2,
+   "metallic": false
+  },
+  {
+   "name": "Coelia Greenshade",
+   "range": "Shade",
+   "hex": "#113431",
+   "oklch_l": 0.2986,
+   "oklch_c": 0.0405,
+   "oklch_h": 187.6,
+   "metallic": false
+  },
+  {
+   "name": "Corax White",
+   "range": "Base",
+   "hex": "#FFFFFF",
+   "oklch_l": 1.0,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Corvus Black",
+   "range": "Base",
+   "hex": "#171314",
+   "oklch_l": 0.192,
+   "oklch_c": 0.0068,
+   "oklch_h": 0.8,
+   "metallic": false
+  },
+  {
+   "name": "Creed Camo",
+   "range": "Contrast",
+   "hex": "#145D2E",
+   "oklch_l": 0.4227,
+   "oklch_c": 0.1035,
+   "oklch_h": 150.6,
+   "metallic": false
+  },
+  {
+   "name": "Cryptek Armourshade Gloss",
+   "range": "Shade",
+   "hex": "#311908",
+   "oklch_l": 0.2428,
+   "oklch_c": 0.0472,
+   "oklch_h": 53.8,
+   "metallic": false
+  },
+  {
+   "name": "Cygor Brown",
+   "range": "Contrast",
+   "hex": "#3E1A17",
+   "oklch_l": 0.2699,
+   "oklch_c": 0.0571,
+   "oklch_h": 26.4,
+   "metallic": false
+  },
+  {
+   "name": "Daemonette Hide",
+   "range": "Base",
+   "hex": "#655F81",
+   "oklch_l": 0.5043,
+   "oklch_c": 0.0538,
+   "oklch_h": 292.4,
+   "metallic": false
+  },
+  {
+   "name": "Dark Angels Green",
+   "range": "Contrast",
+   "hex": "#00110F",
+   "oklch_l": 0.1598,
+   "oklch_c": 0.028,
+   "oklch_h": 186.1,
+   "metallic": false
+  },
+  {
+   "name": "Dark Reaper",
+   "range": "Layer",
+   "hex": "#354D4C",
+   "oklch_l": 0.4003,
+   "oklch_c": 0.0294,
+   "oklch_h": 192.8,
+   "metallic": false
+  },
+  {
+   "name": "Darkoath Flesh",
+   "range": "Contrast",
+   "hex": "#98615B",
+   "oklch_l": 0.5509,
+   "oklch_c": 0.0729,
+   "oklch_h": 26.5,
+   "metallic": false
+  },
+  {
+   "name": "Dawnstone",
+   "range": "Layer",
+   "hex": "#697068",
+   "oklch_l": 0.5366,
+   "oklch_c": 0.0149,
+   "oklch_h": 141.8,
+   "metallic": false
+  },
+  {
+   "name": "Death Guard Green",
+   "range": "Base",
+   "hex": "#6D774D",
+   "oklch_l": 0.5498,
+   "oklch_c": 0.0623,
+   "oklch_h": 119.4,
+   "metallic": false
+  },
+  {
+   "name": "Death Korps Drab",
+   "range": "Base",
+   "hex": "#3D4539",
+   "oklch_l": 0.3791,
+   "oklch_c": 0.0226,
+   "oklch_h": 135.1,
+   "metallic": false
+  },
+  {
+   "name": "Deathclaw Brown",
+   "range": "Layer",
+   "hex": "#AF634F",
+   "oklch_l": 0.5817,
+   "oklch_c": 0.1034,
+   "oklch_h": 35.6,
+   "metallic": false
+  },
+  {
+   "name": "Deathshroud Clear",
+   "range": "Air",
+   "hex": "#1C1C1B",
+   "oklch_l": 0.2261,
+   "oklch_c": 0.0019,
+   "oklch_h": 106.6,
+   "metallic": false
+  },
+  {
+   "name": "Deathworld Forest",
+   "range": "Base",
+   "hex": "#556229",
+   "oklch_l": 0.4716,
+   "oklch_c": 0.0824,
+   "oklch_h": 120.4,
+   "metallic": false
+  },
+  {
+   "name": "Dechala Lilac",
+   "range": "Layer",
+   "hex": "#B598C9",
+   "oklch_l": 0.7224,
+   "oklch_c": 0.0766,
+   "oklch_h": 311.2,
+   "metallic": false
+  },
+  {
+   "name": "Deepkin Flesh",
+   "range": "Layer",
+   "hex": "#A9B79F",
+   "oklch_l": 0.7618,
+   "oklch_c": 0.0369,
+   "oklch_h": 132.1,
+   "metallic": false
+  },
+  {
+   "name": "Doombull Brown",
+   "range": "Layer",
+   "hex": "#570003",
+   "oklch_l": 0.2872,
+   "oklch_c": 0.1172,
+   "oklch_h": 27.5,
+   "metallic": false
+  },
+  {
+   "name": "Doomfire Magenta",
+   "range": "Contrast",
+   "hex": "#EC008C",
+   "oklch_l": 0.6157,
+   "oklch_c": 0.2527,
+   "oklch_h": 355.1,
+   "metallic": false
+  },
+  {
+   "name": "Dorn Yellow",
+   "range": "Layer",
+   "hex": "#FFF55A",
+   "oklch_l": 0.9508,
+   "oklch_c": 0.1705,
+   "oklch_h": 105.6,
+   "metallic": false
+  },
+  {
+   "name": "Drakenhof Nightshade",
+   "range": "Shade",
+   "hex": "#0A131B",
+   "oklch_l": 0.1821,
+   "oklch_c": 0.0214,
+   "oklch_h": 246.1,
+   "metallic": false
+  },
+  {
+   "name": "Dreadful Visage",
+   "range": "Contrast",
+   "hex": "#E4D3DF",
+   "oklch_l": 0.8841,
+   "oklch_c": 0.0246,
+   "oklch_h": 336.1,
+   "metallic": false
+  },
+  {
+   "name": "Druchii Violet",
+   "range": "Shade",
+   "hex": "#250B27",
+   "oklch_l": 0.2062,
+   "oklch_c": 0.063,
+   "oklch_h": 324.7,
+   "metallic": false
+  },
+  {
+   "name": "Dryad Bark",
+   "range": "Base",
+   "hex": "#2B2A24",
+   "oklch_l": 0.2839,
+   "oklch_c": 0.0108,
+   "oklch_h": 99.3,
+   "metallic": false
+  },
+  {
+   "name": "Eidolon Purple Clear",
+   "range": "Air",
+   "hex": "#7D4D99",
+   "oklch_l": 0.5071,
+   "oklch_c": 0.1264,
+   "oklch_h": 311.8,
+   "metallic": false
+  },
+  {
+   "name": "Eldar Flesh",
+   "range": "Dry",
+   "hex": "#E8C07F",
+   "oklch_l": 0.8284,
+   "oklch_c": 0.0945,
+   "oklch_h": 79.0,
+   "metallic": false
+  },
+  {
+   "name": "Elysian Green",
+   "range": "Layer",
+   "hex": "#6B8C37",
+   "oklch_l": 0.5963,
+   "oklch_c": 0.1194,
+   "oklch_h": 127.5,
+   "metallic": false
+  },
+  {
+   "name": "Emperor Children",
+   "range": "Layer",
+   "hex": "#B74073",
+   "oklch_l": 0.5521,
+   "oklch_c": 0.1607,
+   "oklch_h": 357.2,
+   "metallic": false
+  },
+  {
+   "name": "Emperors Children",
+   "range": "Layer",
+   "hex": "#B74073",
+   "oklch_l": 0.5521,
+   "oklch_c": 0.1607,
+   "oklch_h": 357.2,
+   "metallic": false
+  },
+  {
+   "name": "Eshin Grey",
+   "range": "Layer",
+   "hex": "#484B4E",
+   "oklch_l": 0.4111,
+   "oklch_c": 0.0064,
+   "oklch_h": 248.0,
+   "metallic": false
+  },
+  {
+   "name": "Etherium Blue",
+   "range": "Dry",
+   "hex": "#9EB5CE",
+   "oklch_l": 0.764,
+   "oklch_c": 0.044,
+   "oklch_h": 250.6,
+   "metallic": false
+  },
+  {
+   "name": "Evil Sunz Scarlet",
+   "range": "Layer",
+   "hex": "#C01411",
+   "oklch_l": 0.514,
+   "oklch_c": 0.2014,
+   "oklch_h": 28.7,
+   "metallic": false
+  },
+  {
+   "name": "Fenrisian Grey",
+   "range": "Layer",
+   "hex": "#6D94B3",
+   "oklch_l": 0.6494,
+   "oklch_c": 0.0634,
+   "oklch_h": 242.9,
+   "metallic": false
+  },
+  {
+   "name": "Fire Dragon Bright",
+   "range": "Layer",
+   "hex": "#F4874E",
+   "oklch_l": 0.7325,
+   "oklch_c": 0.1511,
+   "oklch_h": 46.8,
+   "metallic": false
+  },
+  {
+   "name": "Flash Gitz Yellow",
+   "range": "Layer",
+   "hex": "#FFF300",
+   "oklch_l": 0.9432,
+   "oklch_c": 0.2012,
+   "oklch_h": 106.0,
+   "metallic": false
+  },
+  {
+   "name": "Flayed One Flesh",
+   "range": "Layer",
+   "hex": "#EEC483",
+   "oklch_l": 0.8427,
+   "oklch_c": 0.0954,
+   "oklch_h": 77.8,
+   "metallic": false
+  },
+  {
+   "name": "Flesh Tearers Red",
+   "range": "Contrast",
+   "hex": "#4B0402",
+   "oklch_l": 0.2635,
+   "oklch_c": 0.1022,
+   "oklch_h": 29.4,
+   "metallic": false
+  },
+  {
+   "name": "Frostheart",
+   "range": "Contrast",
+   "hex": "#003B54",
+   "oklch_l": 0.3321,
+   "oklch_c": 0.0696,
+   "oklch_h": 234.1,
+   "metallic": false
+  },
+  {
+   "name": "Fuegan Orange",
+   "range": "Shade",
+   "hex": "#6C1C03",
+   "oklch_l": 0.3558,
+   "oklch_c": 0.1175,
+   "oklch_h": 36.3,
+   "metallic": false
+  },
+  {
+   "name": "Fulgrim Pink",
+   "range": "Layer",
+   "hex": "#F3ABCA",
+   "oklch_l": 0.8184,
+   "oklch_c": 0.0926,
+   "oklch_h": 351.8,
+   "metallic": false
+  },
+  {
+   "name": "Fyreslayer Flesh",
+   "range": "Contrast",
+   "hex": "#724E3C",
+   "oklch_l": 0.4587,
+   "oklch_c": 0.0564,
+   "oklch_h": 47.4,
+   "metallic": false
+  },
+  {
+   "name": "Gal Vorbak Red",
+   "range": "Base",
+   "hex": "#4B213C",
+   "oklch_l": 0.3172,
+   "oklch_c": 0.074,
+   "oklch_h": 342.9,
+   "metallic": false
+  },
+  {
+   "name": "Garaghaks Sewer",
+   "range": "Contrast",
+   "hex": "#8D6019",
+   "oklch_l": 0.5249,
+   "oklch_c": 0.1012,
+   "oklch_h": 73.4,
+   "metallic": false
+  },
+  {
+   "name": "Gauss Blaster Green",
+   "range": "Layer",
+   "hex": "#7FC1A5",
+   "oklch_l": 0.7585,
+   "oklch_c": 0.0789,
+   "oklch_h": 165.8,
+   "metallic": false
+  },
+  {
+   "name": "Genestealer Purple",
+   "range": "Layer",
+   "hex": "#7658A5",
+   "oklch_l": 0.5254,
+   "oklch_c": 0.1207,
+   "oklch_h": 300.3,
+   "metallic": false
+  },
+  {
+   "name": "Golgfag Brown",
+   "range": "Dry",
+   "hex": "#8F502A",
+   "oklch_l": 0.4983,
+   "oklch_c": 0.0992,
+   "oklch_h": 49.9,
+   "metallic": false
+  },
+  {
+   "name": "Gore-Grunta Fur",
+   "range": "Contrast",
+   "hex": "#613B1F",
+   "oklch_l": 0.3915,
+   "oklch_c": 0.0678,
+   "oklch_h": 55.6,
+   "metallic": false
+  },
+  {
+   "name": "Gorthor Brown",
+   "range": "Layer",
+   "hex": "#5F463F",
+   "oklch_l": 0.4191,
+   "oklch_c": 0.0366,
+   "oklch_h": 36.2,
+   "metallic": false
+  },
+  {
+   "name": "Grey Seer",
+   "range": "Base",
+   "hex": "#A2A5A7",
+   "oklch_l": 0.7201,
+   "oklch_c": 0.0045,
+   "oklch_h": 236.5,
+   "metallic": false
+  },
+  {
+   "name": "Gryph-Charger Grey",
+   "range": "Contrast",
+   "hex": "#25698A",
+   "oklch_l": 0.4934,
+   "oklch_c": 0.0851,
+   "oklch_h": 233.5,
+   "metallic": false
+  },
+  {
+   "name": "Gryph-Hound Orange",
+   "range": "Contrast",
+   "hex": "#94300E",
+   "oklch_l": 0.4541,
+   "oklch_c": 0.1409,
+   "oklch_h": 37.2,
+   "metallic": false
+  },
+  {
+   "name": "Guilliman Blue",
+   "range": "Glaze",
+   "hex": "#2F9AD6",
+   "oklch_l": 0.6539,
+   "oklch_c": 0.1295,
+   "oklch_h": 238.6,
+   "metallic": false
+  },
+  {
+   "name": "Guilliman Flesh",
+   "range": "Contrast",
+   "hex": "#9F4639",
+   "oklch_l": 0.5076,
+   "oklch_c": 0.1214,
+   "oklch_h": 30.3,
+   "metallic": false
+  },
+  {
+   "name": "Gutrippa Flesh",
+   "range": "Contrast",
+   "hex": "#94B18E",
+   "oklch_l": 0.7289,
+   "oklch_c": 0.059,
+   "oklch_h": 140.3,
+   "metallic": false
+  },
+  {
+   "name": "Hellion Green",
+   "range": "Dry",
+   "hex": "#7FC1A5",
+   "oklch_l": 0.7585,
+   "oklch_c": 0.0789,
+   "oklch_h": 165.8,
+   "metallic": false
+  },
+  {
+   "name": "Hexos Palesun",
+   "range": "Dry",
+   "hex": "#FFF55A",
+   "oklch_l": 0.9508,
+   "oklch_c": 0.1705,
+   "oklch_h": 105.6,
+   "metallic": false
+  },
+  {
+   "name": "Hexwraith Flame",
+   "range": "Contrast",
+   "hex": "#1BB24B",
+   "oklch_l": 0.6686,
+   "oklch_c": 0.1864,
+   "oklch_h": 147.9,
+   "metallic": false
+  },
+  {
+   "name": "Hobgrot Hide",
+   "range": "Base",
+   "hex": "#9C823B",
+   "oklch_l": 0.6163,
+   "oklch_c": 0.0954,
+   "oklch_h": 89.2,
+   "metallic": false
+  },
+  {
+   "name": "Hoeth Blue",
+   "range": "Layer",
+   "hex": "#4C78AF",
+   "oklch_l": 0.5653,
+   "oklch_c": 0.0988,
+   "oklch_h": 254.7,
+   "metallic": false
+  },
+  {
+   "name": "Imperial Fist",
+   "range": "Contrast",
+   "hex": "#FDBA12",
+   "oklch_l": 0.829,
+   "oklch_c": 0.1683,
+   "oklch_h": 81.9,
+   "metallic": false
+  },
+  {
+   "name": "Imrik Blue",
+   "range": "Dry",
+   "hex": "#208ABF",
+   "oklch_l": 0.601,
+   "oklch_c": 0.1209,
+   "oklch_h": 236.7,
+   "metallic": false
+  },
+  {
+   "name": "Incubi Darkness",
+   "range": "Base",
+   "hex": "#082E32",
+   "oklch_l": 0.2774,
+   "oklch_c": 0.0416,
+   "oklch_h": 205.3,
+   "metallic": false
+  },
+  {
+   "name": "Ionrach Skin",
+   "range": "Base",
+   "hex": "#97A384",
+   "oklch_l": 0.6974,
+   "oklch_c": 0.0459,
+   "oklch_h": 124.8,
+   "metallic": false
+  },
+  {
+   "name": "Ironjawz Yellow",
+   "range": "Contrast",
+   "hex": "#FFCF62",
+   "oklch_l": 0.876,
+   "oklch_c": 0.137,
+   "oklch_h": 85.4,
+   "metallic": false
+  },
+  {
+   "name": "Iyanden Yellow",
+   "range": "Contrast",
+   "hex": "#DB7F0C",
+   "oklch_l": 0.6821,
+   "oklch_c": 0.1547,
+   "oklch_h": 61.8,
+   "metallic": false
+  },
+  {
+   "name": "Jokaero Orange",
+   "range": "Base",
+   "hex": "#ED3814",
+   "oklch_l": 0.6189,
+   "oklch_c": 0.2209,
+   "oklch_h": 32.6,
+   "metallic": false
+  },
+  {
+   "name": "Kabalite Green",
+   "range": "Layer",
+   "hex": "#008962",
+   "oklch_l": 0.5581,
+   "oklch_c": 0.1178,
+   "oklch_h": 164.7,
+   "metallic": false
+  },
+  {
+   "name": "Kakophoni Purple",
+   "range": "Layer",
+   "hex": "#8869AE",
+   "oklch_l": 0.5793,
+   "oklch_c": 0.1081,
+   "oklch_h": 303.9,
+   "metallic": false
+  },
+  {
+   "name": "Kantor Blue",
+   "range": "Base",
+   "hex": "#02134E",
+   "oklch_l": 0.2254,
+   "oklch_c": 0.1103,
+   "oklch_h": 264.0,
+   "metallic": false
+  },
+  {
+   "name": "Karak Stone",
+   "range": "Layer",
+   "hex": "#B7945C",
+   "oklch_l": 0.6864,
+   "oklch_c": 0.0848,
+   "oklch_h": 78.4,
+   "metallic": false
+  },
+  {
+   "name": "Karandras Green",
+   "range": "Contrast",
+   "hex": "#00A850",
+   "oklch_l": 0.6399,
+   "oklch_c": 0.1733,
+   "oklch_h": 150.7,
+   "metallic": false
+  },
+  {
+   "name": "Khorne Red",
+   "range": "Base",
+   "hex": "#650001",
+   "oklch_l": 0.3183,
+   "oklch_c": 0.1304,
+   "oklch_h": 28.8,
+   "metallic": false
+  },
+  {
+   "name": "Kindleflame",
+   "range": "Dry",
+   "hex": "#F69C82",
+   "oklch_l": 0.7778,
+   "oklch_c": 0.1145,
+   "oklch_h": 36.9,
+   "metallic": false
+  },
+  {
+   "name": "Kislev Flesh",
+   "range": "Layer",
+   "hex": "#D1A570",
+   "oklch_l": 0.7503,
+   "oklch_c": 0.0867,
+   "oklch_h": 71.1,
+   "metallic": false
+  },
+  {
+   "name": "Knight-Questor Flesh",
+   "range": "Layer",
+   "hex": "#996563",
+   "oklch_l": 0.5617,
+   "oklch_c": 0.0678,
+   "oklch_h": 21.9,
+   "metallic": false
+  },
+  {
+   "name": "Krieg Khaki",
+   "range": "Layer",
+   "hex": "#BCBB7E",
+   "oklch_l": 0.7783,
+   "oklch_c": 0.0807,
+   "oklch_h": 107.3,
+   "metallic": false
+  },
+  {
+   "name": "Kroak Green",
+   "range": "Shade",
+   "hex": "#7DBF92",
+   "oklch_l": 0.7479,
+   "oklch_c": 0.0938,
+   "oklch_h": 153.8,
+   "metallic": false
+  },
+  {
+   "name": "Kroxigor Scales",
+   "range": "Contrast",
+   "hex": "#09A09A",
+   "oklch_l": 0.6374,
+   "oklch_c": 0.1088,
+   "oklch_h": 190.0,
+   "metallic": false
+  },
+  {
+   "name": "Lamenters Yellow",
+   "range": "Glaze",
+   "hex": "#FFF56B",
+   "oklch_l": 0.9524,
+   "oklch_c": 0.1576,
+   "oklch_h": 105.1,
+   "metallic": false
+  },
+  {
+   "name": "Leviadon Blue",
+   "range": "Contrast",
+   "hex": "#000A13",
+   "oklch_l": 0.1371,
+   "oklch_c": 0.0297,
+   "oklch_h": 236.5,
+   "metallic": false
+  },
+  {
+   "name": "Leviathan Purple",
+   "range": "Contrast",
+   "hex": "#27004B",
+   "oklch_l": 0.2277,
+   "oklch_c": 0.1217,
+   "oklch_h": 299.8,
+   "metallic": false
+  },
+  {
+   "name": "Longbeard Grey",
+   "range": "Dry",
+   "hex": "#DBDCC6",
+   "oklch_l": 0.8878,
+   "oklch_c": 0.0295,
+   "oklch_h": 109.1,
+   "metallic": false
+  },
+  {
+   "name": "Loren Forest",
+   "range": "Layer",
+   "hex": "#486C25",
+   "oklch_l": 0.4877,
+   "oklch_c": 0.1079,
+   "oklch_h": 132.0,
+   "metallic": false
+  },
+  {
+   "name": "Lothern Blue",
+   "range": "Layer",
+   "hex": "#2C9BCC",
+   "oklch_l": 0.6506,
+   "oklch_c": 0.12,
+   "oklch_h": 232.6,
+   "metallic": false
+  },
+  {
+   "name": "Lucius Lilac",
+   "range": "Dry",
+   "hex": "#B598C9",
+   "oklch_l": 0.7224,
+   "oklch_c": 0.0766,
+   "oklch_h": 311.2,
+   "metallic": false
+  },
+  {
+   "name": "Lugganath Orange",
+   "range": "Layer",
+   "hex": "#F69B82",
+   "oklch_l": 0.7761,
+   "oklch_c": 0.1154,
+   "oklch_h": 36.1,
+   "metallic": false
+  },
+  {
+   "name": "Lupercal Green",
+   "range": "Base",
+   "hex": "#002C2B",
+   "oklch_l": 0.2649,
+   "oklch_c": 0.0454,
+   "oklch_h": 192.4,
+   "metallic": false
+  },
+  {
+   "name": "Luxion Purple",
+   "range": "Contrast",
+   "hex": "#431E75",
+   "oklch_l": 0.3406,
+   "oklch_c": 0.1398,
+   "oklch_h": 297.9,
+   "metallic": false
+  },
+  {
+   "name": "Macragge Blue",
+   "range": "Base",
+   "hex": "#0F3D7C",
+   "oklch_l": 0.369,
+   "oklch_c": 0.1178,
+   "oklch_h": 257.9,
+   "metallic": false
+  },
+  {
+   "name": "Magmadroth Flame",
+   "range": "Contrast",
+   "hex": "#F26524",
+   "oklch_l": 0.676,
+   "oklch_c": 0.1882,
+   "oklch_h": 41.7,
+   "metallic": false
+  },
+  {
+   "name": "Magos Purple",
+   "range": "Contrast",
+   "hex": "#7A3F6E",
+   "oklch_l": 0.4583,
+   "oklch_c": 0.1034,
+   "oklch_h": 335.2,
+   "metallic": false
+  },
+  {
+   "name": "Mantis Warriors Green",
+   "range": "Contrast",
+   "hex": "#8FB15D",
+   "oklch_l": 0.7159,
+   "oklch_c": 0.1179,
+   "oklch_h": 127.2,
+   "metallic": false
+  },
+  {
+   "name": "Mechanicus Standard Grey",
+   "range": "Base",
+   "hex": "#39484A",
+   "oklch_l": 0.3894,
+   "oklch_c": 0.0194,
+   "oklch_h": 206.3,
+   "metallic": false
+  },
+  {
+   "name": "Mephiston Red",
+   "range": "Base",
+   "hex": "#960C09",
+   "oklch_l": 0.4278,
+   "oklch_c": 0.1684,
+   "oklch_h": 28.8,
+   "metallic": false
+  },
+  {
+   "name": "Militarum Green",
+   "range": "Contrast",
+   "hex": "#6B7711",
+   "oklch_l": 0.541,
+   "oklch_c": 0.1184,
+   "oklch_h": 116.7,
+   "metallic": false
+  },
+  {
+   "name": "Moot Green",
+   "range": "Layer",
+   "hex": "#3DAF44",
+   "oklch_l": 0.6666,
+   "oklch_c": 0.1789,
+   "oklch_h": 144.2,
+   "metallic": false
+  },
+  {
+   "name": "Morghast Bone",
+   "range": "Base",
+   "hex": "#C0A973",
+   "oklch_l": 0.7421,
+   "oklch_c": 0.0763,
+   "oklch_h": 87.4,
+   "metallic": false
+  },
+  {
+   "name": "Mortarion Green Clear",
+   "range": "Air",
+   "hex": "#00832B",
+   "oklch_l": 0.5311,
+   "oklch_c": 0.1597,
+   "oklch_h": 146.6,
+   "metallic": false
+  },
+  {
+   "name": "Mortarion Grime",
+   "range": "Shade",
+   "hex": "#AFA400",
+   "oklch_l": 0.7056,
+   "oklch_c": 0.1495,
+   "oklch_h": 104.8,
+   "metallic": false
+  },
+  {
+   "name": "Mournfang Brown",
+   "range": "Base",
+   "hex": "#490F06",
+   "oklch_l": 0.271,
+   "oklch_c": 0.0892,
+   "oklch_h": 32.0,
+   "metallic": false
+  },
+  {
+   "name": "Munitorum Varnish",
+   "range": "Spray",
+   "hex": "#FAFAFA",
+   "oklch_l": 0.9851,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Naggaroth Night",
+   "range": "Base",
+   "hex": "#3B2B50",
+   "oklch_l": 0.3252,
+   "oklch_c": 0.0664,
+   "oklch_h": 302.8,
+   "metallic": false
+  },
+  {
+   "name": "Nazdreg Yellow",
+   "range": "Contrast",
+   "hex": "#6C4C00",
+   "oklch_l": 0.4399,
+   "oklch_c": 0.0909,
+   "oklch_h": 80.8,
+   "metallic": false
+  },
+  {
+   "name": "Niblet Green",
+   "range": "Dry",
+   "hex": "#378C35",
+   "oklch_l": 0.5685,
+   "oklch_c": 0.1484,
+   "oklch_h": 143.0,
+   "metallic": false
+  },
+  {
+   "name": "Night Lords Blue",
+   "range": "Base",
+   "hex": "#002B5C",
+   "oklch_l": 0.2947,
+   "oklch_c": 0.0987,
+   "oklch_h": 255.5,
+   "metallic": false
+  },
+  {
+   "name": "Nighthaunt Gloom",
+   "range": "Contrast",
+   "hex": "#4B8289",
+   "oklch_l": 0.5714,
+   "oklch_c": 0.0592,
+   "oklch_h": 206.1,
+   "metallic": false
+  },
+  {
+   "name": "Nocturne Green",
+   "range": "Base",
+   "hex": "#162A29",
+   "oklch_l": 0.2677,
+   "oklch_c": 0.026,
+   "oklch_h": 191.6,
+   "metallic": false
+  },
+  {
+   "name": "Nuln Oil",
+   "range": "Shade",
+   "hex": "#101010",
+   "oklch_l": 0.173,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Nuln Oil Gloss",
+   "range": "Shade",
+   "hex": "#101010",
+   "oklch_l": 0.173,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Nurgling Green",
+   "range": "Layer",
+   "hex": "#7E975E",
+   "oklch_l": 0.6426,
+   "oklch_c": 0.0851,
+   "oklch_h": 127.9,
+   "metallic": false
+  },
+  {
+   "name": "Ogryn Camo",
+   "range": "Layer",
+   "hex": "#96A648",
+   "oklch_l": 0.6927,
+   "oklch_c": 0.1209,
+   "oklch_h": 117.7,
+   "metallic": false
+  },
+  {
+   "name": "Ork Flesh",
+   "range": "Contrast",
+   "hex": "#00591E",
+   "oklch_l": 0.4044,
+   "oklch_c": 0.1185,
+   "oklch_h": 147.5,
+   "metallic": false
+  },
+  {
+   "name": "Orruk Flesh",
+   "range": "Base",
+   "hex": "#97C17E",
+   "oklch_l": 0.764,
+   "oklch_c": 0.1022,
+   "oklch_h": 134.4,
+   "metallic": false
+  },
+  {
+   "name": "Pallid Wych Flesh",
+   "range": "Layer",
+   "hex": "#CACCBB",
+   "oklch_l": 0.8389,
+   "oklch_c": 0.0232,
+   "oklch_h": 112.3,
+   "metallic": false
+  },
+  {
+   "name": "Phalanx Yellow",
+   "range": "Layer",
+   "hex": "#FFE200",
+   "oklch_l": 0.9087,
+   "oklch_c": 0.1888,
+   "oklch_h": 99.9,
+   "metallic": false
+  },
+  {
+   "name": "Phoenician Purple",
+   "range": "Base",
+   "hex": "#440052",
+   "oklch_l": 0.2825,
+   "oklch_c": 0.136,
+   "oklch_h": 319.4,
+   "metallic": false
+  },
+  {
+   "name": "Pink Horror",
+   "range": "Layer",
+   "hex": "#8E2757",
+   "oklch_l": 0.4479,
+   "oklch_c": 0.1446,
+   "oklch_h": 356.2,
+   "metallic": false
+  },
+  {
+   "name": "Plaguebearer Flesh",
+   "range": "Contrast",
+   "hex": "#718025",
+   "oklch_l": 0.5694,
+   "oklch_c": 0.1153,
+   "oklch_h": 118.3,
+   "metallic": false
+  },
+  {
+   "name": "Poxwalker",
+   "range": "Shade",
+   "hex": "#54989C",
+   "oklch_l": 0.6365,
+   "oklch_c": 0.0693,
+   "oklch_h": 200.5,
+   "metallic": false
+  },
+  {
+   "name": "Praxeti White",
+   "range": "Dry",
+   "hex": "#FFFFFF",
+   "oklch_l": 1.0,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Pylar Glacier",
+   "range": "Contrast",
+   "hex": "#74C0EB",
+   "oklch_l": 0.7747,
+   "oklch_c": 0.0974,
+   "oklch_h": 234.8,
+   "metallic": false
+  },
+  {
+   "name": "Pyroclast Orange Clear",
+   "range": "Air",
+   "hex": "#ED8022",
+   "oklch_l": 0.7084,
+   "oklch_c": 0.1648,
+   "oklch_h": 54.7,
+   "metallic": false
+  },
+  {
+   "name": "Rakarth Flesh",
+   "range": "Base",
+   "hex": "#9C998D",
+   "oklch_l": 0.682,
+   "oklch_c": 0.0176,
+   "oklch_h": 95.3,
+   "metallic": false
+  },
+  {
+   "name": "Ratling Grime",
+   "range": "Contrast",
+   "hex": "#8E8684",
+   "oklch_l": 0.6264,
+   "oklch_c": 0.0101,
+   "oklch_h": 34.3,
+   "metallic": false
+  },
+  {
+   "name": "Ratskin Flesh",
+   "range": "Base",
+   "hex": "#A86648",
+   "oklch_l": 0.5765,
+   "oklch_c": 0.0958,
+   "oklch_h": 44.8,
+   "metallic": false
+  },
+  {
+   "name": "Reikland Fleshshade",
+   "range": "Shade",
+   "hex": "#311908",
+   "oklch_l": 0.2428,
+   "oklch_c": 0.0472,
+   "oklch_h": 53.8,
+   "metallic": false
+  },
+  {
+   "name": "Reikland Fleshshade Gloss",
+   "range": "Shade",
+   "hex": "#311908",
+   "oklch_l": 0.2428,
+   "oklch_c": 0.0472,
+   "oklch_h": 53.8,
+   "metallic": false
+  },
+  {
+   "name": "Rhinox Hide",
+   "range": "Base",
+   "hex": "#462F30",
+   "oklch_l": 0.3327,
+   "oklch_c": 0.0339,
+   "oklch_h": 16.2,
+   "metallic": false
+  },
+  {
+   "name": "Russ Grey",
+   "range": "Layer",
+   "hex": "#507085",
+   "oklch_l": 0.5288,
+   "oklch_c": 0.0496,
+   "oklch_h": 237.7,
+   "metallic": false
+  },
+  {
+   "name": "Ryza Rust",
+   "range": "Dry",
+   "hex": "#F16C23",
+   "oklch_l": 0.6839,
+   "oklch_c": 0.1819,
+   "oklch_h": 44.7,
+   "metallic": false
+  },
+  {
+   "name": "Screamer Pink",
+   "range": "Base",
+   "hex": "#7A0E44",
+   "oklch_l": 0.3844,
+   "oklch_c": 0.1456,
+   "oklch_h": 357.4,
+   "metallic": false
+  },
+  {
+   "name": "Screaming Skull",
+   "range": "Layer",
+   "hex": "#B9C099",
+   "oklch_l": 0.7921,
+   "oklch_c": 0.0536,
+   "oklch_h": 115.9,
+   "metallic": false
+  },
+  {
+   "name": "Seraphim Sepia",
+   "range": "Shade",
+   "hex": "#2E1F08",
+   "oklch_l": 0.2524,
+   "oklch_c": 0.0425,
+   "oklch_h": 75.3,
+   "metallic": false
+  },
+  {
+   "name": "Shyish Purple",
+   "range": "Contrast",
+   "hex": "#2B0E42",
+   "oklch_l": 0.2418,
+   "oklch_c": 0.0943,
+   "oklch_h": 306.0,
+   "metallic": false
+  },
+  {
+   "name": "Sigismund Yellow Clear",
+   "range": "Air",
+   "hex": "#FFE32F",
+   "oklch_l": 0.9118,
+   "oklch_c": 0.1795,
+   "oklch_h": 99.6,
+   "metallic": false
+  },
+  {
+   "name": "Sigvald Burgundy",
+   "range": "Contrast",
+   "hex": "#810054",
+   "oklch_l": 0.398,
+   "oklch_c": 0.1663,
+   "oklch_h": 349.6,
+   "metallic": false
+  },
+  {
+   "name": "Skarsnik Green",
+   "range": "Layer",
+   "hex": "#588F6B",
+   "oklch_l": 0.6013,
+   "oklch_c": 0.0805,
+   "oklch_h": 154.6,
+   "metallic": false
+  },
+  {
+   "name": "Skavenblight Dinge",
+   "range": "Layer",
+   "hex": "#45413B",
+   "oklch_l": 0.3773,
+   "oklch_c": 0.0114,
+   "oklch_h": 78.2,
+   "metallic": false
+  },
+  {
+   "name": "Skeleton Horde",
+   "range": "Contrast",
+   "hex": "#A4966F",
+   "oklch_l": 0.6754,
+   "oklch_c": 0.0564,
+   "oklch_h": 90.6,
+   "metallic": false
+  },
+  {
+   "name": "Skink Blue",
+   "range": "Dry",
+   "hex": "#54BDCA",
+   "oklch_l": 0.742,
+   "oklch_c": 0.0978,
+   "oklch_h": 206.3,
+   "metallic": false
+  },
+  {
+   "name": "Skrag Brown",
+   "range": "Layer",
+   "hex": "#8B4806",
+   "oklch_l": 0.4753,
+   "oklch_c": 0.1135,
+   "oklch_h": 56.0,
+   "metallic": false
+  },
+  {
+   "name": "Slaanesh Grey",
+   "range": "Layer",
+   "hex": "#8B8893",
+   "oklch_l": 0.6329,
+   "oklch_c": 0.0166,
+   "oklch_h": 298.4,
+   "metallic": false
+  },
+  {
+   "name": "Snakebite Leather",
+   "range": "Contrast",
+   "hex": "#694C29",
+   "oklch_l": 0.4397,
+   "oklch_c": 0.0637,
+   "oklch_h": 70.0,
+   "metallic": false
+  },
+  {
+   "name": "Sons of Horus Green",
+   "range": "Layer",
+   "hex": "#00545E",
+   "oklch_l": 0.4081,
+   "oklch_c": 0.0703,
+   "oklch_h": 208.6,
+   "metallic": false
+  },
+  {
+   "name": "Sotek Green",
+   "range": "Layer",
+   "hex": "#0B6371",
+   "oklch_l": 0.4598,
+   "oklch_c": 0.0772,
+   "oklch_h": 212.1,
+   "metallic": false
+  },
+  {
+   "name": "Soulblight Grey",
+   "range": "Shade",
+   "hex": "#A6A1A5",
+   "oklch_l": 0.7144,
+   "oklch_c": 0.0081,
+   "oklch_h": 332.2,
+   "metallic": false
+  },
+  {
+   "name": "Space Wolves Grey",
+   "range": "Contrast",
+   "hex": "#1F486B",
+   "oklch_l": 0.39,
+   "oklch_c": 0.0753,
+   "oklch_h": 247.0,
+   "metallic": false
+  },
+  {
+   "name": "Squig Orange",
+   "range": "Layer",
+   "hex": "#A74D42",
+   "oklch_l": 0.532,
+   "oklch_c": 0.1211,
+   "oklch_h": 28.9,
+   "metallic": false
+  },
+  {
+   "name": "Steel Legion Drab",
+   "range": "Base",
+   "hex": "#584E2D",
+   "oklch_l": 0.4253,
+   "oklch_c": 0.0509,
+   "oklch_h": 93.1,
+   "metallic": false
+  },
+  {
+   "name": "Stegadon Scale Green",
+   "range": "Base",
+   "hex": "#06455D",
+   "oklch_l": 0.3666,
+   "oklch_c": 0.0706,
+   "oklch_h": 230.7,
+   "metallic": false
+  },
+  {
+   "name": "Stormfang",
+   "range": "Dry",
+   "hex": "#5A7FA3",
+   "oklch_l": 0.5833,
+   "oklch_c": 0.0696,
+   "oklch_h": 248.4,
+   "metallic": false
+  },
+  {
+   "name": "Stormfiend",
+   "range": "Contrast",
+   "hex": "#00628F",
+   "oklch_l": 0.4714,
+   "oklch_c": 0.1051,
+   "oklch_h": 238.4,
+   "metallic": false
+  },
+  {
+   "name": "Stormvermin Fur",
+   "range": "Layer",
+   "hex": "#6D655F",
+   "oklch_l": 0.5123,
+   "oklch_c": 0.0138,
+   "oklch_h": 59.4,
+   "metallic": false
+  },
+  {
+   "name": "Straken Green",
+   "range": "Layer",
+   "hex": "#597F1C",
+   "oklch_l": 0.5484,
+   "oklch_c": 0.1315,
+   "oklch_h": 128.8,
+   "metallic": false
+  },
+  {
+   "name": "Striking Scorpion Green",
+   "range": "Contrast",
+   "hex": "#12B259",
+   "oklch_l": 0.6696,
+   "oklch_c": 0.1758,
+   "oklch_h": 151.1,
+   "metallic": false
+  },
+  {
+   "name": "Sybarite Green",
+   "range": "Layer",
+   "hex": "#17A166",
+   "oklch_l": 0.6267,
+   "oklch_c": 0.1415,
+   "oklch_h": 157.9,
+   "metallic": false
+  },
+  {
+   "name": "Sylvaneth Bark",
+   "range": "Dry",
+   "hex": "#4E483B",
+   "oklch_l": 0.4036,
+   "oklch_c": 0.0224,
+   "oklch_h": 86.2,
+   "metallic": false
+  },
+  {
+   "name": "Talassar Blue",
+   "range": "Contrast",
+   "hex": "#003B70",
+   "oklch_l": 0.3514,
+   "oklch_c": 0.1065,
+   "oklch_h": 252.4,
+   "metallic": false
+  },
+  {
+   "name": "Tallarn Sand",
+   "range": "Layer",
+   "hex": "#A07409",
+   "oklch_l": 0.5879,
+   "oklch_c": 0.119,
+   "oklch_h": 81.5,
+   "metallic": false
+  },
+  {
+   "name": "Targor Rageshade",
+   "range": "Shade",
+   "hex": "#614E66",
+   "oklch_l": 0.4523,
+   "oklch_c": 0.0451,
+   "oklch_h": 319.2,
+   "metallic": false
+  },
+  {
+   "name": "Tau Light Ochre",
+   "range": "Layer",
+   "hex": "#BC6B10",
+   "oklch_l": 0.6065,
+   "oklch_c": 0.1371,
+   "oklch_h": 60.3,
+   "metallic": false
+  },
+  {
+   "name": "Teclis Blue",
+   "range": "Layer",
+   "hex": "#3877BF",
+   "oklch_l": 0.563,
+   "oklch_c": 0.1294,
+   "oklch_h": 253.6,
+   "metallic": false
+  },
+  {
+   "name": "Temple Guard Blue",
+   "range": "Layer",
+   "hex": "#239489",
+   "oklch_l": 0.6036,
+   "oklch_c": 0.0977,
+   "oklch_h": 185.1,
+   "metallic": false
+  },
+  {
+   "name": "Terminatus Stone",
+   "range": "Dry",
+   "hex": "#C8B79D",
+   "oklch_l": 0.7869,
+   "oklch_c": 0.0405,
+   "oklch_h": 78.5,
+   "metallic": false
+  },
+  {
+   "name": "Terradon Turquoise",
+   "range": "Contrast",
+   "hex": "#005862",
+   "oklch_l": 0.4211,
+   "oklch_c": 0.0724,
+   "oklch_h": 208.1,
+   "metallic": false
+  },
+  {
+   "name": "The Fang",
+   "range": "Base",
+   "hex": "#405B71",
+   "oklch_l": 0.4588,
+   "oklch_c": 0.0484,
+   "oklch_h": 243.7,
+   "metallic": false
+  },
+  {
+   "name": "Thondia Brown",
+   "range": "Base",
+   "hex": "#4F322C",
+   "oklch_l": 0.3502,
+   "oklch_c": 0.0439,
+   "oklch_h": 32.2,
+   "metallic": false
+  },
+  {
+   "name": "Thousand Sons Blue",
+   "range": "Base",
+   "hex": "#00506F",
+   "oklch_l": 0.4058,
+   "oklch_c": 0.0839,
+   "oklch_h": 233.1,
+   "metallic": false
+  },
+  {
+   "name": "Thunderhawk Blue",
+   "range": "Layer",
+   "hex": "#396A70",
+   "oklch_l": 0.4923,
+   "oklch_c": 0.0539,
+   "oklch_h": 205.8,
+   "metallic": false
+  },
+  {
+   "name": "Troll Slayer Orange",
+   "range": "Layer",
+   "hex": "#F16C23",
+   "oklch_l": 0.6839,
+   "oklch_c": 0.1819,
+   "oklch_h": 44.7,
+   "metallic": false
+  },
+  {
+   "name": "Tuskgor Fur",
+   "range": "Layer",
+   "hex": "#863231",
+   "oklch_l": 0.4369,
+   "oklch_c": 0.116,
+   "oklch_h": 23.8,
+   "metallic": false
+  },
+  {
+   "name": "Typhon Ash",
+   "range": "Air",
+   "hex": "#E4D8C1",
+   "oklch_l": 0.8858,
+   "oklch_c": 0.0335,
+   "oklch_h": 83.7,
+   "metallic": false
+  },
+  {
+   "name": "Tyran Blue",
+   "range": "Shade",
+   "hex": "#0083CA",
+   "oklch_l": 0.5868,
+   "oklch_c": 0.1434,
+   "oklch_h": 243.5,
+   "metallic": false
+  },
+  {
+   "name": "Tyrant Skull",
+   "range": "Dry",
+   "hex": "#C8C483",
+   "oklch_l": 0.8083,
+   "oklch_c": 0.085,
+   "oklch_h": 105.1,
+   "metallic": false
+  },
+  {
+   "name": "Ulthuan Grey",
+   "range": "Layer",
+   "hex": "#C4DDD5",
+   "oklch_l": 0.8768,
+   "oklch_c": 0.0287,
+   "oklch_h": 174.4,
+   "metallic": false
+  },
+  {
+   "name": "Ultramarine Blue",
+   "range": "Contrast",
+   "hex": "#294F86",
+   "oklch_l": 0.4285,
+   "oklch_c": 0.1014,
+   "oklch_h": 257.8,
+   "metallic": false
+  },
+  {
+   "name": "Ultramarines Blue",
+   "range": "Contrast",
+   "hex": "#091948",
+   "oklch_l": 0.2354,
+   "oklch_c": 0.0905,
+   "oklch_h": 265.4,
+   "metallic": false
+  },
+  {
+   "name": "Underhive Ash",
+   "range": "Dry",
+   "hex": "#BCBB7E",
+   "oklch_l": 0.7783,
+   "oklch_c": 0.0807,
+   "oklch_h": 107.3,
+   "metallic": false
+  },
+  {
+   "name": "Ungor Flesh",
+   "range": "Layer",
+   "hex": "#D1A560",
+   "oklch_l": 0.7478,
+   "oklch_c": 0.1014,
+   "oklch_h": 77.5,
+   "metallic": false
+  },
+  {
+   "name": "Ushabti Bone",
+   "range": "Layer",
+   "hex": "#ABA173",
+   "oklch_l": 0.7061,
+   "oklch_c": 0.0637,
+   "oklch_h": 97.3,
+   "metallic": false
+  },
+  {
+   "name": "Verminlord Hide",
+   "range": "Dry",
+   "hex": "#7E3331",
+   "oklch_l": 0.4251,
+   "oklch_c": 0.1049,
+   "oklch_h": 24.1,
+   "metallic": false
+  },
+  {
+   "name": "Volupus Pink",
+   "range": "Contrast",
+   "hex": "#60001C",
+   "oklch_l": 0.3111,
+   "oklch_c": 0.1243,
+   "oklch_h": 14.4,
+   "metallic": false
+  },
+  {
+   "name": "Vulkan Green",
+   "range": "Layer",
+   "hex": "#223C2E",
+   "oklch_l": 0.3303,
+   "oklch_c": 0.0408,
+   "oklch_h": 159.5,
+   "metallic": false
+  },
+  {
+   "name": "Waaagh! Flesh",
+   "range": "Base",
+   "hex": "#0B3B36",
+   "oklch_l": 0.3198,
+   "oklch_c": 0.0503,
+   "oklch_h": 184.8,
+   "metallic": false
+  },
+  {
+   "name": "Warboss Green",
+   "range": "Layer",
+   "hex": "#317E57",
+   "oklch_l": 0.5342,
+   "oklch_c": 0.0982,
+   "oklch_h": 158.2,
+   "metallic": false
+  },
+  {
+   "name": "Warp Lightning",
+   "range": "Contrast",
+   "hex": "#005E26",
+   "oklch_l": 0.4209,
+   "oklch_c": 0.1178,
+   "oklch_h": 149.3,
+   "metallic": false
+  },
+  {
+   "name": "Warpfiend Grey",
+   "range": "Layer",
+   "hex": "#66656E",
+   "oklch_l": 0.5108,
+   "oklch_c": 0.0141,
+   "oklch_h": 291.0,
+   "metallic": false
+  },
+  {
+   "name": "Warpstone Glow",
+   "range": "Layer",
+   "hex": "#0F702A",
+   "oklch_l": 0.4773,
+   "oklch_c": 0.1348,
+   "oklch_h": 147.1,
+   "metallic": false
+  },
+  {
+   "name": "Waywatcher Green",
+   "range": "Glaze",
+   "hex": "#6DC066",
+   "oklch_l": 0.7335,
+   "oklch_c": 0.1491,
+   "oklch_h": 142.3,
+   "metallic": false
+  },
+  {
+   "name": "Wazdakka Red",
+   "range": "Layer",
+   "hex": "#880804",
+   "oklch_l": 0.3973,
+   "oklch_c": 0.1578,
+   "oklch_h": 29.3,
+   "metallic": false
+  },
+  {
+   "name": "White Scar",
+   "range": "Layer",
+   "hex": "#FFFFFF",
+   "oklch_l": 1.0,
+   "oklch_c": 0.0,
+   "oklch_h": 0.0,
+   "metallic": false
+  },
+  {
+   "name": "Wild Rider Red",
+   "range": "Layer",
+   "hex": "#E82E1B",
+   "oklch_l": 0.6031,
+   "oklch_c": 0.2222,
+   "oklch_h": 30.3,
+   "metallic": false
+  },
+  {
+   "name": "Word Bearers Red",
+   "range": "Layer",
+   "hex": "#620104",
+   "oklch_l": 0.3127,
+   "oklch_c": 0.1266,
+   "oklch_h": 27.7,
+   "metallic": false
+  },
+  {
+   "name": "Wrack White",
+   "range": "Dry",
+   "hex": "#D3D0CF",
+   "oklch_l": 0.8597,
+   "oklch_c": 0.0036,
+   "oklch_h": 39.5,
+   "metallic": false
+  },
+  {
+   "name": "Wraithbone",
+   "range": "Base",
+   "hex": "#DBD1B2",
+   "oklch_l": 0.8607,
+   "oklch_c": 0.0429,
+   "oklch_h": 92.2,
+   "metallic": false
+  },
+  {
+   "name": "Wyldwood",
+   "range": "Contrast",
+   "hex": "#432822",
+   "oklch_l": 0.3091,
+   "oklch_c": 0.0424,
+   "oklch_h": 33.2,
+   "metallic": false
+  },
+  {
+   "name": "Xereus Purple",
+   "range": "Layer",
+   "hex": "#47125A",
+   "oklch_l": 0.3091,
+   "oklch_c": 0.1259,
+   "oklch_h": 315.3,
+   "metallic": false
+  },
+  {
+   "name": "XV-88",
+   "range": "Base",
+   "hex": "#6C4811",
+   "oklch_l": 0.4322,
+   "oklch_c": 0.0834,
+   "oklch_h": 72.6,
+   "metallic": false
+  },
+  {
+   "name": "Yriel Yellow",
+   "range": "Layer",
+   "hex": "#FFD900",
+   "oklch_l": 0.8907,
+   "oklch_c": 0.1833,
+   "oklch_h": 96.2,
+   "metallic": false
+  },
+  {
+   "name": "Zamesi Desert",
+   "range": "Layer",
+   "hex": "#D89D1B",
+   "oklch_l": 0.7337,
+   "oklch_c": 0.1459,
+   "oklch_h": 80.3,
+   "metallic": false
+  },
+  {
+   "name": "Zandri Dust",
+   "range": "Base",
+   "hex": "#988E56",
+   "oklch_l": 0.6423,
+   "oklch_c": 0.0766,
+   "oklch_h": 99.4,
+   "metallic": false
+  }
+ ]
+}
